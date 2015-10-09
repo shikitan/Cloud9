@@ -8,9 +8,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/Inventory_title_text"
+        android:text="My Inventory"
         android:id="@+id/textView2"
         android:gravity="center" />
+
+
 
     <ListView
         android:layout_width="match_parent"

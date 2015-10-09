@@ -1,6 +1,42 @@
 <resources>
     <string name="app_name">TradioGC</string>
-
+    <string name="app_name">Tradio XMLs</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="Tradio_GC">Tradio_GC</string>
     <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="market">Market</string>
+    <string name="profile">Profile</string>
+    <string name="location">Location</string>
+    <string name="price_range">Price Range (min-max)</string>
+    <string name="search_market">Search</string>
+    <string name="results">Results</string>
+    <string name="trade">Trade</string>
+    <string name="yours">Yours</string>
+    <string name="theirs">Theirs</string>
+    <string name="edit">Edit</string>
+    <string name="make_offer">Make Offer</string>
+    <string name="settings">Settings</string>
+    <string name="picture_mode">Picture Mode?</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="off">Off</string>
+    <string name="john_smith">John Smith</string>
+    <string name="edmonton">Edmonton</string>
+    <string name="bio_john_smith">I love hockey and hanging out with my friends. Also interested
+    in trying new places to eat!</string>
+    <string name="inventory">Inventory</string>
+    <string name="edit_bio">Edit Bio</string>
+    <string name="trades">Trades</string>
+    <string name="description">Description</string>
+    <string name="friends">Friends</string>
+    <string name="friend_request">Friend Requests</string>
+    <string name="find_friends">Find Friends</string>
+    <string name="my_friends">My Friends</string>
+    <string name="Inventory_title_text">Inventory</string>
+
     <string name="action_settings">Settings</string>
 </resources>

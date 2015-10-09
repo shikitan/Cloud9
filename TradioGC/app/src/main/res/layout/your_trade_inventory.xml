@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="User&apos;s Inventory"
+        android:text="My Inventory"
         android:id="@+id/textView3"
         android:gravity="center" />
 
