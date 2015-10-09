@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Inventory Filter"
+        android:text="@string/market"
         android:id="@+id/market_title"
         android:textStyle="bold|italic"
         android:textSize="50sp"
