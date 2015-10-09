@@ -11,21 +11,19 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testOfferTradeWithFriends() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
-        trade.addItem(borrower_item_id1);
-        trade.addItem(borrower_item_id2);
-        trade.addItem(borrower_item_id3);
+        Trade trade = new Trade(trade_id, borrower, owner);
+        trade.addBorrowerItem(borrower_item_id);
+        trade.addOwnerItem(owner_item_id);
 
-        assertTrue(trade.getItemList.contains(borrower_item_id1));
-        assertTrue(trade.getItemList.contains(borrower_item_id2));
-        assertTrue(trade.getItemList.contains(borrower_item_id3));
+
+        assertTrue(trade.getBorrowerItemList.contains(borrower_item_id));
+        assertTrue(trade.getOwnerItemList.contains(owner_item_id));
     }
 
     public void testGetTradeNotification() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
-        trade.addItem(borrower_item_id);
+        Trade trade = new Trade(trade_id, borrower, owner);
 
         owner.addNodtfication(trade_id);
         assertTrue(owner.getNotificationList().contains(trade));
@@ -34,8 +32,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testAcceptTrade() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
-        trade.addItem(borrower_item_id);
+        Trade trade = new Trade(trade_id, borrower, owner);
 
         borrower.addCurrentTrade(trade);
         owner.addCurrentTrade(trade);
@@ -47,8 +44,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testDeclineTrade() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
-        trade.addItem(borrower_item_id);
+        Trade trade = new Trade(trade_id, borrower, owner);
 
         owner.addNodification(trade_id);
         owner.removeNotification(trade_id);
@@ -60,7 +56,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testOfferCounterTrade() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade counter_trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade counter_trade = new Trade(trade_id, borrower, owner);
 
         borrower.addNodtfication(trade_id);
         assertTrue(borrower.getCurrentTradeList.contains(counter_trade));
@@ -69,28 +65,25 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testEditTrade() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
 
         borrower.addCurrentTrade(trade);
         owner.addCurrentTrade(trade);
 
-        borrower.getCurrentTrade(trade_id).addItem(borrower_item_id1);
-        borrower.getCurrentTrade(trade_id).removeItem(borrower_item_id1);
-        borrower.getCurrentTrade(trade_id).addItem(borrower_item_id2);
-        owner.getCurrentTrade(trade_id).addItem(borrower_item_id1);
-        owner.getCurrentTrade(trade_id).removeItem(borrower_item_id1);
-        owner.getCurrentTrade(trade_id).addItem(borrower_item_id2);
+        borrower.getCurrentTrade(trade_id).addBorrowerItem(borrower_item_id1);
+        borrower.getCurrentTrade(trade_id).removeBorrowerItem(borrower_item_id1);
+        borrower.getCurrentTrade(trade_id).addBorrowerItem(borrower_item_id2);
 
-        assertFalse(borrower.getCurrentTrade(trade_id).getItemList.contains(borrower_item_id1));
-        assertTrue(borrower.getCurrentTrade(trade_id).getItemList.contains(borrower_item_id2));
-        assertFalse(owner.getCurrentTrade(trade_id).getItemList.contains(borrower_item_id1));
-        assertTrue(owner.getCurrentTrade(trade_id).getItemList.contains(borrower_item_id2));
+        assertFalse(borrower.getCurrentTrade(trade_id).getBorrowerItemList.contains(borrower_item_id1));
+        assertTrue(borrower.getCurrentTrade(trade_id).getBorrowerItemList.contains(borrower_item_id2));
+        assertFalse(owner.getCurrentTrade(trade_id).getBorrowerItemList.contains(borrower_item_id1));
+        assertTrue(owner.getCurrentTrade(trade_id).getBorrowerItemList.contains(borrower_item_id2));
     }
 
     public void testDeleteTrade() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
         borrower.addCurrentTrade(trade);
         owner.addCurrentTrade(trade);
 
@@ -104,7 +97,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testEmailTradeInfo() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
         owner.addCurrentTrade(trade);
         owner.getCurrentTrade(trade_id).commentOnTrade("comment");
 
@@ -114,7 +107,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testBrowsePastTrades() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
         owner.addPastTrade(trade);
 
         assertTrue(owner.getPastTradeList().contains(trade));
@@ -123,7 +116,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testBrowseCurrentTrades() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
         owner.addCurrentTrade(trade);
 
         assertTrue(owner.getCurrentTradeList().contains(trade));
@@ -132,7 +125,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testBrowseMySentTrades() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
         owner.addMySentTrade(trade);
 
         assertTrue(owner.getMySentTradeList().contains(trade));
@@ -141,7 +134,7 @@ public class TradeUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testBrowseTradesOfferedToMe() {
         User borrower = new User(username, password);
         User owner = new User(username, password);
-        Trade trade = new Trade(trade_id, owner_item_id, borrower, owner);
+        Trade trade = new Trade(trade_id, borrower, owner);
         owner.addTradesOfferedToMe(trade);
 
         assertTrue(owner.getTradesOfferedToMeList().contains(trade));
