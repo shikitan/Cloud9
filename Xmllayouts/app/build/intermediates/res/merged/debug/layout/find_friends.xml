@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/searchTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:layout_gravity="center"
+        android:textSize="32sp"
+        android:layout_above="@+id/searchTextButton"
+        android:layout_alignParentStart="true"
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/searchTitleView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Find Friends"
+        android:layout_gravity="center"
+        android:textSize="32sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:clickable="true" />
+
+
+    <Button
+        android:id="@+id/searchTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout><!-- From: file:/cshome/wong5/Cloud9/Xmllayouts/app/src/main/res/layout/find_friends.xml -->
