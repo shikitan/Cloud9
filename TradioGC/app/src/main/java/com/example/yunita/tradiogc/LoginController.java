@@ -27,13 +27,16 @@ public class LoginController {
         users = new Users();
     }
 
-    public void addUser(User user) {
+    public void addUser(String username, String password) {
+        User newUser = new User();
+        newUser.setAccount(new Account(username, password));
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost(users.getResourceUrl() + user.getAccount());
+            HttpPost addRequest = new HttpPost(users.getResourceUrl() + username);
+            // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/[username]
 
-            StringEntity stringEntity = new StringEntity(gson.toJson(user));
+            StringEntity stringEntity = new StringEntity(gson.toJson(newUser));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
 
@@ -45,7 +48,5 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
-
 
 }

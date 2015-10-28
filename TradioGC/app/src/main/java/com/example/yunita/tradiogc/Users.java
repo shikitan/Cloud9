@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Users extends ArrayList<User> implements Observable{
     private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/user";
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/_search";
 
     @Override
