@@ -6,18 +6,18 @@ package com.example.yunita.tradiogc;
 public class User {
 
     private final static boolean STATUS = false;
-    private Account account;
+    private String username;
 
-
-    public User(){
+    public User() {
 
     }
 
-    public Account getAccount() {
-        return account;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
 }

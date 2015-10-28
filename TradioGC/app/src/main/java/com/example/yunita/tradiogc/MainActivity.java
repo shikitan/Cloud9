@@ -16,64 +16,41 @@ public class MainActivity extends Activity {
 
     private LinearLayout login_view;
     private LinearLayout signup_view;
+    private EditText username_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
-        loginController = new LoginController();
+        loginController = new LoginController(mContext);
 
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
 
+        username_et = (EditText) findViewById(R.id.usernameEditText);
+
     }
 
-    public void goToSignUp(View view){
-        Animation anim = AnimationUtils.loadAnimation(mContext,R.anim.pull_down);
+    public void goToSignUp(View view) {
+        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.pull_down);
         login_view.setVisibility(View.GONE);
         signup_view.setVisibility(View.VISIBLE);
         signup_view.startAnimation(anim);
     }
 
-    public void goToLogin(View view){
+    public void goToLogin(View view) {
         signup_view.setVisibility(View.GONE);
         login_view.setVisibility(View.VISIBLE);
     }
 
-    public void signUp(){
+    public void signUp(View view) {
+        String username = username_et.getText().toString();
 
         // Execute the thread
-        Thread thread = new CreateAccountThread(newMovie);
+        Thread thread = loginController.new CreateAccountThread(username);
         thread.start();
     }
 
-    // Thread that close the activity after finishing add
-    private Runnable doFinishAdd = new Runnable() {
-        public void run() {
-            finish();
-        }
-    };
 
-    class CreateAccountThread extends Thread {
-        private User user;
-
-        public CreateAccountThread(User user) {
-            this.user = user;
-        }
-
-        @Override
-        public void run() {
-            loginController.addUser(user);
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
-    }
 }

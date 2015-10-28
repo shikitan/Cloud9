@@ -1,10 +1,8 @@
 package com.example.yunita.tradiogc;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -19,21 +17,32 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class LoginController {
 
+    private static final String TAG = "LoginController";
     private Gson gson = new Gson();
     private Users users;
-    private static final String TAG = "LoginController";
+    private Context context;
+    // Thread that close the activity after finishing add
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            ((Activity) context).finish();
+        }
+    };
 
-    public LoginController(){
+    public LoginController(Context context) {
         users = new Users();
+        this.context = context;
     }
 
-    public void addUser(User user) {
+    public void addUser(String username) {
+        User newUser = new User();
+        newUser.setUsername(username);
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost(users.getResourceUrl() + user.getAccount());
+            HttpPost addRequest = new HttpPost(users.getResourceUrl() + username);
+            // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/[username]
 
-            StringEntity stringEntity = new StringEntity(gson.toJson(user));
+            StringEntity stringEntity = new StringEntity(gson.toJson(newUser));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
 
@@ -46,6 +55,25 @@ public class LoginController {
         }
     }
 
+    class CreateAccountThread extends Thread {
+        private String username;
 
+        public CreateAccountThread(String username) {
+            this.username = username;
+        }
+
+        @Override
+        public void run() {
+            addUser(username);
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+//            runOnUiThread(doFinishAdd);
+        }
+    }
 
 }
