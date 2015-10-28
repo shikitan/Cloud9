@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TradioGC</string>
     <string name="login"><b>LOG IN</b></string>
-
+    <string name="sign_up"><b>SIGN UP</b></string>
 
     <string name="create_account">Create Account</string>
     <string name="username">Username</string>
