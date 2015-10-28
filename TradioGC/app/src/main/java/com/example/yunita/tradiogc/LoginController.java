@@ -1,10 +1,8 @@
 package com.example.yunita.tradiogc;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -19,17 +17,25 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class LoginController {
 
+    private static final String TAG = "LoginController";
     private Gson gson = new Gson();
     private Users users;
-    private static final String TAG = "LoginController";
+    private Context context;
+    // Thread that close the activity after finishing add
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            ((Activity) context).finish();
+        }
+    };
 
-    public LoginController(){
+    public LoginController(Context context) {
         users = new Users();
+        this.context = context;
     }
 
-    public void addUser(String username, String password) {
+    public void addUser(String username) {
         User newUser = new User();
-        newUser.setAccount(new Account(username, password));
+        newUser.setUsername(username);
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
@@ -46,6 +52,27 @@ public class LoginController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    class CreateAccountThread extends Thread {
+        private String username;
+
+        public CreateAccountThread(String username) {
+            this.username = username;
+        }
+
+        @Override
+        public void run() {
+            addUser(username);
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+//            runOnUiThread(doFinishAdd);
         }
     }
 
