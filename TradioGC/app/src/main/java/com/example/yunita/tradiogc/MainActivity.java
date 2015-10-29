@@ -1,55 +1,61 @@
 package com.example.yunita.tradiogc;
 
-import android.app.Activity;
-import android.content.Context;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
-public class MainActivity extends Activity {
+import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TextView;
 
-    private Context mContext = this;
-    private LoginController loginController;
+public class MainActivity extends TabActivity {
 
-    private LinearLayout login_view;
-    private LinearLayout signup_view;
-    private EditText username_et;
+    private String textArray[] = {"Notification", "Friends", "Market", "Profile"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.main);
 
-        loginController = new LoginController(mContext);
+        manageTab();
 
-        login_view = (LinearLayout) findViewById(R.id.login_view);
-        signup_view = (LinearLayout) findViewById(R.id.signUp_view);
-
-        username_et = (EditText) findViewById(R.id.usernameEditText);
 
     }
 
-    public void goToSignUp(View view) {
-        Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.pull_down);
-        login_view.setVisibility(View.GONE);
-        signup_view.setVisibility(View.VISIBLE);
-        signup_view.startAnimation(anim);
+    public void manageTab() {
+        TabHost tabHost = this.getTabHost();
+        TabHost.TabSpec spec;
+        Intent intent;
+        //Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
+        //        MarketActivity.class, ProfileActivity.class};
+        Class activityArray[] = {LoginActivity.class, LoginActivity.class,
+                LoginActivity.class, LoginActivity.class};
+
+        for(int i = 0; i < 4; i++){
+            intent=new Intent().setClass(this, activityArray[i]);
+            spec = tabHost.newTabSpec(textArray[i]).setIndicator(getTabItemView(i)).setContent(intent);
+            tabHost.addTab(spec);
+            tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);
+        }
+
+        tabHost.setCurrentTab(0);
     }
 
-    public void goToLogin(View view) {
-        signup_view.setVisibility(View.GONE);
-        login_view.setVisibility(View.VISIBLE);
-    }
+    private View getTabItemView(int index){
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.bottom_tab_button, null);
+        int imageViewArray[] = {R.drawable.bottom_message_button,R.drawable.bottom_friends_button,R.drawable.bottom_market_button,
+                R.drawable.bottom_profile_button};
 
-    public void signUp(View view) {
-        String username = username_et.getText().toString();
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+        imageView.setImageResource(imageViewArray[index]);
 
-        // Execute the thread
-        Thread thread = loginController.new CreateAccountThread(username);
-        thread.start();
+        TextView textView = (TextView) view.findViewById(R.id.textview);
+        textView.setText(textArray[index]);
+
+        return view;
     }
 
 

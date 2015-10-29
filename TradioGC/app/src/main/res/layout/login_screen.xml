@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/login_textColor"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Create account"
+            android:text="Don't have an account?  Create an Account"
             android:layout_gravity="center_horizontal"
             android:layout_margin="6dp"
             android:clickable="true"
