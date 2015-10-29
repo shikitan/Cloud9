@@ -12,6 +12,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 /**
  * Created by yunita on 27/10/15.
  */
@@ -19,8 +24,10 @@ public class LoginController {
 
     private static final String TAG = "LoginController";
     private Gson gson = new Gson();
-    private Users users;
+    private User newUser;
     private Context context;
+    private WebServer webServer = new WebServer();
+
     // Thread that close the activity after finishing add
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -29,17 +36,17 @@ public class LoginController {
     };
 
     public LoginController(Context context) {
-        users = new Users();
         this.context = context;
+        newUser = new User();
     }
 
     public void addUser(String username) {
-        User newUser = new User();
         newUser.setUsername(username);
         HttpClient httpClient = new DefaultHttpClient();
 
+        saveUserInFile(username);
         try {
-            HttpPost addRequest = new HttpPost(users.getResourceUrl() + username);
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + username);
             // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/[username]
 
             StringEntity stringEntity = new StringEntity(gson.toJson(newUser));
@@ -55,10 +62,24 @@ public class LoginController {
         }
     }
 
-    class CreateAccountThread extends Thread {
+    private void saveUserInFile(String username) {
+        try {
+            FileOutputStream fos = context.openFileOutput( username + ".sav", 0);
+            OutputStreamWriter writer = new OutputStreamWriter(fos);
+            gson.toJson(newUser, writer);
+            writer.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    class SignUpThread extends Thread {
         private String username;
 
-        public CreateAccountThread(String username) {
+        public SignUpThread(String username) {
             this.username = username;
         }
 
@@ -72,7 +93,7 @@ public class LoginController {
                 e.printStackTrace();
             }
 
-//            runOnUiThread(doFinishAdd);
+//            ((Activity) context).runOnUiThread(doFinishAdd);
         }
     }
 
