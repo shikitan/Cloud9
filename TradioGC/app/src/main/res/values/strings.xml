@@ -1,16 +1,27 @@
 <resources>
+
+    <!-- Login Activity -->
     <string name="app_name">TradioGC</string>
     <string name="login"><b>LOG IN</b></string>
     <string name="sign_up"><b>SIGN UP</b></string>
-
     <string name="create_account">Create Account</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="Tradio_GC">Tradio_GC</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="main_menu">Main Menu</string>
+
+    <!-- Main Activity -->
     <string name="market">Market</string>
     <string name="profile">Profile</string>
+    <string name="friends">Friends</string>
+    <string name="notification">Notification</string>
+
+    <!-- Friends Activity -->
+    <string name="add">Add</string>
+
+
+    <string name="hello_world">Hello world!</string>
+    <string name="main_menu">Main Menu</string>
+
     <string name="location">Location</string>
     <string name="price_range">Price Range (min-max)</string>
     <string name="search_market">Search</string>
@@ -32,11 +43,12 @@
     <string name="edit_bio">Edit Bio</string>
     <string name="trades">Trades</string>
     <string name="description">Description</string>
-    <string name="friends">Friends</string>
+
     <string name="friend_request">Friend Requests</string>
     <string name="find_friends">Find Friends</string>
     <string name="my_friends">My Friends</string>
     <string name="Inventory_title_text">Inventory</string>
     <string name="action_settings">Settings</string>
+
 
 </resources>

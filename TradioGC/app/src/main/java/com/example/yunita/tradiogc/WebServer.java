@@ -1,8 +1,5 @@
 package com.example.yunita.tradiogc;
 
-/**
- * Created by yunita on 10/28/15.
- */
 public class WebServer {
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/_search";

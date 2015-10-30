@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.example.yunita.tradiogc.friends.FriendsActivity;
+import com.example.yunita.tradiogc.login.LoginActivity;
+
 public class MainActivity extends TabActivity {
 
     private String textArray[] = {"Notification", "Friends", "Market", "Profile"};
@@ -18,20 +21,17 @@ public class MainActivity extends TabActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
         manageTab();
 
-
+        LoginActivity.STATUS = true;
     }
 
     public void manageTab() {
         TabHost tabHost = this.getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
-        //Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
-        //        MarketActivity.class, ProfileActivity.class};
-        Class activityArray[] = {LoginActivity.class, LoginActivity.class,
-                LoginActivity.class, LoginActivity.class};
+        Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
+                MarketActivity.class, ProfileActivity.class};
 
         for(int i = 0; i < 4; i++){
             intent=new Intent().setClass(this, activityArray[i]);

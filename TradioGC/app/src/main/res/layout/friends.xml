@@ -1,54 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/Friends_Layout">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/friends"
-        android:id="@+id/friends_title_text_view"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="50sp"
-        android:textStyle="bold|italic" />
-
-    <Button
-        android:layout_marginTop="75dp"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="@string/friend_request"
-        android:id="@+id/button2"
-        android:layout_below="@+id/friends_title_text_view"
-        android:textSize="20sp"
-        android:layout_alignLeft="@+id/friends_title_text_view"
-        android:layout_alignStart="@+id/friends_title_text_view" />
-
-    <Button
-        android:layout_marginTop="75dp"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="@string/my_friends"
-        android:id="@+id/button4"
-        android:layout_below="@+id/button2"
-        android:textSize="20sp"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2"
-        android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2" />
-
-    <Button
-        android:layout_marginTop="75dp"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="@string/find_friends"
-        android:id="@+id/button5"
-        android:layout_below="@+id/button4"
-        android:textSize="20sp"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignStart="@+id/button4"
-        android:layout_alignRight="@+id/button4"
-        android:layout_alignEnd="@+id/button4" />
-
-</RelativeLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/primary_background">
+</LinearLayout>

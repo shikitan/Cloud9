@@ -1,7 +1,8 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -9,13 +10,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.yunita.tradiogc.LoginController;
+import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
 
-/**
- * Created by Amber on 15/10/28.
- */
 public class LoginActivity extends Activity {
+
+    public static boolean STATUS = false;
+
     private Context mContext = this;
     private LoginController loginController;
 
@@ -35,6 +36,10 @@ public class LoginActivity extends Activity {
 
         username_et = (EditText) findViewById(R.id.usernameEditText);
 
+        if(STATUS == true){
+            goToMain();
+            finish();
+        }
     }
 
     public void goToSignUp(View view) {
@@ -49,11 +54,24 @@ public class LoginActivity extends Activity {
         login_view.setVisibility(View.VISIBLE);
     }
 
+    public void goToMain(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    public void login(View view){
+        goToMain();
+    }
+
     public void signUp(View view) {
         String username = username_et.getText().toString();
 
         // Execute the thread
         Thread thread = loginController.new SignUpThread(username);
         thread.start();
+
+        goToMain();
     }
 }

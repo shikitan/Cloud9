@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="32dp"
-    android:background="@color/primary_background">
+    android:background="@color/primary_color">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -54,14 +54,15 @@
             android:id="@+id/loginButton"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
-            android:textColorHighlight="@color/primary_background" />
+            android:textColorHighlight="@color/primary_background"
+            android:onClick="login" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/login_textColor"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Don't have an account?  Create an Account"
+            android:text="Create Account"
             android:layout_gravity="center_horizontal"
             android:layout_margin="6dp"
             android:clickable="true"

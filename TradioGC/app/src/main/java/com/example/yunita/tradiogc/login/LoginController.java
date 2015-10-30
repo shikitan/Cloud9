@@ -1,9 +1,11 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.login;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.yunita.tradiogc.User;
+import com.example.yunita.tradiogc.WebServer;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
@@ -17,9 +19,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-/**
- * Created by yunita on 27/10/15.
- */
 public class LoginController {
 
     private static final String TAG = "LoginController";
@@ -93,7 +92,7 @@ public class LoginController {
                 e.printStackTrace();
             }
 
-//            ((Activity) context).runOnUiThread(doFinishAdd);
+            ((Activity) context).runOnUiThread(doFinishAdd);
         }
     }
 

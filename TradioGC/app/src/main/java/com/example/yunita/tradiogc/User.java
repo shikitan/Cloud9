@@ -1,11 +1,9 @@
 package com.example.yunita.tradiogc;
 
-/**
- * Created by yunita on 10/28/15.
- */
+import java.util.ArrayList;
+
 public class User {
 
-    private final static boolean STATUS = false;
     private String username;
 
     public User() {
@@ -19,5 +17,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
 
 }
