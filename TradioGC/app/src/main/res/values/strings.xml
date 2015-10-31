@@ -49,6 +49,7 @@
     <string name="my_friends">My Friends</string>
     <string name="Inventory_title_text">Inventory</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_search_user">SearchUserActivity</string>
 
 
 </resources>

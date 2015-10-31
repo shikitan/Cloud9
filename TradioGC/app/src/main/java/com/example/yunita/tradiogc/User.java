@@ -29,4 +29,7 @@ public class User{
         this.friends = friends;
     }
 
+    public String toString() {
+        return username;
+    }
 }
