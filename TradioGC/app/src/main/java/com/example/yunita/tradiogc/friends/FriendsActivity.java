@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +44,23 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        friendsViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, LoginActivity.USERLOGIN.getFriends());
+
+        final Friends friends = LoginActivity.USERLOGIN.getFriends();
+        friendsViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, friends);
+        friendList.setAdapter(friendsViewAdapter);
+
+        // Delete movie on long click
+        friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = friends.get(position);
+                Toast.makeText(mContext, "Deleting " + user.getUsername(), Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -67,6 +84,8 @@ public class FriendsActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
         toast.show();
+
+        friendsViewAdapter.notifyDataSetChanged();
     }
 
 }

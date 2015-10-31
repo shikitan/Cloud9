@@ -13,6 +13,10 @@ public class User{
         friends = new Friends();
     }
 
+    public User(String username){
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -27,6 +31,11 @@ public class User{
 
     public void setFriends(Friends friends) {
         this.friends = friends;
+    }
+
+    @Override
+    public String toString(){
+        return username;
     }
 
 }

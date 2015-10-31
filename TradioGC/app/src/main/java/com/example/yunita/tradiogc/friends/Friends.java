@@ -16,4 +16,8 @@ public class Friends extends ArrayList<User>{
         this.add(newFriend);
     }
 
+    public void deleteFriend(User user){
+        this.remove(user);
+    }
+
 }
