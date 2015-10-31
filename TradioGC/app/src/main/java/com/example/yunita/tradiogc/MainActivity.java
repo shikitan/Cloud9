@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.yunita.tradiogc.friends.FriendsActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class MainActivity extends TabActivity {
 

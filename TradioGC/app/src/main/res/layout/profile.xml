@@ -79,5 +79,6 @@
         android:textSize="25sp"
         android:textStyle="italic"
         android:layout_below="@+id/edit_bio_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

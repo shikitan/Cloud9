@@ -10,7 +10,7 @@ public class BrowseUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public void testSearchFriendInventory(){
         Inventory inventory = new Inventory();
-        Item item = new Item(1, "GAP Gift Card", "A", "Apparel", "Unused", 1, 1);
+        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
         inventory.addItem(item);
 
         User john = new Borrower("john");
@@ -23,7 +23,7 @@ public class BrowseUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public void testBrowseInventoryByCategory(){
         Inventory inventory = new Inventory();
-        Item item = new Item(1, "GAP Gift Card", "A", "Apparel", "Unused", 1, 1);
+        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
         inventory.addItem(item);
 
         User john = new Borrower("john");
@@ -35,7 +35,7 @@ public class BrowseUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public void testBrowseInventoryByTextQuery(){
         Inventory inventory = new Inventory();
-        Item item = new Item(1, "GAP Gift Card", "A", "Apparel", "Unused", 1, 1);
+        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
         inventory.addItem(item);
 
         User john = new Borrower("john");
