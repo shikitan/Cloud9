@@ -1,13 +1,16 @@
 package com.example.yunita.tradiogc;
 
+import com.example.yunita.tradiogc.friends.Friends;
+
 import java.util.ArrayList;
 
-public class User {
+public class User{
 
     private String username;
+    private Friends friends;
 
     public User() {
-
+        friends = new Friends();
     }
 
     public String getUsername() {
@@ -18,5 +21,12 @@ public class User {
         this.username = username;
     }
 
+    public Friends getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Friends friends) {
+        this.friends = friends;
+    }
 
 }

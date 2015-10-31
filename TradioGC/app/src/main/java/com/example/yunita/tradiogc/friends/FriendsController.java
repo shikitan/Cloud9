@@ -1,5 +1,7 @@
 package com.example.yunita.tradiogc.friends;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.example.yunita.tradiogc.User;
@@ -14,21 +16,27 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class FriendsController {
 
-    private Gson gson = new Gson();
-    private Friends friends;
     private static final String TAG = "FriendsController";
+    private Gson gson = new Gson();
+    private Context context;
     private WebServer webServer = new WebServer();
+    // Thread that close the activity after finishing add
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            ((Activity) context).finish();
+        }
+    };
 
-    public FriendsController(Friends friends) {
+    public FriendsController(Context context) {
         super();
-        this.friends = friends;
+        this.context = context;
     }
 
-    public void addFriend(User user) {
+    public void updateFriend(User user) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost( webServer.getResourceUrl() + user.getUsername());
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername());
 
             StringEntity stringEntity = new StringEntity(gson.toJson(user));
             addRequest.setEntity(stringEntity);
@@ -43,5 +51,24 @@ public class FriendsController {
         }
     }
 
+    class UpdateFriendsThread extends Thread {
+        private User user;
 
+        public UpdateFriendsThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+            updateFriend(user);
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+//            ((Activity) context).runOnUiThread(doFinishAdd);
+        }
+    }
 }
