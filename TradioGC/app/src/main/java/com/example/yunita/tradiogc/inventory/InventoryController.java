@@ -26,9 +26,13 @@ public class InventoryController {
     private static final String TAG = "InventoryController";
     private Gson gson = new Gson();
     private Inventory newInventory;
-    private User newUser;
     private Context context;
     private WebServer webServer = new WebServer();
+
+    public InventoryController(Context context){
+        super();
+        this.context = context;
+    }
     // Thread that close the activity after finishing add
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -38,19 +42,18 @@ public class InventoryController {
 
 
     public void createItem(Inventory inventory, String name,int category,double price,String description,Boolean visibility){
-        //Item item = new Item(name, category, price, description, visibility);
-        Item item = new Item("ebgames", 1, 20.00, "hi", true);
+        Item item = new Item(name, category, price, description, visibility);
         inventory.addItem(item);
     }
 
-    public void addItem(String username, Inventory inventory) {
+    public void addInventory(User user, Inventory inventory) {
         newInventory = inventory;
         HttpClient httpClient = new DefaultHttpClient();
 
-        saveUserInFile(username);
+        saveInventoryInFile(inventory);
         try {
-            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + username + username);
-            // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/[username]/inventory
+            HttpPost addRequest = new HttpPost(webServer.getInventoryUrl() + user.getUsername());
+            // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/inventory/[username]
 
             StringEntity stringEntity = new StringEntity(gson.toJson(newInventory));
             addRequest.setEntity(stringEntity);
@@ -65,11 +68,11 @@ public class InventoryController {
         }
     }
 
-    private void saveUserInFile(String username) {
+    private void saveInventoryInFile(Inventory inventory) {
         try {
-            FileOutputStream fos = context.openFileOutput(username + ".sav", 0);
+            FileOutputStream fos = context.openFileOutput(inventory + ".sav", 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
-            gson.toJson(newUser, writer);
+            gson.toJson(newInventory, writer);
             writer.flush();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -79,17 +82,18 @@ public class InventoryController {
         }
     }
 
-    class SignUpThread extends Thread {
-        private String username;
+    class UpdateInventoryThread extends Thread {
+        private User user;
         private Inventory inventory;
 
-        public SignUpThread(String username) {
-            this.username = username;
+        public UpdateInventoryThread(User user, Inventory inventory) {
+            this.inventory = inventory;
+            this.user = user;
         }
 
         @Override
         public void run() {
-            addItem(username, inventory);
+            addInventory(user, inventory);
             // Give some time to get updated info
             try {
                 Thread.sleep(500);

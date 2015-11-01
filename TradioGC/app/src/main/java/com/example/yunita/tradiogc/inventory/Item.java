@@ -13,7 +13,6 @@ public class Item{
     double price;
     String desc;
     Boolean visibility;
-    int quantity;
 
     public Item(String name,int category, double price, String desc, Boolean visibility) {
         this.category = category;
@@ -21,7 +20,6 @@ public class Item{
         this.price = price;
         this.desc = desc;
         this.visibility = visibility;
-        this.quantity = quantity;
     }
 
     public String getName() {

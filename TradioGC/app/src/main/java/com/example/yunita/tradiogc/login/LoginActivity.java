@@ -12,10 +12,12 @@ import android.widget.LinearLayout;
 
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.User;
 
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;
+    public static User USERLOGIN = new User();
 
     private Context mContext = this;
     private LoginController loginController;
@@ -62,6 +64,7 @@ public class LoginActivity extends Activity {
     }
 
     public void login(View view){
+        USERLOGIN.setUsername(username_et.getText().toString());
         goToMain();
     }
 

@@ -49,24 +49,29 @@
         android:text="Public"
         android:id="@+id/public_title" />
 
-    <RadioButton
+    <RadioGroup
+        android:id="@+id/radioVisibility"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/public_radio_button"
-        android:checked="false" />
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/public_radio_button"
+            android:checked="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Private"
-        android:id="@+id/private_title" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Private"
+            android:id="@+id/private_title" />
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/private_radio_button"
-        android:checked="false" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/private_radio_button"
+            android:checked="false" />
+    </RadioGroup>
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,4 +107,5 @@
         android:text="Add Item"
         android:id="@+id/add_item_button"
         android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

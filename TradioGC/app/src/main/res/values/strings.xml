@@ -90,6 +90,16 @@
     <string name="myInventory">My Inventory</string>
     <string name="plus">+</string>
     <string name="title_activity_new_item">NewItemActivity</string>
+    <string-array name="categories_array">
+        <item>Books</item>
+        <item>Electronics</item>
+        <item>Sports</item>
+        <item>Music</item>
+        <item>Clothing</item>
+        <item>Hobby</item>
+        <item>Food</item>
+        <item>Other</item>
+    </string-array>
 
 
 </resources>

@@ -1,6 +1,7 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.support.v4.os.ParcelableCompat;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
