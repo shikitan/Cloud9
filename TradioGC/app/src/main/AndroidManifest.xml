@@ -46,6 +46,12 @@
             android:label="@string/notification" >
         </activity>
 
+        <activity
+            android:name=".SearchUserActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="SearchUser" >
+        </activity>
+
     </application>
 
 </manifest>

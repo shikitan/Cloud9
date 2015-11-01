@@ -8,6 +8,7 @@ public class User{
 
     private String username;
     private Friends friends;
+    private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
 
     public User() {
         friends = new Friends();
