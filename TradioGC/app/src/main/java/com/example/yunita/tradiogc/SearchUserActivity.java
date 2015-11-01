@@ -2,6 +2,7 @@ package com.example.yunita.tradiogc;
 
 import android.content.Context;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,28 +44,16 @@ public class SearchUserActivity extends Activity {
         searchController = new SearchController();
         //SearchThread thread = new SearchThread("");
         //thread.start();
-        TextWatcher watcher = new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+        editText1.addTextChangedListener(new DelayedTextWatcher(500) {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //SearchThread thread = new SearchThread(s.toString());
-                //thread.start();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("TAG", "[TextWatcher][onTextChanged]" + s);
-                //do something
+            public void afterTextChangedDelayed(Editable s) {
                 users.clear();
                 SearchThread thread = new SearchThread(s.toString());
                 thread.start();
+
             }
-        };
-        editText1.addTextChangedListener(watcher);
+        });
     }
 
     public void search(View view) {
@@ -97,18 +86,14 @@ public class SearchUserActivity extends Activity {
         public void run() {
             users.clear();
             users.addAll(searchController.searchUsers(search));
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             notifyUpdated();
         }
 
     }
-/*
-    class DelayedTextWatcher implements TextWatcher {
+
+    // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+    // (C) 2015 user1338795
+    abstract class DelayedTextWatcher implements TextWatcher {
 
         private long delayTime;
         private WaitTask lastWaitTask;
@@ -130,16 +115,10 @@ public class SearchUserActivity extends Activity {
         }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // TODO Auto-generated method stub
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // TODO Auto-generated method stub
-
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         public abstract void afterTextChangedDelayed(Editable s);
 
@@ -162,5 +141,5 @@ public class SearchUserActivity extends Activity {
         }
 
     }
-    */
+
 }
