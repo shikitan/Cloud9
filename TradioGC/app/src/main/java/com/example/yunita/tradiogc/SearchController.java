@@ -15,6 +15,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -23,33 +24,26 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
+
 /**
  * Created by shuming2 on 10/31/15.
  */
 public class SearchController {
     private static final String TAG = "SearchController";
-    private Gson gson = new Gson();
+    private Gson gson;
     private WebServer webServer = new WebServer();
     private Users users = new Users();
 
     public Users getUsers() {
         return users;
     }
+
     public SearchController() {
         gson = new Gson();
     }
 
-    /*public Users searchUsers(String searchString, String field) {
-        User user = new User();
-        user.setUsername("john");
-        users.add(user);
-        return users;
 
-    }
-    */
-
-
-    public Users searchUsers(String searchString, String field) {
+    public Users getAllUsers(String field) {
         Users result = new Users();
 
 
@@ -60,7 +54,7 @@ public class SearchController {
             throw new UnsupportedOperationException("Not implemented!");
         }
 
-        SimpleSearchCommand command = new SimpleSearchCommand(searchString);
+        SimpleSearchCommand command = new SimpleSearchCommand("*");
 
         String query = gson.toJson(command);
         Log.i(TAG, "Json command: " + query);
@@ -111,9 +105,21 @@ public class SearchController {
             result.add(hit.getSource());
         }
 
-        result.notifyObservers();
+        //result.notifyObservers();
 
         return result;
     }
 
+    public Users searchUsers(String searchString) {
+        Users result = new Users();
+        Users allUsers = getAllUsers(null);
+        for (User user : allUsers) {
+            if (user.getUsername().indexOf(searchString) != -1) {
+                result.add(user);
+            }
+        }
+        result.notifyObservers();
+        return result;
+    }
 }
+
