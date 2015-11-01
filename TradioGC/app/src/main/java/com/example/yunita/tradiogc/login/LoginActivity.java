@@ -16,6 +16,8 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
 
+import java.util.concurrent.CountDownLatch;
+
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;
@@ -70,21 +72,32 @@ public class LoginActivity extends Activity {
 
 
     public void login(View view){
-        USERLOGIN.setUsername(username_et.getText().toString());
 
         String username = username_et.getText().toString();
 
         // Execute the thread
-        Thread thread = searchController.new GetUserLoginThread(username);
-        thread.start();
+        final Thread thread = searchController.new GetUserLoginThread(username);
 
-        if(USERLOGIN == null){
-            Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-            goToMain();
-        }
 
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (thread) {
+                    thread.start();
+                    try {
+                        thread.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (USERLOGIN == null) {
+                        Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } else {
+                        goToMain();
+                    }
+                }
+            }
+        });
     }
 
     public void signUp(View view) {
@@ -96,6 +109,7 @@ public class LoginActivity extends Activity {
 
         goToMain();
     }
+
 
 
 }

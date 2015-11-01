@@ -55,7 +55,7 @@ public class SearchController {
 
 
 
-        public User getUser(String username) {
+    public User getUser(String username) {
         SearchHit<User> sr = null;
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(webServer.getResourceUrl() + username);
@@ -152,8 +152,6 @@ public class SearchController {
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
             result.add(hit.getSource());
         }
-
-
         return result;
     }
 
@@ -169,11 +167,7 @@ public class SearchController {
         return result;
     }
 
-    private Runnable doFinishLogin = new Runnable() {
-        public void run() {
-            ((Activity) context).finish();
-        }
-    };
+
 
     public class GetUserLoginThread extends Thread {
         private String username;
@@ -181,12 +175,12 @@ public class SearchController {
         public GetUserLoginThread(String username) {
             this.username = username;
         }
-
         @Override
         public void run() {
-            LoginActivity.USERLOGIN = getUser(username);
-
-            ((Activity) context).runOnUiThread(doFinishLogin);
+            synchronized (this) {
+                LoginActivity.USERLOGIN = getUser(username);
+                notify();
+            }
         }
     }
 
