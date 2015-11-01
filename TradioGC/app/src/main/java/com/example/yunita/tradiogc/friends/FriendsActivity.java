@@ -28,6 +28,8 @@ public class FriendsActivity extends AppCompatActivity {
     private ArrayAdapter<User> friendsViewAdapter;
     private ListView friendList;
 
+    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,8 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        final Friends friends = LoginActivity.USERLOGIN.getFriends();
-        friendsViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, friends);
+
+        friendsViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 
         // Delete movie on long click
@@ -54,8 +56,14 @@ public class FriendsActivity extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = friends.get(position);
-                Toast.makeText(mContext, "Deleting " + user.getUsername(), Toast.LENGTH_SHORT).show();
+                User removedUser = thisUserFriends.get(position);
+                thisUserFriends.deleteFriend(removedUser);
+
+                Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
+                thread.start();
+
+                friendsViewAdapter.notifyDataSetChanged();
+                Toast.makeText(mContext, "Deleting " + removedUser.getUsername(), Toast.LENGTH_SHORT).show();
 
                 return true;
             }
@@ -77,7 +85,7 @@ public class FriendsActivity extends AppCompatActivity {
         User newFriend = new User();
         newFriend.setUsername(friendName);
 
-        LoginActivity.USERLOGIN.getFriends().add(newFriend);
+        thisUserFriends.add(newFriend);
 
         Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
         thread.start();
