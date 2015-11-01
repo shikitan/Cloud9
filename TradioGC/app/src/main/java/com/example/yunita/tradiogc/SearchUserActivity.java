@@ -23,6 +23,7 @@ public class SearchUserActivity extends Activity {
     private ArrayAdapter<User> usersViewAdapter;
     private SearchController searchController;
     private EditText editText1;
+    private Context mContext = this;
 
 
     @Override
@@ -41,7 +42,7 @@ public class SearchUserActivity extends Activity {
         users = new Users();
         usersViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, users);
         userList.setAdapter(usersViewAdapter);
-        searchController = new SearchController();
+        searchController = new SearchController(mContext);
         //SearchThread thread = new SearchThread("");
         //thread.start();
         editText1.addTextChangedListener(new DelayedTextWatcher(500) {

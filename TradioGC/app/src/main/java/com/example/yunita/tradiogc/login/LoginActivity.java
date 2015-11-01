@@ -9,18 +9,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
 
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;
-    public static User USERLOGIN = new User();
+    public static User USERLOGIN;
 
     private Context mContext = this;
     private LoginController loginController;
+    private SearchController searchController;
 
     private LinearLayout login_view;
     private LinearLayout signup_view;
@@ -32,6 +35,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login_screen);
 
         loginController = new LoginController(mContext);
+        searchController = new SearchController(mContext);
 
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
@@ -67,7 +71,20 @@ public class LoginActivity extends Activity {
 
     public void login(View view){
         USERLOGIN.setUsername(username_et.getText().toString());
-        goToMain();
+
+        String username = username_et.getText().toString();
+
+        // Execute the thread
+        Thread thread = searchController.new GetUserLoginThread(username);
+        thread.start();
+
+        if(USERLOGIN == null){
+            Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            goToMain();
+        }
+
     }
 
     public void signUp(View view) {
@@ -79,4 +96,6 @@ public class LoginActivity extends Activity {
 
         goToMain();
     }
+
+
 }

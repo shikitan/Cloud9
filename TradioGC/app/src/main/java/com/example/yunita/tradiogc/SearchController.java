@@ -1,11 +1,13 @@
 package com.example.yunita.tradiogc;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
 import com.example.yunita.tradiogc.data.SearchHit;
 import com.example.yunita.tradiogc.data.SearchResponse;
 import com.example.yunita.tradiogc.data.SimpleSearchCommand;
+import com.example.yunita.tradiogc.login.LoginActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -24,22 +26,68 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
-
-/**
- * Created by shuming2 on 10/31/15.
- */
 public class SearchController {
     private static final String TAG = "SearchController";
     private Gson gson;
     private WebServer webServer = new WebServer();
     private Users users = new Users();
+    private Context context;
 
     public Users getUsers() {
         return users;
     }
 
-    public SearchController() {
+    public SearchController(Context context) {
         gson = new Gson();
+        this.context = context;
+    }
+
+//    public User getUser(String username) {
+//        User result = null;
+//        Users allUsers = getAllUsers(null);
+//        for (User user : allUsers) {
+//            if (user.getUsername().equals(username)) {
+//                result = user;
+//            }
+//        }
+//        return result;
+//    }
+
+
+
+        public User getUser(String username) {
+        SearchHit<User> sr = null;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(webServer.getResourceUrl() + username);
+
+        HttpResponse response = null;
+
+        try {
+            response = httpClient.execute(httpGet);
+        } catch (ClientProtocolException e1) {
+            throw new RuntimeException(e1);
+        } catch (IOException e1) {
+            throw new RuntimeException(e1);
+        }
+
+        Type searchHitType = new TypeToken<SearchHit<User>>() {}.getType();
+
+        try {
+            sr = gson.fromJson(
+                    new InputStreamReader(response.getEntity().getContent()),
+                    searchHitType);
+        } catch (JsonIOException e) {
+            throw new RuntimeException(e);
+        } catch (JsonSyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sr.getSource();
+
     }
 
 
@@ -105,7 +153,6 @@ public class SearchController {
             result.add(hit.getSource());
         }
 
-        //result.notifyObservers();
 
         return result;
     }
@@ -121,5 +168,27 @@ public class SearchController {
         result.notifyObservers();
         return result;
     }
+
+    private Runnable doFinishLogin = new Runnable() {
+        public void run() {
+            ((Activity) context).finish();
+        }
+    };
+
+    public class GetUserLoginThread extends Thread {
+        private String username;
+
+        public GetUserLoginThread(String username) {
+            this.username = username;
+        }
+
+        @Override
+        public void run() {
+            LoginActivity.USERLOGIN = getUser(username);
+
+            ((Activity) context).runOnUiThread(doFinishLogin);
+        }
+    }
+
 }
 

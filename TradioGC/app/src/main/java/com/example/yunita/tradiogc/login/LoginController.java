@@ -96,17 +96,14 @@ public class LoginController {
         @Override
         public void run() {
             addUser(username);
-            // Give some time to get updated info
-
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
             ((Activity) context).runOnUiThread(doFinishAdd);
         }
     }
+
 
 }
