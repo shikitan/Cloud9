@@ -42,20 +42,7 @@ public class SearchController {
         this.context = context;
     }
 
-//    public User getUser(String username) {
-//        User result = null;
-//        Users allUsers = getAllUsers(null);
-//        for (User user : allUsers) {
-//            if (user.getUsername().equals(username)) {
-//                result = user;
-//            }
-//        }
-//        return result;
-//    }
-
-
-
-        public User getUser(String username) {
+    public User getUser(String username) {
         SearchHit<User> sr = null;
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(webServer.getResourceUrl() + username);
