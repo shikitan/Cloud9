@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.example.yunita.tradiogc.friends.FriendMainActivity;
 import com.example.yunita.tradiogc.friends.FriendsActivity;
+import com.example.yunita.tradiogc.inventory.InventoryActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class MainActivity extends TabActivity {
 
@@ -33,7 +35,7 @@ public class MainActivity extends TabActivity {
         Intent intent;
         //Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
         //        MarketActivity.class, ProfileActivity.class};
-        Class activityArray[] = {SearchUserActivity.class, FriendsActivity.class,
+        Class activityArray[] = {InventoryActivity.class, FriendsActivity.class,
                 FriendMainActivity.class, ProfileActivity.class};
 
         for(int i = 0; i < 4; i++){

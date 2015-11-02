@@ -4,6 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +39,7 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:label="@string/profile"
             android:parentActivityName=".MainActivity" >
         </activity>
@@ -49,6 +57,13 @@
             android:name=".friends.FriendMainActivity"
             android:label="@string/title_activity_friend" >
         </activity>
+        <activity
+            android:name=".inventory.InventoryActivity"
+            android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".inventory.NewItemActivity"
+            android:label="@string/title_activity_new_item" >
+        </activity>
     </application>
-
 </manifest>

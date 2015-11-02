@@ -2,6 +2,11 @@ package com.example.yunita.tradiogc;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.example.yunita.tradiogc.inventory.Inventory;
+import com.example.yunita.tradiogc.inventory.Item;
+
+import java.security.acl.Owner;
+
 public class OfflineUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public OfflineUseCaseTest() {
@@ -11,10 +16,10 @@ public class OfflineUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testMakeInventoryItemsOffline(){
         // when it is offline
         Inventory inventory = new Inventory();
-        Item item = new Item(1, "GAP Gift Card", "A", "Apparel", "Unused", 1, 1);
+        Item item = new Item("GAP Gift Card",1, 50.00, "Unused", true);
         inventory.addItem(item);
         inventory.setIsOffline(true);
-        assertTrue(inventory.isOffline());
+        assertTrue(inventory.getIsOffline());
 
         // when we get connectivity
 
@@ -32,12 +37,12 @@ public class OfflineUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public void testBrowseFriendInventoryOffline(){
         Inventory onlineInventory = new Inventory();
-        Item item = new Item(1, "GAP Gift Card", "A", "Apparel", "Unused", 1, 1);
-        inventory.addItem(item);
-        assertEquals(inventory.getSize(), 1);
+        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
+        onlineInventory.addItem(item);
+        assertEquals(onlineInventory.getSize(), 1);
 
         User anne = new Owner("anne");
-        anne.addInventory(inventory);
+        anne.addInventory(onlineInventory);
 
         // cache inventory using key(user)-value pair(user inventory)
         OfflineInventory offlineInventory = new OfflineInventory();
