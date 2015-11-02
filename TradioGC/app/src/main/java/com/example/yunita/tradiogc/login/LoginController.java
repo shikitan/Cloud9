@@ -34,7 +34,6 @@ public class LoginController {
 
     private static final String TAG = "LoginController";
     private Gson gson = new Gson();
-    private User newUser;
     private Context context;
     private WebServer webServer = new WebServer();
 
@@ -47,19 +46,17 @@ public class LoginController {
 
     public LoginController(Context context) {
         this.context = context;
-        newUser = new User();
     }
 
-    public void addUser(String username) {
-        newUser.setUsername(username);
+    public void addUser(User user) {
         HttpClient httpClient = new DefaultHttpClient();
 
-        saveUserInFile(username);
+        saveUserInFile(user);
         try {
-            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + username);
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername());
             // check http://cmput301.softwareprocess.es:8080/cmput301f15t09/user/[username]
 
-            StringEntity stringEntity = new StringEntity(gson.toJson(newUser));
+            StringEntity stringEntity = new StringEntity(gson.toJson(user));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
 
@@ -72,11 +69,11 @@ public class LoginController {
         }
     }
 
-    private void saveUserInFile(String username) {
+    private void saveUserInFile(User user) {
         try {
-            FileOutputStream fos = context.openFileOutput( username + ".sav", 0);
+            FileOutputStream fos = context.openFileOutput( user.getUsername() + ".sav", 0);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
-            gson.toJson(newUser, writer);
+            gson.toJson(user, writer);
             writer.flush();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -87,15 +84,15 @@ public class LoginController {
     }
 
     class SignUpThread extends Thread {
-        private String username;
+        private User newUser;
 
-        public SignUpThread(String username) {
-            this.username = username;
+        public SignUpThread(User newUser) {
+            this.newUser=newUser;
         }
 
         @Override
         public void run() {
-            addUser(username);
+            addUser(newUser);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

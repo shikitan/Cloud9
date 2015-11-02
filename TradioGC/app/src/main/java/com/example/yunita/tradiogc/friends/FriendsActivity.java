@@ -48,7 +48,6 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-
         friendsViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 

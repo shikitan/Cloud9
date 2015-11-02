@@ -80,6 +80,32 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:hint="City"
+            android:textColorHint="@color/hint_color"
+            android:backgroundTint="@color/login_textColor"
+            android:ems="10"
+            android:id="@+id/locationEditText"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:fontFamily="monospace"
+            android:inputType="text" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone"
+            android:textColorHint="@color/hint_color"
+            android:backgroundTint="@color/login_textColor"
+            android:ems="10"
+            android:id="@+id/phoneEditText"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:fontFamily="monospace"
+            android:inputType="text" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:hint="Email"
             android:textColorHint="@color/hint_color"
             android:backgroundTint="@color/login_textColor"

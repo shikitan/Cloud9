@@ -38,6 +38,7 @@ public class FriendMainActivity extends AppCompatActivity {
         setContentView(R.layout.friend_main_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        friendsController = new FriendsController(mContext);
         friendList = (ListView) findViewById(R.id.friend_list_view);
 
 
@@ -58,8 +59,8 @@ public class FriendMainActivity extends AppCompatActivity {
                 User removedUser = thisUserFriends.get(position);
                 thisUserFriends.deleteFriend(removedUser);
 
-                //Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-                //thread.start();
+                Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
+                thread.start();
 
                 friendsViewAdapter.notifyDataSetChanged();
                 Toast.makeText(mContext, "Deleting " + removedUser.getUsername(), Toast.LENGTH_SHORT).show();
