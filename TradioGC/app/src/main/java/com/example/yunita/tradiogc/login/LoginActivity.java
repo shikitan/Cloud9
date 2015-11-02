@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
@@ -41,7 +42,7 @@ public class LoginActivity extends Activity {
 
         username_et = (EditText) findViewById(R.id.usernameEditText);
 
-        if(STATUS == true){
+        if(STATUS){
             goToMain();
             finish();
         }
@@ -69,13 +70,27 @@ public class LoginActivity extends Activity {
 
 
     public void login(View view){
-        String username = username_et.getText().toString();
+
+        final String username = username_et.getText().toString();
 
         // Execute the thread
         Thread thread = searchController.new GetUserLoginThread(username);
         thread.start();
 
-        goToMain();
+        synchronized (thread) {
+            try {
+                thread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (USERLOGIN == null) {
+                Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                goToMain();
+            }
+        }
     }
 
     public void signUp(View view) {
@@ -87,6 +102,4 @@ public class LoginActivity extends Activity {
 
         goToMain();
     }
-
-
 }

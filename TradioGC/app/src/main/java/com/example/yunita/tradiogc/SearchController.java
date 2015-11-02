@@ -33,14 +33,13 @@ public class SearchController {
     private Users users = new Users();
     private Context context;
 
-    public Users getUsers() {
-        return users;
-    }
+
 
     public SearchController(Context context) {
         gson = new Gson();
         this.context = context;
     }
+
 
     public User getUser(String username) {
         SearchHit<User> sr = null;
@@ -76,6 +75,7 @@ public class SearchController {
         return sr.getSource();
 
     }
+
 
 
     public Users getAllUsers(String field) {
@@ -139,8 +139,6 @@ public class SearchController {
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
             result.add(hit.getSource());
         }
-
-
         return result;
     }
 
@@ -156,11 +154,7 @@ public class SearchController {
         return result;
     }
 
-    private Runnable doFinishLogin = new Runnable() {
-        public void run() {
-            ((Activity) context).finish();
-        }
-    };
+
 
     public class GetUserLoginThread extends Thread {
         private String username;
@@ -168,12 +162,15 @@ public class SearchController {
         public GetUserLoginThread(String username) {
             this.username = username;
         }
-
         @Override
         public void run() {
-            LoginActivity.USERLOGIN = getUser(username);
+            synchronized (this) {
 
-            ((Activity) context).runOnUiThread(doFinishLogin);
+                LoginActivity.USERLOGIN = getUser(username);
+                System.out.println("Waiting for b to notify...");
+
+                notify();
+            }
         }
     }
 
