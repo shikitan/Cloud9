@@ -27,7 +27,7 @@ public class FriendMainActivity extends AppCompatActivity {
 
     private FriendsController friendsController;
     private Context mContext = this;
-    private ArrayAdapter<User> friendsViewAdapter;
+    private ArrayAdapter<String> friendsViewAdapter;
 
     private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
 
@@ -48,7 +48,7 @@ public class FriendMainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         
-        friendsViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, thisUserFriends);
+        friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 
         // Delete movie on long click
@@ -56,14 +56,14 @@ public class FriendMainActivity extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                User removedUser = thisUserFriends.get(position);
+                String removedUser = thisUserFriends.get(position);
                 thisUserFriends.deleteFriend(removedUser);
 
                 Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
                 thread.start();
 
                 friendsViewAdapter.notifyDataSetChanged();
-                Toast.makeText(mContext, "Deleting " + removedUser.getUsername(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Deleting " + removedUser, Toast.LENGTH_SHORT).show();
 
                 return true;
             }

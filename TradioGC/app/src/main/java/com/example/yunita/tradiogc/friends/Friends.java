@@ -7,19 +7,19 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 
 import java.util.ArrayList;
 
-public class Friends extends ArrayList<User>{
+public class Friends extends ArrayList<String>{
 
     public Friends(){
 
     }
 
     // Add newFriend to User's friend list
-    public void addNewFriend(User newFriend) {
+    public void addNewFriend(String newFriend) {
         this.add(newFriend);
     }
 
     // Remove otherUser from the User's friend list
-    public void deleteFriend(User otherUser){
+    public void deleteFriend(String otherUser){
         this.remove(otherUser);
     }
 

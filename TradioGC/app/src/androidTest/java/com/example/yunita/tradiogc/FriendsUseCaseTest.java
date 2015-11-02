@@ -21,33 +21,34 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testSearchUserName() {
+
         User john = new User("john");
         User anne = new User("anne");
 
 
-        SearchController search = new SearchController(this);
-        Users user_list = search.getAllUsers("john");
-        Users user_list2 = search.getAllUsers("an");
-        Users user_list3 = search.getAllUsers("123");
+        SearchController search = new SearchController(context);
 
-        assertTrue(user_list.contains("john"));
-        assertTrue(user_list2.contains("anne"));
-        assertFalse(user_list3.contains("123"));
+        User test_john = search.getUser("john");
+        assertEquals(john, test_john);
+        User test_anne = search.getUser("anne");
+        assertEquals(anne, test_anne);
+
     }
 
     public void testAddFriend() {
 
-        // Define two users and get one of their friend lists
+        // Define two users and get their friend lists
         User user = new User("username");
         User john = new User("john");
+        String user_name = user.getUsername();
+        String john_name = john.getUsername();
         Friends friend_list_user = user.getFriends();
         Friends friend_list_john = john.getFriends();
 
         // Have user add the other person
-        friend_list_user.addNewFriend(john);
-        friend_list_john.addNewFriend(user);
+        friend_list_user.addNewFriend(john_name);
+        friend_list_john.addNewFriend(user_name);
 
-        System.out.println(friend_list_user);
         // Assert that both users have each other on their friend lists
         assertTrue(user.getFriends().contains(john));
         assertTrue(john.getFriends().contains(user));
@@ -57,21 +58,20 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         // Define two users and get one of their friend lists
         User user = new User("username");
         User john = new User("john");
+        String john_name = john.getUsername();
         Friends friend_list_user = user.getFriends();
 
         // Have user add the other person
-        friend_list_user.addNewFriend(john);
+        friend_list_user.addNewFriend(john_name);
 
-        // Assert that both users have each other on their friend lists
+        // Assert that user has the other person in their friend list
         assertTrue(user.getFriends().contains(john));
-        assertTrue(john.getFriends().contains(user));
 
         // Have user delete the other person
-        friend_list_user.deleteFriend(john);
+        friend_list_user.deleteFriend(john_name);
 
         // Assert that both users no longer have each other on their friend lists
         assertFalse(user.getFriends().contains(john));
-        assertFalse(john.getFriends().contains(user));
     }
 
     //public void testViewPersonalProfile(){
