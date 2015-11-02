@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
 
         username_et = (EditText) findViewById(R.id.usernameEditText);
 
-        if(STATUS == true){
+        if(STATUS){
             goToMain();
             finish();
         }
