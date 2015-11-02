@@ -7,11 +7,6 @@
     android:padding="8dp"
     android:background="@color/primary_background">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_friend_et" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,6 +20,5 @@
         android:id="@+id/friend_list_view">
 
     </ListView>
-
 
 </LinearLayout>

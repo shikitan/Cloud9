@@ -4,7 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 public class PhotographsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
-    public TradeUseCaseTest() {
+    public PhotographsUseCaseTest() {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 

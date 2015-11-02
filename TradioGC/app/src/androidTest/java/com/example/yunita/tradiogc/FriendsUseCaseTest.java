@@ -1,67 +1,92 @@
 package com.example.yunita.tradiogc;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+
+import com.example.yunita.tradiogc.friends.Friends;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
+    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+
     public FriendsUseCaseTest() {
         super(com.example.yunita.tradiogc.MainActivity.class);
+    }
+
+    public void testStart() throws Exception {
+        Activity activity = getActivity();
     }
 
     public void testSearchUserName() {
         User john = new User("john");
         User anne = new User("anne");
 
-        UserList users = new UserList();
-        users.addUser(john);
-        users.addUser(anne);
+        SearchController search = new SearchController();
+        Users user_list = search.getAllUsers("john");
+        Users user_list2 = search.getAllUsers("an");
+        Users user_list3 = search.getAllUsers("123");
 
-        assertTrue(users.isExist("anne"));
+        assertTrue(user_list.contains("john"));
+        assertTrue(user_list2.contains("anne"));
+        assertFalse(user_list3.contains("123"));
     }
 
     public void testAddFriend() {
+
+        // Define two users and get one of their friend lists
         User user = new User("username");
-        User owner = new Owner("John");
+        User john = new User("john");
+        Friends friend_list_user = user.getFriends();
 
-        owner.addFriend(user);
-        user.addFriend(owner);
+        // Have user add the other person
+        friend_list_user.addNewFriend(john);
 
-        assertTrue(owner.getFriends().contains(user));
-        assertTrue(user.getFriends().contains(owner));
+        System.out.println(friend_list_user);
+        // Assert that both users have each other on their friend lists
+        assertTrue(user.getFriends().contains(john));
+        assertTrue(john.getFriends().contains(user));
     }
 
     public void testRemoveFriend() {
+        // Define two users and get one of their friend lists
         User user = new User("username");
-        User owner = new Owner("John");
+        User john = new User("john");
+        Friends friend_list_user = user.getFriends();
 
-        owner.addFriend(user);
-        user.addFriend(owner);
+        // Have user add the other person
+        friend_list_user.addNewFriend(john);
 
-        owner.removeFriend(user);
-        user.removeFriend(owner);
+        // Assert that both users have each other on their friend lists
+        assertTrue(user.getFriends().contains(john));
+        assertTrue(john.getFriends().contains(user));
 
-        assertFalse(owner.getFriends().contains(user));
-        assertFalse(user.getFriends().contains(owner));
+        // Have user delete the other person
+        friend_list_user.deleteFriend(john);
+
+        // Assert that both users no longer have each other on their friend lists
+        assertFalse(user.getFriends().contains(john));
+        assertFalse(john.getFriends().contains(user));
     }
 
-    public void testViewPersonalProfile(){
-        User user = new User(username, password);
-        Profile profile = new Profile();
-        profile.setLocation("location");
-        profile.setPhoneNumber("1001001000");
-        user.addProfile(profile);
+    //public void testViewPersonalProfile(){
+        //User user = new User(username, password);
+        //Profile profile = new Profile();
+        //profile.setLocation("location");
+        //profile.setPhoneNumber("1001001000");
+        //user.addProfile(profile);
 
-        assertTrue(user.getProfile().equals(profile));
-    }
+        //assertTrue(user.getProfile().equals(profile));
+    //}
 
-    public void testViewOtherProfile(){
-        User user = new User(username, password);
-        Profile profile = new Profile();
-        profile.setLocation("location");
-        profile.setPhoneNumber("1001001000");
-        user.addProfile(profile);
+    //public void testViewOtherProfile(){
+        //User user = new User(username, password);
+        //Profile profile = new Profile();
+        //profile.setLocation("location");
+        //profile.setPhoneNumber("1001001000");
+        //user.addProfile(profile);
 
-        assertTrue(user.getProfile().equals(profile));
-    }
+        //assertTrue(user.getProfile().equals(profile));
+    //}
 
 }
