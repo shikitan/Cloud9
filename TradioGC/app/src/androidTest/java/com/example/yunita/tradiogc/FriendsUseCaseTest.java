@@ -24,8 +24,9 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         User john = new User("john");
         User anne = new User("anne");
 
-        SearchController search = new SearchController(context);
-        Users user_list = search.getUser("john");
+
+        SearchController search = new SearchController(this);
+        Users user_list = search.getAllUsers("john");
         Users user_list2 = search.getAllUsers("an");
         Users user_list3 = search.getAllUsers("123");
 

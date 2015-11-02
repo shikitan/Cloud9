@@ -28,6 +28,9 @@ public class LoginActivity extends Activity {
     private LinearLayout login_view;
     private LinearLayout signup_view;
     private EditText username_et;
+    private EditText location_et;
+    private EditText phone_et;
+    private EditText email_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class LoginActivity extends Activity {
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
 
         username_et = (EditText) findViewById(R.id.usernameEditText);
+        location_et = (EditText) findViewById(R.id.locationEditText);
+        phone_et = (EditText) findViewById(R.id.phoneEditText);
+        email_et = (EditText) findViewById(R.id.emailEditText);
 
         if(STATUS){
             goToMain();
@@ -95,9 +101,18 @@ public class LoginActivity extends Activity {
 
     public void signUp(View view) {
         String username = username_et.getText().toString();
+        String location = location_et.getText().toString();
+        String email = email_et.getText().toString();
+        String phone = phone_et.getText().toString();
+
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setLocation(location);
+        newUser.setEmail(email);
+        newUser.setPhone(phone);
 
         // Execute the thread
-        Thread thread = loginController.new SignUpThread(username);
+        Thread thread = loginController.new SignUpThread(newUser);
         thread.start();
 
         goToMain();
