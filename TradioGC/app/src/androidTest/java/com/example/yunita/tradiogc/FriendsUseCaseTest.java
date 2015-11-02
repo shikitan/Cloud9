@@ -9,6 +9,7 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
+    private Context context;
     private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
 
     public FriendsUseCaseTest() {
@@ -22,11 +23,9 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testSearchUserName() {
         User john = new User("john");
         User anne = new User("anne");
-        Context mContext;
 
-
-        SearchController search = new SearchController(mContext);
-        Users user_list = search.getAllUsers("john");
+        SearchController search = new SearchController(context);
+        Users user_list = search.getUser("john");
         Users user_list2 = search.getAllUsers("an");
         Users user_list3 = search.getAllUsers("123");
 
@@ -41,9 +40,11 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         User user = new User("username");
         User john = new User("john");
         Friends friend_list_user = user.getFriends();
+        Friends friend_list_john = john.getFriends();
 
         // Have user add the other person
         friend_list_user.addNewFriend(john);
+        friend_list_john.addNewFriend(user);
 
         System.out.println(friend_list_user);
         // Assert that both users have each other on their friend lists

@@ -13,25 +13,14 @@ public class Friends extends ArrayList<User>{
 
     }
 
+    // Add newFriend to User's friend list
     public void addNewFriend(User newFriend) {
-
-        // Add newFriend to User's friend list
         this.add(newFriend);
-
-        // Add User to newFriend's friend list
-        Friends otherUserFriends = newFriend.getFriends();
-        //otherUserFriends.add(LoginActivity.USERLOGIN);
-
     }
 
+    // Remove otherUser from the User's friend list
     public void deleteFriend(User otherUser){
-
-        // Remove otherUser from the User's friend list
         this.remove(otherUser);
-
-        // Remove User from otherUser's friend list
-        Friends otherUserFriends = otherUser.getFriends();
-        otherUserFriends.remove(LoginActivity.USERLOGIN);
     }
 
 }

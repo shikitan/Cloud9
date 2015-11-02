@@ -1,6 +1,7 @@
 package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,22 +21,29 @@ import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.login.LoginController;
 
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+
 public class FriendsActivity extends AppCompatActivity {
 
     private FriendsController friendsController;
     private EditText add_friend_et;
     private Context mContext = this;
+    private Context context;
 
     private ArrayAdapter<User> friendsViewAdapter;
     private ListView friendList;
 
     private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
 
+    public User friendName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
 
         friendsController = new FriendsController(mContext);
 
@@ -45,7 +53,7 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
 
@@ -60,8 +68,21 @@ public class FriendsActivity extends AppCompatActivity {
                 User removedUser = thisUserFriends.get(position);
                 thisUserFriends.deleteFriend(removedUser);
 
-                Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-                thread.start();
+                try {
+                    Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
+                    thread.start();
+                } catch (Exception error) {
+                    System.out.println(error);
+                }
+
+                Friends removedUserFriends = removedUser.getFriends();
+                removedUserFriends.deleteFriend(LoginActivity.USERLOGIN);
+                try {
+                    Thread threadRemoved = friendsController.new UpdateFriendsThread(removedUser);
+                    threadRemoved.start();
+                } catch (Exception error) {
+                    System.out.println(error);
+                }
 
                 friendsViewAdapter.notifyDataSetChanged();
                 Toast.makeText(mContext, "Deleting " + removedUser.getUsername(), Toast.LENGTH_SHORT).show();
@@ -80,25 +101,142 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     public void addFriend(View view) {
-        String friendName = add_friend_et.getText().toString();
+        String friendNameET = add_friend_et.getText().toString();
+        final CountDownLatch latch = new CountDownLatch(1);
 
+        //new GetUserNameThread().execute(friendNameET);
+
+
+        //saveFriendList(LoginActivity.USERLOGIN, friendName);
         // need to be fixed, search user -> request -> accepted -> add friend
-        User newFriend = new User();
-        newFriend.setUsername(friendName);
-        //SearchController searchController = new SearchController(this);
-        //User newFriend = searchController.getUser(friendName);
+
+        // Start a new thread for searching and adding users
 
 
-        thisUserFriends.addNewFriend(newFriend);
+        Thread getNameThread = new GetUserNameThread(friendNameET);
+        getNameThread.start();
 
-        //Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN, newFriend);
-        Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-        thread.start();
+        synchronized (getNameThread) {
+            try {
+                // Wait 500ms to search for the user name
+                getNameThread.wait(500);
 
+                // Add friend to the user's friend list
+                thisUserFriends.addNewFriend(friendName);
+
+                // Open the new friend's friend list and add user
+                Friends newFriendList = friendName.getFriends();
+                newFriendList.addNewFriend(LoginActivity.USERLOGIN);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+            //SearchController searchController = new SearchController(context);
+            //User newFriend = searchController.getUser(friendName);
+        //final CountDownLatch latch = new CountDownLatch(1);
+
+
+        /*
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        System.out.println(friendName);
+        */
+        /*
+        try {
+            //latch.await();
+            Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
+            //thread.join(500);
+            thread.start();
+            //thread.join(500);
+        } catch (Exception error) {
+            System.out.println(error);
+        }
+        */
+        /*
+        try {
+            Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
+            threadFriend.start();
+        } catch (Exception error) {
+            System.out.println(error);
+        }
+        */
         friendsViewAdapter.notifyDataSetChanged();
         Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public class GetUserNameThread extends Thread {
+        private String username;
+        //private User user;
+
+        public GetUserNameThread(String username) {
+            this.username = username;
+        }
+        @Override
+        public void run() {
+            synchronized (this) {
+                SearchController searchController = new SearchController(context);
+                friendName = searchController.getUser(username);
+
+            }
+        }
 
     }
+
+
+    /*
+    public void saveFriendList(User user){
+        try {
+            //latch.await();
+            System.out.println(user);
+            Thread thread = friendsController.new UpdateFriendsThread(user);
+
+            thread.start();
+            //thread.join(500);
+        } catch (Exception error) {
+            System.out.println(error);
+        }
+        //friendsViewAdapter.notifyDataSetChanged();
+        //Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
+        //toast.show();
+    }
+    */
+    /*
+    public class GetUserNameThread extends AsyncTask<String, Void, User> {
+
+
+        protected User doInBackground(String... params) {
+            try {
+                SearchController searchController = new SearchController(context);
+                friendName = searchController.getUser(params[0]);
+                thisUserFriends.addNewFriend(friendName);
+
+                // Open the new friend's friend list and add user
+                Friends newFriendList = friendName.getFriends();
+                newFriendList.addNewFriend(LoginActivity.USERLOGIN);
+
+                //Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
+                //thread.start();
+
+                //Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
+                //threadFriend.start();
+
+            } catch (Exception e) {
+            }
+            return friendName;
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
+            friendName = result;
+            //saveFriendList(LoginActivity.USERLOGIN);
+            //friendsViewAdapter.notifyDataSetChanged();
+        }
+    }
+    */
 
 }
