@@ -33,27 +33,27 @@ public class SearchController {
     private Users users = new Users();
     private Context context;
 
-    public Users getUsers() {
-        return users;
-    }
+
 
     public SearchController(Context context) {
         gson = new Gson();
         this.context = context;
     }
+/*
+    public User getUser(String username) {
+        User result = null;
+        Users allUsers = getAllUsers(null);
+        for (User user : allUsers) {
+            if (user.getUsername().equals(username)) {
+                result = user;
+                break;
+            }
+        }
+        return result;
+    }
 
-//    public User getUser(String username) {
-//        User result = null;
-//        Users allUsers = getAllUsers(null);
-//        for (User user : allUsers) {
-//            if (user.getUsername().equals(username)) {
-//                result = user;
-//            }
-//        }
-//        return result;
-//    }
 
-
+*/
 
     public User getUser(String username) {
         SearchHit<User> sr = null;
@@ -89,6 +89,7 @@ public class SearchController {
         return sr.getSource();
 
     }
+
 
 
     public Users getAllUsers(String field) {
@@ -178,7 +179,10 @@ public class SearchController {
         @Override
         public void run() {
             synchronized (this) {
+
                 LoginActivity.USERLOGIN = getUser(username);
+                System.out.println("Waiting for b to notify...");
+
                 notify();
             }
         }

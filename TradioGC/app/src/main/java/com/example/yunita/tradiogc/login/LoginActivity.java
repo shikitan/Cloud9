@@ -16,12 +16,10 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
 
-import java.util.concurrent.CountDownLatch;
-
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;
-    public static User USERLOGIN;
+    public static User USERLOGIN = new User();
 
     private Context mContext = this;
     private LoginController loginController;
@@ -73,31 +71,30 @@ public class LoginActivity extends Activity {
 
     public void login(View view){
 
-        String username = username_et.getText().toString();
+        final String username = username_et.getText().toString();
 
         // Execute the thread
-        final Thread thread = searchController.new GetUserLoginThread(username);
 
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (thread) {
-                    thread.start();
-                    try {
-                        thread.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (USERLOGIN == null) {
-                        Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
-                        toast.show();
-                    } else {
-                        goToMain();
-                    }
-                }
+
+        Thread thread = searchController.new GetUserLoginThread(username);
+        thread.start();
+
+        synchronized (thread) {
+            try {
+                thread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+
+            if (USERLOGIN == null) {
+                Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                goToMain();
+            }
+        }
+
     }
 
     public void signUp(View view) {
@@ -109,7 +106,4 @@ public class LoginActivity extends Activity {
 
         goToMain();
     }
-
-
-
 }
