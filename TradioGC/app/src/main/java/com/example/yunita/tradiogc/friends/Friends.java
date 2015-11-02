@@ -20,7 +20,7 @@ public class Friends extends ArrayList<User>{
 
         // Add User to newFriend's friend list
         Friends otherUserFriends = newFriend.getFriends();
-        otherUserFriends.add(LoginActivity.USERLOGIN);
+        //otherUserFriends.add(LoginActivity.USERLOGIN);
 
     }
 

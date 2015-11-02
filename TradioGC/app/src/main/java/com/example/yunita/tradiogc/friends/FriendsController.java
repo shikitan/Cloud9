@@ -53,14 +53,17 @@ public class FriendsController {
 
     class UpdateFriendsThread extends Thread {
         private User user;
+        private User friend;
 
         public UpdateFriendsThread(User user) {
             this.user = user;
+            //this.friend = friend;
         }
 
         @Override
         public void run() {
             updateFriend(user);
+            //updateFriend(friend);
             // Give some time to get updated info
             try {
                 Thread.sleep(500);

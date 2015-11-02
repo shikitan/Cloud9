@@ -1,6 +1,7 @@
 package com.example.yunita.tradiogc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.friends.Friends;
@@ -21,8 +22,10 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
     public void testSearchUserName() {
         User john = new User("john");
         User anne = new User("anne");
+        Context mContext;
 
-        SearchController search = new SearchController();
+
+        SearchController search = new SearchController(mContext);
         Users user_list = search.getAllUsers("john");
         Users user_list2 = search.getAllUsers("an");
         Users user_list3 = search.getAllUsers("123");

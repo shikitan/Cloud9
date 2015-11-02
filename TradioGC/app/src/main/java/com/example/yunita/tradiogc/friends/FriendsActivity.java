@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.login.LoginController;
@@ -84,9 +85,13 @@ public class FriendsActivity extends AppCompatActivity {
         // need to be fixed, search user -> request -> accepted -> add friend
         User newFriend = new User();
         newFriend.setUsername(friendName);
+        //SearchController searchController = new SearchController(this);
+        //User newFriend = searchController.getUser(friendName);
+
 
         thisUserFriends.addNewFriend(newFriend);
 
+        //Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN, newFriend);
         Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
         thread.start();
 
