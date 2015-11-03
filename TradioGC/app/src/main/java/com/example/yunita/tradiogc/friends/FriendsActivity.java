@@ -64,6 +64,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String removedUser = thisUserFriends.get(position);
+                thisUserFriends = LoginActivity.USERLOGIN.getFriends();
                 thisUserFriends.deleteFriend(removedUser);
 
                 try {
@@ -118,7 +119,8 @@ public class FriendsActivity extends AppCompatActivity {
         String friendNameET = add_friend_et.getText().toString();
 
         // Add friend to user's friend list
-        thisUserFriends.add(friendNameET);
+        thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+        thisUserFriends.addNewFriend(friendNameET);
 
         // Start a thread for getting the User of the friend
         Thread getNameThread = new GetUserNameThread(friendNameET);
@@ -137,8 +139,6 @@ public class FriendsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-        System.out.println(friendName);
 
         try {
             Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
