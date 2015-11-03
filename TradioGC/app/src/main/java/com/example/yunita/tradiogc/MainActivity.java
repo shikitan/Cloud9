@@ -39,6 +39,9 @@ public class MainActivity extends TabActivity {
 
         for (int i = 0; i < 4; i++) {
             intent = new Intent().setClass(this, activityArray[i]);
+            if (i == 3) {
+                intent.putExtra(ProfileActivity.USERNAME, LoginActivity.USERLOGIN.getUsername());
+            }
             spec = tabHost.newTabSpec(textArray[i]).setIndicator(getTabItemView(i)).setContent(intent);
             tabHost.addTab(spec);
             tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);

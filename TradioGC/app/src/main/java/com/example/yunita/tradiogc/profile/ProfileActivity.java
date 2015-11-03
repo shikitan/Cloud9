@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,13 +16,10 @@ import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class ProfileActivity extends AppCompatActivity {
-    public static String USERNAME = LoginActivity.USERLOGIN.getUsername();
+    public static String USERNAME;
     private SearchController searchController;
     private User user;
-    private TextView userName;
-    private TextView location;
-    private TextView email;
-    private TextView phone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +33,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
-            userName = (TextView) findViewById(R.id.profileName);
-            location = (TextView) findViewById(R.id.profileLocation);
-            email = (TextView) findViewById(R.id.profileEmail);
-            phone = (TextView) findViewById(R.id.profilePhone);
+            TextView userName = (TextView) findViewById(R.id.profileName);
+            TextView location = (TextView) findViewById(R.id.profileLocation);
+            TextView email = (TextView) findViewById(R.id.profileEmail);
+            TextView phone = (TextView) findViewById(R.id.profilePhone);
 
             userName.setText(user.getUsername());
             location.setText(user.getLocation());
@@ -80,7 +78,6 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void run() {
             user = searchController.getUser(username);
-
             runOnUiThread(doUpdateGUIDetails);
         }
     }
