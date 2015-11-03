@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.SearchUserActivity;
 import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.friends.Friends;
@@ -31,6 +32,8 @@ public class FriendMainActivity extends AppCompatActivity {
 
     private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
 
+    public User friendName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -45,13 +48,14 @@ public class FriendMainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        
+
+        // Show list of friends
         friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 
-        // Delete movie on long click
+        // Delete friends on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -59,8 +63,37 @@ public class FriendMainActivity extends AppCompatActivity {
                 String removedUser = thisUserFriends.get(position);
                 thisUserFriends.deleteFriend(removedUser);
 
-                Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-                thread.start();
+                try {
+                    Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
+                    thread.start();
+                } catch (Exception error) {
+                    System.out.println(error);
+                }
+
+                // Start a new thread for finding the User of the removed friend
+                Thread getNameThread = new GetUserNameThread(removedUser);
+                getNameThread.start();
+
+                synchronized (getNameThread) {
+                    try {
+                        // Wait 500ms to search for the username
+                        getNameThread.wait(500);
+
+                        // Add the user's username to the new friend's friend list
+                        Friends friendsFriends = friendName.getFriends();
+                        friendsFriends.deleteFriend(LoginActivity.USERLOGIN.getUsername());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                try {
+                    Thread threadRemoved = friendsController.new UpdateFriendsThread(friendName);
+                    threadRemoved.start();
+                } catch (Exception error) {
+                    System.out.println(error);
+                }
 
                 friendsViewAdapter.notifyDataSetChanged();
                 Toast.makeText(mContext, "Deleting " + removedUser, Toast.LENGTH_SHORT).show();
@@ -71,10 +104,27 @@ public class FriendMainActivity extends AppCompatActivity {
 
     }
 
+    // Send to search friend page after clicking "Add Friend" button
     public void addFriend(View view) {
 
         Intent intent = new Intent(this, SearchUserActivity.class);
         startActivity(intent);
 
+    }
+
+    // Class for searching for a username
+    public class GetUserNameThread extends Thread {
+        private String username;
+
+        public GetUserNameThread(String username) {
+            this.username = username;
+        }
+        @Override
+        public void run() {
+            synchronized (this) {
+                SearchController searchController = new SearchController(mContext);
+                friendName = searchController.getUser(username);
+            }
+        }
     }
 }

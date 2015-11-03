@@ -165,10 +165,7 @@ public class SearchController {
         @Override
         public void run() {
             synchronized (this) {
-
                 LoginActivity.USERLOGIN = getUser(username);
-                System.out.println("Waiting for b to notify...");
-
                 notify();
             }
         }

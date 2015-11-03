@@ -73,7 +73,6 @@ public class FriendsActivity extends AppCompatActivity {
                     System.out.println(error);
                 }
 
-                // Need to implement this properly after getting add to work
                 // Start a new thread for finding the User of the removed friend
                 Thread getNameThread = new GetUserNameThread(removedUser);
                 getNameThread.start();
@@ -91,11 +90,6 @@ public class FriendsActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                /*
-                Friends removedUserFriends = removedUser.getFriends();
-
-                removedUserFriends.deleteFriend(LoginActivity.USERLOGIN);
-                */
 
                 try {
                     Thread threadRemoved = friendsController.new UpdateFriendsThread(friendName);
@@ -180,7 +174,6 @@ public class FriendsActivity extends AppCompatActivity {
                 friendName = searchController.getUser(username);
             }
         }
-
     }
 
 
