@@ -2,20 +2,19 @@ package com.example.yunita.tradiogc;
 
 import android.content.Context;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.yunita.tradiogc.login.LoginController;
+import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class SearchUserActivity extends Activity {
     private Users users;
@@ -55,6 +54,23 @@ public class SearchUserActivity extends Activity {
 
             }
         });
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                String username = users.get(pos).getUsername();
+                startDetailsActivity(username);
+            }
+
+        });
+
+    }
+
+    public void startDetailsActivity(String username) {
+        Intent intent = new Intent(mContext, ProfileActivity.class);
+        intent.putExtra(ProfileActivity.USERNAME, username);
+
+        startActivity(intent);
     }
 
     public void search(View view) {
