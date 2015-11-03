@@ -25,12 +25,12 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 public class FriendMainActivity extends AppCompatActivity {
 
     private ListView friendList;
-
     private FriendsController friendsController;
+    private SearchController searchController;
     private Context mContext = this;
     private ArrayAdapter<String> friendsViewAdapter;
 
-    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+    private Friends thisUserFriends;
 
     public User friendName;
 
@@ -42,14 +42,29 @@ public class FriendMainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         friendsController = new FriendsController(mContext);
-        friendList = (ListView) findViewById(R.id.friend_list_view);
+        searchController = new SearchController(mContext);
 
+        friendList = (ListView) findViewById(R.id.friend_list_view);
 
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+
+        // Execute the thread
+        Thread thread = searchController.new GetUserLoginThread( LoginActivity.USERLOGIN.getUsername());
+        thread.start();
+
+        synchronized (thread) {
+            try {
+                thread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        thisUserFriends = LoginActivity.USERLOGIN.getFriends();
 
         // Show list of friends
         friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);

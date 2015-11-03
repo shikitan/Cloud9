@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yunita.tradiogc.friends.FriendMainActivity;
 import com.example.yunita.tradiogc.friends.FriendsActivity;

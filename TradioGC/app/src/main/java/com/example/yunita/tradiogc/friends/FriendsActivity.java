@@ -29,7 +29,6 @@ public class FriendsActivity extends AppCompatActivity {
     private FriendsController friendsController;
     private EditText add_friend_et;
     private Context mContext = this;
-    private Context context;
 
     private ArrayAdapter<String> friendsViewAdapter;
     private ListView friendList;
@@ -58,7 +57,6 @@ public class FriendsActivity extends AppCompatActivity {
         friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 
-        // Delete movie on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -108,10 +106,9 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_friends, menu);
-        return true;
+    public void onResume(){
+        super.onResume();
+
     }
 
     public void addFriend(View view) {
@@ -170,62 +167,10 @@ public class FriendsActivity extends AppCompatActivity {
         @Override
         public void run() {
             synchronized (this) {
-                SearchController searchController = new SearchController(context);
+                SearchController searchController = new SearchController(mContext);
                 friendName = searchController.getUser(username);
             }
         }
     }
-
-
-    /*
-    public void saveFriendList(User user){
-        try {
-            //latch.await();
-            System.out.println(user);
-            Thread thread = friendsController.new UpdateFriendsThread(user);
-
-            thread.start();
-            //thread.join(500);
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-        //friendsViewAdapter.notifyDataSetChanged();
-        //Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
-        //toast.show();
-    }
-    */
-    /*
-    public class GetUserNameThread extends AsyncTask<String, Void, User> {
-
-
-        protected User doInBackground(String... params) {
-            try {
-                SearchController searchController = new SearchController(context);
-                friendName = searchController.getUser(params[0]);
-                thisUserFriends.addNewFriend(friendName);
-
-                // Open the new friend's friend list and add user
-                Friends newFriendList = friendName.getFriends();
-                newFriendList.addNewFriend(LoginActivity.USERLOGIN);
-
-                //Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-                //thread.start();
-
-                //Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
-                //threadFriend.start();
-
-            } catch (Exception e) {
-            }
-            return friendName;
-        }
-
-        @Override
-        protected void onPostExecute(User result) {
-            friendName = result;
-            //saveFriendList(LoginActivity.USERLOGIN);
-            //friendsViewAdapter.notifyDataSetChanged();
-        }
-    }
-    */
 
 }
