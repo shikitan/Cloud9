@@ -1,73 +1,87 @@
 package com.example.yunita.tradiogc.profile;
 
+import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.inventory.InventoryActivity;
+import com.example.yunita.tradiogc.SearchController;
+import com.example.yunita.tradiogc.User;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class ProfileActivity extends AppCompatActivity {
+    public static String USERNAME = LoginActivity.USERLOGIN.getUsername();
+    private SearchController searchController;
+    private User user;
+    private TextView userName;
+    private TextView location;
+    private TextView email;
+    private TextView phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
-        onClickListeners();
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
-        return true;
-    }
+    private Runnable doUpdateGUIDetails = new Runnable() {
+        public void run() {
+            userName = (TextView) findViewById(R.id.profileName);
+            location = (TextView) findViewById(R.id.profileLocation);
+            email = (TextView) findViewById(R.id.profileEmail);
+            phone = (TextView) findViewById(R.id.profilePhone);
+
+            userName.setText(user.getUsername());
+            location.setText(user.getLocation());
+            email.setText(user.getEmail());
+            phone.setText(user.getPhone());
+
+        }
+    };
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onStart() {
+        super.onStart();
+        searchController = new SearchController(this);
+        Intent intent = getIntent();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+
+            if (extras != null) {
+                String username = extras.getString(USERNAME);
+
+                Thread thread = new GetThread(username);
+                thread.start();
+            }
         }
 
-        return super.onOptionsItemSelected(item);
+
     }
 
+    class GetThread extends Thread {
+        private String username;
 
-    public void onClickListeners() {
-        Button inventory = (Button) findViewById(R.id.inventory_button);
-        inventory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, InventoryActivity.class));
-            }
-        });
+        public GetThread(String username) {
+            this.username = username;
+        }
 
-        Button trades = (Button) findViewById(R.id.trades_button);
-        trades.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //startActivity(new Intent(ProfileActivity.this, TradesActivity.class));
-            }
-        });
+        @Override
+        public void run() {
+            user = searchController.getUser(username);
 
-        Button editBio = (Button) findViewById(R.id.edit_bio_button);
-        editBio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // alert dialgoue instead of activity
-            }
-        });
-    }}
+            runOnUiThread(doUpdateGUIDetails);
+        }
+    }
+}
