@@ -5,16 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.yunita.tradiogc.friends.FriendMainActivity;
 import com.example.yunita.tradiogc.friends.FriendsActivity;
-import com.example.yunita.tradiogc.inventory.InventoryActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.profile.ProfileActivity;
+import com.example.yunita.tradiogc.login.ProfileLayoutTest;
 
 public class MainActivity extends TabActivity {
 
@@ -35,11 +33,12 @@ public class MainActivity extends TabActivity {
         Intent intent;
         //Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
         //        MarketActivity.class, ProfileActivity.class};
-        Class activityArray[] = {InventoryActivity.class, FriendsActivity.class,
-                FriendMainActivity.class, ProfileActivity.class};
 
-        for(int i = 0; i < 4; i++){
-            intent=new Intent().setClass(this, activityArray[i]);
+        Class activityArray[] = {SearchUserActivity.class, FriendsActivity.class,
+                FriendMainActivity.class, ProfileLayoutTest.class};
+
+        for (int i = 0; i < 4; i++) {
+            intent = new Intent().setClass(this, activityArray[i]);
             spec = tabHost.newTabSpec(textArray[i]).setIndicator(getTabItemView(i)).setContent(intent);
             tabHost.addTab(spec);
             tabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);
@@ -48,10 +47,10 @@ public class MainActivity extends TabActivity {
         tabHost.setCurrentTab(0);
     }
 
-    private View getTabItemView(int index){
+    private View getTabItemView(int index) {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.bottom_tab_button, null);
-        int imageViewArray[] = {R.drawable.bottom_message_button,R.drawable.bottom_friends_button,R.drawable.bottom_market_button,
+        int imageViewArray[] = {R.drawable.bottom_message_button, R.drawable.bottom_friends_button, R.drawable.bottom_market_button,
                 R.drawable.bottom_profile_button};
 
         ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
