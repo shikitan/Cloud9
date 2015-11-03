@@ -120,11 +120,36 @@ public class FriendsActivity extends AppCompatActivity {
         return true;
     }
 
+    //ON RESUME----------NEED TEST!!!!!!!!
+    @Override
+    public void onResume() {
+        super.onResume();
+        Thread updateUserLoginThread  = new UpdateUserLoginThread();
+        updateUserLoginThread.start();
+        thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+        friendsViewAdapter.notifyDataSetChanged();
+
+    }
+
     public void addFriend(View view) {
         String friendNameET = add_friend_et.getText().toString();
 
         // Add friend to user's friend list
-        thisUserFriends.add(friendNameET);
+        ////COMPLETE UPDATE USERLOGIN PART ------NEED TEST!!!!!!!!!!!!!!!
+        //TODO test for addFriend
+        Thread updateUserLoginThread = new UpdateUserLoginThread();
+        updateUserLoginThread.start();
+        synchronized (updateUserLoginThread) {
+            try {
+                // Wait 500ms to search for the username
+                updateUserLoginThread.wait(500);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Add the user's username to the new friend's friend list
+            thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+            thisUserFriends.add(friendNameET);
+        }
 
         // Start a thread for getting the User of the friend
         Thread getNameThread = new GetUserNameThread(friendNameET);
@@ -183,6 +208,17 @@ public class FriendsActivity extends AppCompatActivity {
 
     }
 
+    public class UpdateUserLoginThread extends Thread {
+        public UpdateUserLoginThread() {}
+        @Override
+        public void run() {
+            synchronized (this) {
+                SearchController searchController = new SearchController(context);
+                LoginActivity.USERLOGIN = searchController.getUser(LoginActivity.USERLOGIN.getUsername());
+                notify();
+            }
+        }
+    }
 
     /*
     public void saveFriendList(User user){
