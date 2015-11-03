@@ -49,6 +49,10 @@
             android:name=".friends.FriendMainActivity"
             android:label="@string/title_activity_friend" >
         </activity>
+        <activity
+            android:name=".login.ProfileLayoutTest"
+            android:label="@string/title_activity_profile_layout_test" >
+        </activity>
     </application>
 
 </manifest>

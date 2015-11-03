@@ -44,7 +44,6 @@ public class FriendsActivity extends AppCompatActivity {
         setContentView(R.layout.friends);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-
         friendsController = new FriendsController(mContext);
 
         add_friend_et = (EditText) findViewById(R.id.add_friend_et);
