@@ -115,14 +115,17 @@ public class FriendsController {
     }
 
 
-    class UpdateUserThread extends Thread {
+    public class UpdateUserThread extends Thread {
         private User user;
         public UpdateUserThread(User user) {
             this.user = user;
         }
         @Override
         public void run() {
-            updateUser(user);
+            synchronized (this) {
+                updateUser(user);
+                notify();
+            }
         }
     }
 

@@ -1,11 +1,11 @@
 package com.example.yunita.tradiogc.profile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,9 +13,9 @@ import android.widget.Toast;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
-import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.friends.FriendsController;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -31,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout myprofile_panel;
     private LinearLayout stranger_panel;
     private LinearLayout friend_panel;
+    private ImageButton edit_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,10 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         friendsController = new FriendsController(context);
-
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
-
+        edit_button = (ImageButton) findViewById(R.id.edit_button);
     }
 
     private Runnable doUpdateGUIDetails = new Runnable() {
@@ -77,18 +77,20 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // Checks to see if we are getting a username from the intent
-        if(!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())){
+        if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
 
             Friends friends = LoginActivity.USERLOGIN.getFriends();
 
             // If the username is in the user's friend list, show friend profile view
-            if (friends.contains(targetUsername)){
+            if (friends.contains(targetUsername)) {
                 myprofile_panel.setVisibility(View.GONE);
+                edit_button.setVisibility(View.GONE);
                 friend_panel.setVisibility(View.VISIBLE);
 
                 // If not, then show the stranger's profile view
             } else {
                 myprofile_panel.setVisibility(View.GONE);
+                edit_button.setVisibility(View.GONE);
                 stranger_panel.setVisibility(View.VISIBLE);
             }
         }
@@ -112,11 +114,19 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    public void editProfile(View view) {
+        Intent intent = new Intent(context, EditProfileActivity.class);
+        startActivity(intent);
+    }
+
+
     class AddThreat extends Thread {
         private String friendname;
+
         public AddThreat(String friendname) {
             this.friendname = friendname;
         }
+
         @Override
         public void run() {
             synchronized (this) {
