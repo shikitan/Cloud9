@@ -73,6 +73,21 @@ public class FriendsController {
         }
         Thread updateUserThread = new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+
+        Thread getFriendThread = new GetFriendThread(friendname);
+        getFriendThread.start();
+
+        synchronized (getFriendThread) {
+            try {
+                getFriendThread.wait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Add the user's username to the new friend's friend list
+            friend.getFriends().addNewFriend(LoginActivity.USERLOGIN.getUsername());
+        }
+        updateUserThread = new UpdateUserThread(friend);
+        updateUserThread.start();
     }
 
 

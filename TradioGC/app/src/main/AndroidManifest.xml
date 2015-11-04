@@ -44,13 +44,10 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-<<<<<<< HEAD
-=======
             android:name=".friends.FriendsActivity"
             android:label="@string/friends" >
         </activity>
         <activity
->>>>>>> yunita2
             android:name=".inventory.InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>

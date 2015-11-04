@@ -92,21 +92,6 @@ public class FriendsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    class AddThreat extends Thread {
-        private String friendname;
-        public AddThreat(String friendname) {
-            this.friendname = friendname;
-        }
-        @Override
-        public void run() {
-            friendsController.addFriend(friendname);
-            Thread updateFrindListThread  = new UpdateFrindListThread();
-            updateFrindListThread.start();
-            friends.addNewFriend(friendname);
-            notifyUpdated();
-        }
-    }
-
     class DeleteThread extends Thread {
         private String friendname;
         public DeleteThread(String friendname) {

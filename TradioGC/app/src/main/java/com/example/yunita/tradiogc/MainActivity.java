@@ -30,18 +30,8 @@ public class MainActivity extends TabActivity {
         TabHost tabHost = this.getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
-<<<<<<< HEAD
-        //Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
-        //        MarketActivity.class, ProfileActivity.class};
-
-        Class activityArray[] = {SearchUserActivity.class, FriendsActivity.class,
-                FriendsActivity.class, ProfileActivity.class};
-=======
-        
         Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
                 MarketActivity.class, ProfileActivity.class};
->>>>>>> yunita2
-
         for (int i = 0; i < 4; i++) {
             intent = new Intent().setClass(this, activityArray[i]);
             if (i == 3) {

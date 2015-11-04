@@ -22,7 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
     public static String USERNAME;
     private String targetUsername;
     private User user;
-    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+    private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     private SearchController searchController;
     private FriendsController friendsController;
@@ -79,10 +79,10 @@ public class ProfileActivity extends AppCompatActivity {
         // Checks to see if we are getting a username from the intent
         if(!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())){
 
-            Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+            Friends friends = LoginActivity.USERLOGIN.getFriends();
 
             // If the username is in the user's friend list, show friend profile view
-            if (thisUserFriends.contains(targetUsername)){
+            if (friends.contains(targetUsername)){
                 myprofile_panel.setVisibility(View.GONE);
                 friend_panel.setVisibility(View.VISIBLE);
 
@@ -95,51 +95,36 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-
-
     public void addFriend(View view) {
 
-        // Add friend to user's friend list
-        thisUserFriends.add(targetUsername);
-
-        // Start a thread for getting the User of the friend
-        Thread getNameThread = new GetThread(targetUsername);
-        getNameThread.start();
-
-        synchronized (getNameThread) {
+        Thread addThreat = new AddThreat(targetUsername);
+        addThreat.start();
+        synchronized (addThreat) {
             try {
-                // Wait 500ms to search for the username
-                getNameThread.wait(500);
-
-                // Add the user's username to the new friend's friend list
-                Friends friendsFriends = user.getFriends();
-                friendsFriends.addNewFriend(LoginActivity.USERLOGIN.getUsername());
-
+                addThreat.wait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-        try {
-            Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-            thread.start();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-
-
-        try {
-            Thread threadFriend = friendsController.new UpdateFriendsThread(user);
-            threadFriend.start();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-
         Toast toast = Toast.makeText(this, "Friend has been added", Toast.LENGTH_SHORT);
         toast.show();
 
         finish();
+    }
 
+    class AddThreat extends Thread {
+        private String friendname;
+        public AddThreat(String friendname) {
+            this.friendname = friendname;
+        }
+        @Override
+        public void run() {
+            synchronized (this) {
+                friendsController.addFriend(friendname);
+                friends.addNewFriend(friendname);
+                notify();
+            }
+        }
     }
 
     class GetThread extends Thread {
@@ -155,6 +140,4 @@ public class ProfileActivity extends AppCompatActivity {
             runOnUiThread(doUpdateGUIDetails);
         }
     }
-
-
 }
