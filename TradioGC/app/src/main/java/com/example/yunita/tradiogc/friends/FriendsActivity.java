@@ -63,6 +63,16 @@ public class FriendsActivity extends AppCompatActivity {
         friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String username = thisUserFriends.get(position);
+                viewFriendProfileActivity(username);
+            }
+
+        });
+
         // Delete friends on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
