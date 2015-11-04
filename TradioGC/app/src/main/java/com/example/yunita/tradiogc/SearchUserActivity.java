@@ -1,10 +1,10 @@
 package com.example.yunita.tradiogc;
 
 import android.content.Context;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,11 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
-public class SearchUserActivity extends Activity {
+public class SearchUserActivity extends AppCompatActivity{
     private Users users;
     private ListView userList;
     private ArrayAdapter<User> usersViewAdapter;
@@ -30,7 +29,7 @@ public class SearchUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_friends_search_results);
         userList = (ListView) findViewById(R.id.friendsSearchList);
-        editText1 = (EditText) findViewById(R.id.editText1);
+        editText1 = (EditText) findViewById(R.id.search_by_username_et);
     }
 
 
@@ -60,6 +59,7 @@ public class SearchUserActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 String username = users.get(pos).getUsername();
                 startDetailsActivity(username);
+                finish();
             }
 
         });
@@ -72,14 +72,6 @@ public class SearchUserActivity extends Activity {
 
         startActivity(intent);
     }
-
-    public void search(View view) {
-        users.clear();
-        TextView query = (TextView) findViewById(R.id.editText1);
-        SearchThread thread = new SearchThread(query.getText().toString());
-        thread.start();
-    }
-
 
     public void notifyUpdated() {
         // Thread to update adapter after an operation
