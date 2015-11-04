@@ -1,6 +1,7 @@
 package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,90 +23,112 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.login.LoginController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 public class FriendsActivity extends AppCompatActivity {
-
+    private SearchController searchController;
     private FriendsController friendsController;
     private EditText add_friend_et;
-    private Context mContext = this;
-    private Context context;
+    private Context context = this;
 
     private ArrayAdapter<String> friendsViewAdapter;
     private ListView friendList;
 
-    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+    //private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
-    public User friendName;
+    private Friends friends;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        friendsController = new FriendsController(mContext);
-
+        searchController = new SearchController(context);
+        friendsController = new FriendsController(context);
         add_friend_et = (EditText) findViewById(R.id.add_friend_et);
-
         friendList = (ListView) findViewById(R.id.friend_list_view);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);
+        friends = new Friends();
+        friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, friends);
         friendList.setAdapter(friendsViewAdapter);
 
         // Delete movie on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String removedUser = thisUserFriends.get(position);
-                thisUserFriends = LoginActivity.USERLOGIN.getFriends();
-                thisUserFriends.deleteFriend(removedUser);
-
-                try {
-                    Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-                    thread.start();
-                } catch (Exception error) {
-                    System.out.println(error);
-                }
-
-                // Start a new thread for finding the User of the removed friend
-                Thread getNameThread = new GetUserNameThread(removedUser);
-                getNameThread.start();
-
-                synchronized (getNameThread) {
-                    try {
-                        // Wait 500ms to search for the username
-                        getNameThread.wait(500);
-
-                        // Add the user's username to the new friend's friend list
-                        Friends friendsFriends = friendName.getFriends();
-                        friendsFriends.deleteFriend(LoginActivity.USERLOGIN.getUsername());
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                try {
-                    Thread threadRemoved = friendsController.new UpdateFriendsThread(friendName);
-                    threadRemoved.start();
-                } catch (Exception error) {
-                    System.out.println(error);
-                }
-
-                friendsViewAdapter.notifyDataSetChanged();
-                Toast.makeText(mContext, "Deleting " + removedUser, Toast.LENGTH_SHORT).show();
-
+                String friendname = friends.get(position);
+                Thread deleteThread = new DeleteThread(friendname);
+                deleteThread.start();
+                Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
+    }
 
+    public void addFriend(View view) {
+        String friendname = add_friend_et.getText().toString();
+        Thread addThread = new AddThreat(friendname);
+        addThread.start();
+        Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+
+    class AddThreat extends Thread {
+        private String friendname;
+        public AddThreat(String friendname) {
+            this.friendname = friendname;
+        }
+        @Override
+        public void run() {
+            friendsController.addFriend(friendname);
+            Thread updateFrindListThread  = new UpdateFrindListThread();
+            updateFrindListThread.start();
+            friends.addNewFriend(friendname);
+            notifyUpdated();
+        }
+    }
+
+    class DeleteThread extends Thread {
+        private String friendname;
+        public DeleteThread(String friendname) {
+            this.friendname = friendname;
+        }
+        @Override
+        public void run() {
+            friendsController.deleteFriend(friendname);
+            friends.remove(friendname);
+            notifyUpdated();
+        }
+    }
+
+
+
+
+
+    //ON RESUME----------NEED TEST!!!!!!!!
+    @Override
+    public void onResume() {
+        super.onResume();
+        Thread updateFrindListThread  = new UpdateFrindListThread();
+        updateFrindListThread.start();
+    }
+
+    public void notifyUpdated() {
+        // Thread to update adapter after an operation
+        Runnable doUpdateGUIList = new Runnable() {
+            public void run() {
+                friendsViewAdapter.notifyDataSetChanged();
+            }
+        };
+
+        runOnUiThread(doUpdateGUIList);
     }
 
     @Override
@@ -115,117 +138,25 @@ public class FriendsActivity extends AppCompatActivity {
         return true;
     }
 
-    public void addFriend(View view) {
-        String friendNameET = add_friend_et.getText().toString();
 
-        // Add friend to user's friend list
-        thisUserFriends = LoginActivity.USERLOGIN.getFriends();
-        thisUserFriends.addNewFriend(friendNameET);
-
-        // Start a thread for getting the User of the friend
-        Thread getNameThread = new GetUserNameThread(friendNameET);
-        getNameThread.start();
-
-        synchronized (getNameThread) {
-            try {
-                // Wait 500ms to search for the username
-                getNameThread.wait(500);
-
-                // Add the user's username to the new friend's friend list
-                Friends friendsFriends = friendName.getFriends();
-                friendsFriends.addNewFriend(LoginActivity.USERLOGIN.getUsername());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-            thread.start();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-
-
-        try {
-            Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
-            threadFriend.start();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-
-        friendsViewAdapter.notifyDataSetChanged();
-        Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
-        toast.show();
-
-    }
-
-    public class GetUserNameThread extends Thread {
-        private String username;
-
-        public GetUserNameThread(String username) {
-            this.username = username;
-        }
+    public class UpdateFrindListThread extends Thread {
+        public UpdateFrindListThread() {}
         @Override
         public void run() {
-            synchronized (this) {
-                SearchController searchController = new SearchController(context);
-                friendName = searchController.getUser(username);
+            Thread refreshUserLoginThread = friendsController.new RefreshUserLoginThread();
+            refreshUserLoginThread.start();
+            synchronized (refreshUserLoginThread) {
+                try {
+                    refreshUserLoginThread.wait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                friends.clear();
+                friends.addAll(LoginActivity.USERLOGIN.getFriends());
+                notifyUpdated();
             }
         }
     }
 
-
-    /*
-    public void saveFriendList(User user){
-        try {
-            //latch.await();
-            System.out.println(user);
-            Thread thread = friendsController.new UpdateFriendsThread(user);
-
-            thread.start();
-            //thread.join(500);
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-        //friendsViewAdapter.notifyDataSetChanged();
-        //Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
-        //toast.show();
-    }
-    */
-    /*
-    public class GetUserNameThread extends AsyncTask<String, Void, User> {
-
-
-        protected User doInBackground(String... params) {
-            try {
-                SearchController searchController = new SearchController(context);
-                friendName = searchController.getUser(params[0]);
-                thisUserFriends.addNewFriend(friendName);
-
-                // Open the new friend's friend list and add user
-                Friends newFriendList = friendName.getFriends();
-                newFriendList.addNewFriend(LoginActivity.USERLOGIN);
-
-                //Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-                //thread.start();
-
-                //Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
-                //threadFriend.start();
-
-            } catch (Exception e) {
-            }
-            return friendName;
-        }
-
-        @Override
-        protected void onPostExecute(User result) {
-            friendName = result;
-            //saveFriendList(LoginActivity.USERLOGIN);
-            //friendsViewAdapter.notifyDataSetChanged();
-        }
-    }
-    */
 
 }

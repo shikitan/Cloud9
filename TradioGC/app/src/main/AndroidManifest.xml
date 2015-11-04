@@ -49,10 +49,6 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".friends.FriendMainActivity"
-            android:label="@string/title_activity_friend" >
-        </activity>
-        <activity
             android:name=".inventory.InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.WebServer;
+import com.example.yunita.tradiogc.login.LoginActivity;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
@@ -20,6 +22,10 @@ public class FriendsController {
     private Gson gson = new Gson();
     private Context context;
     private WebServer webServer = new WebServer();
+    private SearchController searchController;
+    private Friends friends;
+    private User friend;
+
     // Thread that close the activity after finishing add
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -30,9 +36,11 @@ public class FriendsController {
     public FriendsController(Context context) {
         super();
         this.context = context;
+        searchController = new SearchController(context);
     }
 
-    public void updateFriend(User user) {
+
+    public void updateUser(User user) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
@@ -51,27 +59,104 @@ public class FriendsController {
         }
     }
 
-    class UpdateFriendsThread extends Thread {
-        private User user;
-        private User friend;
-
-        public UpdateFriendsThread(User user) {
-            this.user = user;
-            //this.friend = friend;
-        }
-
-        @Override
-        public void run() {
-            updateFriend(user);
-            //updateFriend(friend);
-            // Give some time to get updated info
+    public void addFriend(String friendname) {
+        Thread refreshUserLoginThread = new RefreshUserLoginThread();
+        refreshUserLoginThread.start();
+        synchronized (refreshUserLoginThread) {
             try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
+                refreshUserLoginThread.wait();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+            // Add the user's username to the new friend's friend list
+            LoginActivity.USERLOGIN.getFriends().addNewFriend(friendname);
+        }
+        Thread updateUserThread = new UpdateUserThread(LoginActivity.USERLOGIN);
+        updateUserThread.start();
 
-//            ((Activity) context).runOnUiThread(doFinishAdd);
+
+
+        // Start a thread for getting the User of the friend
+        Thread getFriendThread = new GetFriendThread(friendname);
+        getFriendThread.start();
+
+
+        synchronized (getFriendThread) {
+            try {
+                getFriendThread.wait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Add the user's username to the new friend's friend list
+            friend.getFriends().addNewFriend(LoginActivity.USERLOGIN.getUsername());
+        }
+        updateUserThread = new UpdateUserThread(friend);
+        updateUserThread.start();
+    }
+
+
+    public void deleteFriend(String friendname) {
+        LoginActivity.USERLOGIN.getFriends().deleteFriend(friendname);
+        Thread updateUserThread = new UpdateUserThread(LoginActivity.USERLOGIN);
+        updateUserThread.start();
+
+
+        // Start a new thread for finding the User of the removed friend
+        Thread getFriendThread = new GetFriendThread(friendname);
+        getFriendThread.start();
+
+        synchronized (getFriendThread) {
+            try {
+                getFriendThread.wait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Add the user's username to the new friend's friend list
+            friend.getFriends().deleteFriend(LoginActivity.USERLOGIN.getUsername());
+        }
+        updateUserThread = new UpdateUserThread(friend);
+        updateUserThread.start();
+    }
+
+
+    class UpdateUserThread extends Thread {
+        private User user;
+        public UpdateUserThread(User user) {
+            this.user = user;
+        }
+        @Override
+        public void run() {
+            updateUser(user);
         }
     }
+
+
+    public class GetFriendThread extends Thread {
+        private String username;
+        public GetFriendThread(String username) {
+            this.username = username;
+        }
+        @Override
+        public void run() {
+            synchronized (this) {
+                friend = searchController.getUser(username);
+                notify();
+            }
+        }
+    }
+
+    public class RefreshUserLoginThread extends Thread {
+        public RefreshUserLoginThread() {}
+        @Override
+        public void run() {
+            synchronized (this) {
+                String username = LoginActivity.USERLOGIN.getUsername();
+                LoginActivity.USERLOGIN = searchController.getUser(username);
+                notify();
+            }
+        }
+    }
+
+
+
 }
