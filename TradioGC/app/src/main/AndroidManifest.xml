@@ -29,11 +29,6 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".friends.FriendsActivity"
-            android:label="@string/friends"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity
             android:name=".MarketActivity"
             android:label="@string/market"
             android:parentActivityName=".MainActivity" >
@@ -45,10 +40,17 @@
         </activity>
         <activity
             android:name=".SearchUserActivity"
-            android:label="SearchUser"
+            android:label="@string/search_user"
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
+<<<<<<< HEAD
+=======
+            android:name=".friends.FriendsActivity"
+            android:label="@string/friends" >
+        </activity>
+        <activity
+>>>>>>> yunita2
             android:name=".inventory.InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
@@ -58,7 +60,7 @@
         </activity>
         <activity
             android:name=".profile.ProfileActivity"
-            android:label="Profile" >
+            android:label="@string/profile" >
         </activity>
 
     </application>

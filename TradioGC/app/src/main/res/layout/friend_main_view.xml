@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Add friend"
         android:id="@+id/add_friend_button"
-        android:onClick="addFriend" />
+        android:onClick="searchUser" />
 
     <ListView
         android:layout_width="fill_parent"
