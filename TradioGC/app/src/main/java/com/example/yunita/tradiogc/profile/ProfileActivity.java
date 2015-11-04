@@ -1,13 +1,10 @@
 package com.example.yunita.tradiogc.profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,15 +13,20 @@ import android.widget.Toast;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
-import com.example.yunita.tradiogc.friends.*;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.friends.Friends;
+import com.example.yunita.tradiogc.friends.FriendsController;
 
 public class ProfileActivity extends AppCompatActivity {
+
     public static String USERNAME;
     private String targetUsername;
-    private SearchController searchController;
     private User user;
-    private Friends thisUserFriends;
+    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+
+    private SearchController searchController;
+    private FriendsController friendsController;
+    private Context mContext = this;
 
     private LinearLayout myprofile_panel;
     private LinearLayout stranger_panel;
@@ -35,11 +37,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        friendsController = new FriendsController(mContext);
+
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
 
     }
-
 
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
@@ -59,7 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        searchController = new SearchController(this);
+        friendsController = new FriendsController(mContext);
+        searchController = new SearchController(mContext);
         Intent intent = getIntent();
 
         if (intent != null) {
@@ -79,18 +83,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-    }
-
     public void addFriend(View view) {
         // Add friend to user's friend list
         thisUserFriends.add(targetUsername);
 
         // Start a thread for getting the User of the friend
-        Thread getNameThread = new GetUserNameThread(targetUsername);
+        Thread getNameThread = new GetThread(targetUsername);
         getNameThread.start();
 
         synchronized (getNameThread) {
@@ -99,7 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
                 getNameThread.wait(500);
 
                 // Add the user's username to the new friend's friend list
-                Friends friendsFriends = friendName.getFriends();
+                Friends friendsFriends = user.getFriends();
                 friendsFriends.addNewFriend(LoginActivity.USERLOGIN.getUsername());
 
             } catch (Exception e) {
@@ -116,15 +114,16 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         try {
-            Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
+            Thread threadFriend = friendsController.new UpdateFriendsThread(user);
             threadFriend.start();
         } catch (Exception error) {
             System.out.println(error);
         }
 
-        friendsViewAdapter.notifyDataSetChanged();
         Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
         toast.show();
+
+        finish();
 
     }
 
@@ -142,20 +141,5 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    // Class for searching for a username
-    public class GetUserNameThread extends Thread {
-        private String username;
-
-        public GetUserNameThread(String username) {
-            this.username = username;
-        }
-        @Override
-        public void run() {
-            synchronized (this) {
-                SearchController searchController = new SearchController(mContext);
-                friendName = searchController.getUser(username);
-            }
-        }
-    }
 
 }

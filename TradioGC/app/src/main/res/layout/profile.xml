@@ -138,7 +138,8 @@
             android:text="Add friend"
             android:id="@+id/add_friend_btn"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginBottom="2dp"
+            android:onClick="addFriend"/>
 
     </LinearLayout>
 

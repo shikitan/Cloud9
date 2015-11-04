@@ -29,11 +29,6 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".friends.FriendsActivity"
-            android:label="@string/friends"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity
             android:name=".MarketActivity"
             android:label="@string/market"
             android:parentActivityName=".MainActivity" >
@@ -49,7 +44,7 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".friends.FriendMainActivity"
+            android:name=".friends.FriendsActivity"
             android:label="@string/title_activity_friend" >
         </activity>
         <activity

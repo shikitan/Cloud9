@@ -51,7 +51,7 @@ public class FriendsController {
         }
     }
 
-    class UpdateFriendsThread extends Thread {
+    public class UpdateFriendsThread extends Thread {
         private User user;
         private User friend;
 

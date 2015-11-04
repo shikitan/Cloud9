@@ -1,62 +1,68 @@
 package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchController;
+import com.example.yunita.tradiogc.SearchUserActivity;
 import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.login.LoginController;
-
-import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 
 public class FriendsActivity extends AppCompatActivity {
 
-    private FriendsController friendsController;
-    private EditText add_friend_et;
-    private Context mContext = this;
-
-    private ArrayAdapter<String> friendsViewAdapter;
-    private ListView friendList;
-
-    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
-
     public User friendName;
+    private ListView friendList;
+    private FriendsController friendsController;
+    private SearchController searchController;
+    private Context mContext = this;
+    private ArrayAdapter<String> friendsViewAdapter;
+    private Friends thisUserFriends;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.friends);
+        setContentView(R.layout.friend_main_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         friendsController = new FriendsController(mContext);
-
-        add_friend_et = (EditText) findViewById(R.id.add_friend_et);
+        searchController = new SearchController(mContext);
 
         friendList = (ListView) findViewById(R.id.friend_list_view);
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
+        // Execute the thread
+        Thread thread = searchController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+        thread.start();
+
+        synchronized (thread) {
+            try {
+                thread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+
+        // Show list of friends
         friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, thisUserFriends);
         friendList.setAdapter(friendsViewAdapter);
 
+        // Delete friends on long click
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -105,65 +111,22 @@ public class FriendsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-
-    }
-
+    // Send to search friend page after clicking "Add Friend" button
     public void addFriend(View view) {
-        String friendNameET = add_friend_et.getText().toString();
 
-        // Add friend to user's friend list
-        thisUserFriends.add(friendNameET);
-
-        // Start a thread for getting the User of the friend
-        Thread getNameThread = new GetUserNameThread(friendNameET);
-        getNameThread.start();
-
-        synchronized (getNameThread) {
-            try {
-                // Wait 500ms to search for the username
-                getNameThread.wait(500);
-
-                // Add the user's username to the new friend's friend list
-                Friends friendsFriends = friendName.getFriends();
-                friendsFriends.addNewFriend(LoginActivity.USERLOGIN.getUsername());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println(friendName);
-
-        try {
-            Thread thread = friendsController.new UpdateFriendsThread(LoginActivity.USERLOGIN);
-            thread.start();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-
-
-        try {
-            Thread threadFriend = friendsController.new UpdateFriendsThread(friendName);
-            threadFriend.start();
-        } catch (Exception error) {
-            System.out.println(error);
-        }
-
-        friendsViewAdapter.notifyDataSetChanged();
-        Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
-        toast.show();
+        Intent intent = new Intent(this, SearchUserActivity.class);
+        startActivity(intent);
 
     }
 
+    // Class for searching for a username
     public class GetUserNameThread extends Thread {
         private String username;
 
         public GetUserNameThread(String username) {
             this.username = username;
         }
+
         @Override
         public void run() {
             synchronized (this) {
@@ -172,5 +135,4 @@ public class FriendsActivity extends AppCompatActivity {
             }
         }
     }
-
 }
