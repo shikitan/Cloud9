@@ -15,6 +15,7 @@ import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.SearchUserActivity;
 import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class FriendsActivity extends AppCompatActivity {
 
@@ -135,4 +136,13 @@ public class FriendsActivity extends AppCompatActivity {
             }
         }
     }
+
+    // Class for going to a friend's profile
+    public void viewFriendProfileActivity(String username) {
+        Intent intent = new Intent(mContext, ProfileActivity.class);
+        intent.putExtra(ProfileActivity.USERNAME, username);
+
+        startActivity(intent);
+    }
+
 }
