@@ -30,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private LinearLayout myprofile_panel;
     private LinearLayout stranger_panel;
+    private LinearLayout friend_panel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
+        friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
 
     }
 
@@ -77,13 +79,26 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
 
+        // Checks to see if we are getting a username from the intent
         if(!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())){
-            myprofile_panel.setVisibility(View.GONE);
-            stranger_panel.setVisibility(View.VISIBLE);
+
+            Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
+
+            // If the username is in the user's friend list, show friend profile view
+            if (thisUserFriends.contains(targetUsername)){
+                myprofile_panel.setVisibility(View.GONE);
+                friend_panel.setVisibility(View.VISIBLE);
+
+                // If not, then show the stranger's profile view
+            } else {
+                myprofile_panel.setVisibility(View.GONE);
+                stranger_panel.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     public void addFriend(View view) {
+
         // Add friend to user's friend list
         thisUserFriends.add(targetUsername);
 
@@ -120,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
             System.out.println(error);
         }
 
-        Toast toast = Toast.makeText(this, "Friend is added", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "Friend has been added", Toast.LENGTH_SHORT);
         toast.show();
 
         finish();
