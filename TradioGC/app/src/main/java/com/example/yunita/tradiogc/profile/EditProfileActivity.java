@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.FriendsController;
@@ -18,6 +19,8 @@ public class EditProfileActivity extends AppCompatActivity{
     private EditText location_et;
     private EditText email_et;
     private EditText phone_et;
+    private TextView userName;
+
     private Context context = this;
 
 
@@ -25,6 +28,7 @@ public class EditProfileActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile);
+        userName = (TextView) findViewById(R.id.profileName);
         location_et = (EditText) findViewById(R.id.location_et);
         email_et = (EditText) findViewById(R.id.email_et);
         phone_et = (EditText) findViewById(R.id.phone_et);
@@ -33,6 +37,7 @@ public class EditProfileActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
+        userName.setText(LoginActivity.USERLOGIN.getUsername());
         location_et.setText(LoginActivity.USERLOGIN.getLocation());
         location_et.setSelection(LoginActivity.USERLOGIN.getLocation().length());
         email_et.setText(LoginActivity.USERLOGIN.getEmail());
