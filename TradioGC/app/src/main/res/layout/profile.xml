@@ -12,18 +12,30 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:id="@+id/profileName" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:id="@+id/edit_button"
+            android:src="@drawable/edit_profile_button"
+            android:background="#00000000"
+            android:onClick="editProfile"
+            android:visibility="visible"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
 
@@ -43,7 +55,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
 
@@ -63,7 +75,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:orientation="horizontal">
 
         <TextView
@@ -91,15 +103,6 @@
         android:paddingRight="50dp"
         android:id="@+id/myprofile_button_panel"
         android:visibility="visible">
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:id="@+id/editProfileButton"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
 
         <Button
             style="?android:attr/buttonStyleSmall"

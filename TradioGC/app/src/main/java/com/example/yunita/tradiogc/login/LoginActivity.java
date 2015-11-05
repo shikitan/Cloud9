@@ -106,43 +106,44 @@ public class LoginActivity extends Activity {
         String phone = phone_et.getText().toString();
 
         // Execute the thread
-        Thread thread = searchController.new GetUserLoginThread(username);
-        thread.start();
+        if (!username.equals("")) {
+            Thread thread = searchController.new GetUserLoginThread(username);
+            thread.start();
 
-        synchronized (thread) {
-            try {
-                thread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if (USERLOGIN != null) {
-                Toast toast = Toast.makeText(mContext, "This username already exists.", Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-
+            synchronized (thread) {
                 try {
-                    User newUser = new User();
-                    newUser.setUsername(username);
-                    newUser.setLocation(location);
-                    newUser.setEmail(email);
-                    newUser.setPhone(phone);
+                    thread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                    USERLOGIN = new User();
-                    USERLOGIN.setUsername(username);
-                    USERLOGIN.setLocation(location);
-                    USERLOGIN.setEmail(email);
-                    USERLOGIN.setPhone(phone);
-
-                    // Execute the thread
-                    Thread thread2 = loginController.new SignUpThread(newUser);
-                    thread2.start();
-                    Toast toast = Toast.makeText(mContext, "User account has been created", Toast.LENGTH_SHORT);
+                if (USERLOGIN != null) {
+                    Toast toast = Toast.makeText(mContext, "This username already exists.", Toast.LENGTH_SHORT);
                     toast.show();
+                } else {
+                    try {
+                        User newUser = new User();
+                        newUser.setUsername(username);
+                        newUser.setLocation(location);
+                        newUser.setEmail(email);
+                        newUser.setPhone(phone);
 
-                    goToMain();
-                } catch (Exception e){
-                    System.out.println(e);
+                        USERLOGIN = new User();
+                        USERLOGIN.setUsername(username);
+                        USERLOGIN.setLocation(location);
+                        USERLOGIN.setEmail(email);
+                        USERLOGIN.setPhone(phone);
+
+                        // Execute the thread
+                        Thread thread2 = loginController.new SignUpThread(newUser);
+                        thread2.start();
+                        Toast toast = Toast.makeText(mContext, "User account has been created", Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        goToMain();
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                 }
             }
         }

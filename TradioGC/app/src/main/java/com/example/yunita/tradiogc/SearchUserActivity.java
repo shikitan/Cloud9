@@ -41,8 +41,8 @@ public class SearchUserActivity extends AppCompatActivity{
         usersViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, users);
         userList.setAdapter(usersViewAdapter);
         searchController = new SearchController(mContext);
-        //SearchThread thread = new SearchThread("");
-        //thread.start();
+        SearchThread thread = new SearchThread("");
+        thread.start();
         editText1.addTextChangedListener(new DelayedTextWatcher(500) {
 
             @Override
@@ -58,7 +58,7 @@ public class SearchUserActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 String username = users.get(pos).getUsername();
-                startDetailsActivity(username);
+                startProfileActivity(username);
                 finish();
             }
 
@@ -66,10 +66,9 @@ public class SearchUserActivity extends AppCompatActivity{
 
     }
 
-    public void startDetailsActivity(String username) {
+    public void startProfileActivity(String username) {
         Intent intent = new Intent(mContext, ProfileActivity.class);
         intent.putExtra(ProfileActivity.USERNAME, username);
-
         startActivity(intent);
     }
 

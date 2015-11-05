@@ -8,7 +8,8 @@
         android:id="@+id/search_by_username_et"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter username" />
+        android:hint="Enter username"
+        android:maxLines="1"/>
 
 
     <ListView
