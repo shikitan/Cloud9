@@ -23,4 +23,11 @@ public class Friends extends ArrayList<String>{
         this.remove(otherUser);
     }
 
+    public boolean isFriend(String searchFriend){
+        if (this.contains(new String(searchFriend))){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,97 +1,100 @@
 package com.example.yunita.tradiogc;
 
-import android.app.Activity;
-import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.friends.Friends;
-import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
-
-    private Context context;
-    private Friends thisUserFriends = LoginActivity.USERLOGIN.getFriends();
 
     public FriendsUseCaseTest() {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
-    public void testStart() throws Exception {
-        Activity activity = getActivity();
-    }
-
-    public void testSearchUserName() {
-
-        User john = new User("john");
-        User anne = new User("anne");
-
-
-        SearchController search = new SearchController(context);
-
-        User test_john = search.getUser("john");
-        assertEquals(john, test_john);
-        User test_anne = search.getUser("anne");
-        assertEquals(anne, test_anne);
-
-    }
-
     public void testAddFriend() {
+        // we have 2 users: ann and john
+        User ann = new User();
+        ann.setUsername("ann");
+        User john = new User();
+        john.setUsername("john");
 
-        // Define two users and get their friend lists
-        User user = new User("username");
-        User john = new User("john");
-        String user_name = user.getUsername();
-        String john_name = john.getUsername();
-        Friends friend_list_user = user.getFriends();
-        Friends friend_list_john = john.getFriends();
-
-        // Have user add the other person
-        friend_list_user.addNewFriend(john_name);
-        friend_list_john.addNewFriend(user_name);
+        // ann adds john to her friendlist
+        Friends ann_friendlist = ann.getFriends();
+        ann_friendlist.addNewFriend(john.getUsername());
+        // then, automatically john adds anna to his friendlist
+        Friends john_friendlist = john.getFriends();
+        john_friendlist.addNewFriend(ann.getUsername());
 
         // Assert that both users have each other on their friend lists
-        assertTrue(user.getFriends().contains(john));
-        assertTrue(john.getFriends().contains(user));
+        assertTrue(ann_friendlist.contains(john.getUsername()));
+        assertTrue(john_friendlist.contains(ann.getUsername()));
+
     }
 
     public void testRemoveFriend() {
-        // Define two users and get one of their friend lists
-        User user = new User("username");
-        User john = new User("john");
-        String john_name = john.getUsername();
-        Friends friend_list_user = user.getFriends();
+        // we have 2 users: ann and john
+        User ann = new User();
+        ann.setUsername("ann");
+        User john = new User();
+        john.setUsername("john");
 
-        // Have user add the other person
-        friend_list_user.addNewFriend(john_name);
+        // ann adds john to her friendlist
+        Friends ann_friendlist = ann.getFriends();
+        ann_friendlist.addNewFriend(john.getUsername());
+        // then, automatically john adds anna to his friendlist
+        Friends john_friendlist = john.getFriends();
+        john_friendlist.addNewFriend(ann.getUsername());
 
-        // Assert that user has the other person in their friend list
-        assertTrue(user.getFriends().contains(john));
+        // ann removes john from her friendlist
+        ann_friendlist.deleteFriend(john.getUsername());
+        john_friendlist.deleteFriend(ann.getUsername());
 
-        // Have user delete the other person
-        friend_list_user.deleteFriend(john_name);
-
-        // Assert that both users no longer have each other on their friend lists
-        assertFalse(user.getFriends().contains(john));
+        // Assert that both users doen't have each other on their friend lists
+        assertFalse(ann_friendlist.contains(john.getUsername()));
+        assertFalse(john_friendlist.contains(ann.getUsername()));
     }
 
-    //public void testViewPersonalProfile(){
-        //User user = new User(username, password);
-        //Profile profile = new Profile();
-        //profile.setLocation("location");
-        //profile.setPhoneNumber("1001001000");
-        //user.addProfile(profile);
+    public void testViewFriendProfile() {
+        // we have 2 users: ann and john
+        User ann = new User();
+        ann.setUsername("ann");
+        User john = new User();
+        john.setUsername("john");
+        john.setLocation("edmonton");
+        john.setEmail("john@yahoo.com");
+        john.setPhone("7803332221");
 
-        //assertTrue(user.getProfile().equals(profile));
-    //}
+        // ann adds john to her friendlist
+        Friends ann_friendlist = ann.getFriends();
+        ann_friendlist.addNewFriend(john.getUsername());
+        // then, automatically john adds anna to his friendlist
+        Friends john_friendlist = john.getFriends();
+        john_friendlist.addNewFriend(ann.getUsername());
 
-    //public void testViewOtherProfile(){
-        //User user = new User(username, password);
-        //Profile profile = new Profile();
-        //profile.setLocation("location");
-        //profile.setPhoneNumber("1001001000");
-        //user.addProfile(profile);
+        // check whether john is ann's friend now
+        assertTrue(ann_friendlist.get(0).equals(john.getUsername()));
+        User friend_profile = john;
+        assertTrue(friend_profile.getUsername().equals("john"));
+        assertTrue(friend_profile.getLocation().equals("edmonton"));
+        assertTrue(friend_profile.getEmail().equals("john@yahoo.com"));
+        assertTrue(friend_profile.getPhone().equals("7803332221"));
 
-        //assertTrue(user.getProfile().equals(profile));
-    //}
+    }
+
+    public void testSearchFriend() {
+        // we have 2 users: ann and john
+        User ann = new User();
+        ann.setUsername("ann");
+        User john = new User();
+        john.setUsername("john");
+
+        // ann adds john to her friendlist
+        Friends ann_friendlist = ann.getFriends();
+        ann_friendlist.addNewFriend(john.getUsername());
+        // then, automatically john adds anna to his friendlist
+        Friends john_friendlist = john.getFriends();
+        john_friendlist.addNewFriend(ann.getUsername());
+
+        assertTrue(ann_friendlist.isFriend("john"));
+    }
 
 }

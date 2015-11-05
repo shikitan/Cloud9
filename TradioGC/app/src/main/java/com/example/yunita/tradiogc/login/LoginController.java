@@ -44,6 +44,9 @@ public class LoginController {
         }
     };
 
+    public LoginController() {
+    }
+
     public LoginController(Context context) {
         this.context = context;
     }
