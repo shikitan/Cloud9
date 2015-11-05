@@ -111,7 +111,8 @@
             android:text="Inventory"
             android:id="@+id/inventoryButton"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginBottom="2dp"
+            android:onClick="goToInventory"/>
 
         <Button
             style="?android:attr/buttonStyleSmall"

@@ -80,21 +80,23 @@ public class LoginActivity extends Activity {
         final String username = username_et.getText().toString();
 
         // Execute the thread
-        Thread thread = searchController.new GetUserLoginThread(username);
-        thread.start();
+        if(!username.equals("")){
+            Thread thread = searchController.new GetUserLoginThread(username);
+            thread.start();
 
-        synchronized (thread) {
-            try {
-                thread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            synchronized (thread) {
+                try {
+                    thread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-            if (USERLOGIN == null) {
-                Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                goToMain();
+                if (USERLOGIN == null) {
+                    Toast toast = Toast.makeText(mContext, "This username does not exist.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    goToMain();
+                }
             }
         }
     }

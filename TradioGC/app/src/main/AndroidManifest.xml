@@ -49,11 +49,11 @@
         </activity>
         <activity
             android:name=".inventory.InventoryActivity"
-            android:label="@string/title_activity_inventory" >
+            android:label="@string/inventory" >
         </activity>
         <activity
             android:name=".inventory.NewItemActivity"
-            android:label="@string/title_activity_new_item" >
+            android:label="@string/add_item" >
         </activity>
         <activity
             android:name=".profile.ProfileActivity"
