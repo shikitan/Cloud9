@@ -1,13 +1,8 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v4.os.ParcelableCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,15 +31,14 @@ public class NewItemActivity extends ActionBarActivity {
         //need to pass in an inventory
         inventory = new Inventory();
         onClickListeners();
-        }
-
+    }
 
 
     public void onClickListeners() {
         Button addItem = (Button) findViewById(R.id.add_item_button);
 
         final Spinner categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.categories_array,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
@@ -64,7 +58,6 @@ public class NewItemActivity extends ActionBarActivity {
                 if (privateChoice.isChecked()) {
                     visibility = false;
                 }
-
 
 
                 double price = Double.parseDouble(priceEdit.getText().toString());

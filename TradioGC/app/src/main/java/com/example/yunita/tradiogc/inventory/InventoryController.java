@@ -28,11 +28,6 @@ public class InventoryController {
     private Inventory newInventory;
     private Context context;
     private WebServer webServer = new WebServer();
-
-    public InventoryController(Context context){
-        super();
-        this.context = context;
-    }
     // Thread that close the activity after finishing add
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -40,8 +35,12 @@ public class InventoryController {
         }
     };
 
+    public InventoryController(Context context) {
+        super();
+        this.context = context;
+    }
 
-    public void createItem(Inventory inventory, String name,int category,double price,String description,Boolean visibility){
+    public void createItem(Inventory inventory, String name, int category, double price, String description, Boolean visibility) {
         Item item = new Item(name, category, price, description, visibility);
         inventory.addItem(item);
     }

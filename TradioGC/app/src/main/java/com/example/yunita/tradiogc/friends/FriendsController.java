@@ -1,6 +1,5 @@
 package com.example.yunita.tradiogc.friends;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -107,9 +106,11 @@ public class FriendsController {
 
     public class UpdateUserThread extends Thread {
         private User user;
+
         public UpdateUserThread(User user) {
             this.user = user;
         }
+
         @Override
         public void run() {
             synchronized (this) {
@@ -122,9 +123,11 @@ public class FriendsController {
 
     public class GetFriendThread extends Thread {
         private String username;
+
         public GetFriendThread(String username) {
             this.username = username;
         }
+
         @Override
         public void run() {
             synchronized (this) {
@@ -135,7 +138,9 @@ public class FriendsController {
     }
 
     public class RefreshUserLoginThread extends Thread {
-        public RefreshUserLoginThread() {}
+        public RefreshUserLoginThread() {
+        }
+
         @Override
         public void run() {
             synchronized (this) {
@@ -145,7 +150,6 @@ public class FriendsController {
             }
         }
     }
-
 
 
 }

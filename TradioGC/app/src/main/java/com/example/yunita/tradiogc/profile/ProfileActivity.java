@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchController;
 import com.example.yunita.tradiogc.User;
@@ -34,20 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout stranger_panel;
     private LinearLayout friend_panel;
     private ImageButton edit_button;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        friendsController = new FriendsController(context);
-        myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
-        stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
-        friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
-        edit_button = (ImageButton) findViewById(R.id.edit_button);
-    }
-
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             TextView userName = (TextView) findViewById(R.id.profileName);
@@ -61,6 +46,19 @@ public class ProfileActivity extends AppCompatActivity {
             phone.setText(user.getPhone());
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.profile);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        friendsController = new FriendsController(context);
+        myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
+        stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
+        friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel);
+        edit_button = (ImageButton) findViewById(R.id.edit_button);
+    }
 
     @Override
     protected void onStart() {
@@ -98,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void goToInventory(View view){
+    public void goToInventory(View view) {
         Intent intent = new Intent(this, InventoryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

@@ -2,9 +2,7 @@ package com.example.yunita.tradiogc;
 
 import com.example.yunita.tradiogc.friends.Friends;
 
-import java.util.ArrayList;
-
-public class User{
+public class User {
 
     private String username;
     private String location;
@@ -18,7 +16,7 @@ public class User{
         friends = new Friends();
     }
 
-    public User(String username){
+    public User(String username) {
         this.username = username;
     }
 
@@ -63,7 +61,7 @@ public class User{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return username;
     }
 

@@ -1,17 +1,22 @@
 package com.example.yunita.tradiogc.inventory;
 
-import android.support.v4.os.ParcelableCompat;
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
 
 /**
  * Created by dshin on 10/31/15.
  */
-public class Inventory{
+public class Inventory {
     public ArrayList<Item> inventory;
     public Item item;
     public Boolean IsOffline;
+
+    public Inventory(ArrayList<Item> inventory) {
+        this.inventory = inventory;
+    }
+
+    public Inventory() {
+        this.inventory = new ArrayList<>();
+    }
 
     public Boolean getIsOffline() {
         return IsOffline;
@@ -29,13 +34,6 @@ public class Inventory{
         this.item = item;
     }
 
-    public Inventory(ArrayList<Item> inventory) {
-        this.inventory = inventory;
-    }
-    public Inventory() {
-        this.inventory = new ArrayList<>();
-    }
-
     public ArrayList<Item> getInventory() {
         return inventory;
     }
@@ -43,13 +41,16 @@ public class Inventory{
     public void addItem(Item item) {
         inventory.add(item);
     }
+
     public int getSize() {
         return inventory.size();
     }
-    public void removeItem(int i){
+
+    public void removeItem(int i) {
         inventory.remove(i);
     }
-    public Boolean contains(Item item){
+
+    public Boolean contains(Item item) {
         return inventory.contains(item);
     }
 }

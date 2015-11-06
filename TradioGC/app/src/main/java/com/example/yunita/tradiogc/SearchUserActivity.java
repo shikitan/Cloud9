@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
-public class SearchUserActivity extends AppCompatActivity{
+public class SearchUserActivity extends AppCompatActivity {
     private Users users;
     private ListView userList;
     private ArrayAdapter<User> usersViewAdapter;
@@ -123,10 +123,12 @@ public class SearchUserActivity extends AppCompatActivity{
         }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
 
         public abstract void afterTextChangedDelayed(Editable s);
 

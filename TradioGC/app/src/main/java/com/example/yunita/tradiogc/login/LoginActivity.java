@@ -48,7 +48,7 @@ public class LoginActivity extends Activity {
         phone_et = (EditText) findViewById(R.id.phoneEditText);
         email_et = (EditText) findViewById(R.id.emailEditText);
 
-        if(STATUS){
+        if (STATUS) {
             goToMain();
             finish();
         }
@@ -67,7 +67,7 @@ public class LoginActivity extends Activity {
     }
 
 
-    public void goToMain(){
+    public void goToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -75,12 +75,12 @@ public class LoginActivity extends Activity {
     }
 
 
-    public void login(View view){
+    public void login(View view) {
 
         final String username = username_et.getText().toString();
 
         // Execute the thread
-        if(!username.equals("")){
+        if (!username.equals("")) {
             Thread thread = searchController.new GetUserLoginThread(username);
             thread.start();
 

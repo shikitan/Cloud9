@@ -1,6 +1,5 @@
 package com.example.yunita.tradiogc;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -16,8 +15,8 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -32,7 +31,6 @@ public class SearchController {
     private WebServer webServer = new WebServer();
     private Users users = new Users();
     private Context context;
-
 
 
     public SearchController(Context context) {
@@ -56,7 +54,8 @@ public class SearchController {
             throw new RuntimeException(e1);
         }
 
-        Type searchHitType = new TypeToken<SearchHit<User>>() {}.getType();
+        Type searchHitType = new TypeToken<SearchHit<User>>() {
+        }.getType();
 
         try {
             sr = gson.fromJson(
@@ -75,7 +74,6 @@ public class SearchController {
         return sr.getSource();
 
     }
-
 
 
     public Users getAllUsers(String field) {
@@ -155,13 +153,13 @@ public class SearchController {
     }
 
 
-
     public class GetUserLoginThread extends Thread {
         private String username;
 
         public GetUserLoginThread(String username) {
             this.username = username;
         }
+
         @Override
         public void run() {
             synchronized (this) {

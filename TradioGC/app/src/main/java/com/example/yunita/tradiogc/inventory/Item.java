@@ -1,20 +1,16 @@
 package com.example.yunita.tradiogc.inventory;
 
-import android.opengl.Visibility;
-import android.os.Parcelable;
-import android.support.v4.os.ParcelableCompat;
-
 /**
  * Created by dshin on 10/31/15.
  */
-public class Item{
+public class Item {
     String name;
     int category;
     double price;
     String desc;
     Boolean visibility;
 
-    public Item(String name,int category, double price, String desc, Boolean visibility) {
+    public Item(String name, int category, double price, String desc, Boolean visibility) {
         this.category = category;
         this.name = name;
         this.price = price;

@@ -4,39 +4,40 @@ import java.util.List;
 
 
 public class Hits<T> {
-	private int total;
-	private float max_score;
-	private List<SearchHit<T>> hits;
-	
-	public Hits() {}
+    private int total;
+    private float max_score;
+    private List<SearchHit<T>> hits;
 
-	public int getTotal() {
-		return total;
-	}
+    public Hits() {
+    }
 
-	public void setTotal(int total) {
-		this.total = total;
-	}
+    public int getTotal() {
+        return total;
+    }
 
-	public float getMax_score() {
-		return max_score;
-	}
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
-	public void setMax_score(float max_score) {
-		this.max_score = max_score;
-	}
+    public float getMax_score() {
+        return max_score;
+    }
 
-	public List<SearchHit<T>> getHits() {
-		return hits;
-	}
+    public void setMax_score(float max_score) {
+        this.max_score = max_score;
+    }
 
-	public void setHits(List<SearchHit<T>> hits) {
-		this.hits = hits;
-	}
+    public List<SearchHit<T>> getHits() {
+        return hits;
+    }
 
-	@Override
-	public String toString() {
-		return "Hits [total=" + total + ", max_score=" + max_score + ", hits="
-				+ hits + "]";
-	}
+    public void setHits(List<SearchHit<T>> hits) {
+        this.hits = hits;
+    }
+
+    @Override
+    public String toString() {
+        return "Hits [total=" + total + ", max_score=" + max_score + ", hits="
+                + hits + "]";
+    }
 }

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 public class Categories {
     private ArrayList<String> categories;
 
+    public Categories(ArrayList<String> categories) {
+        this.categories = categories;
+    }
+
     public ArrayList<String> getCategories() {
         categories.add("books");
         categories.add("electronics");
@@ -18,10 +22,6 @@ public class Categories {
         categories.add("hobby");
         categories.add("other");
         return categories;
-    }
-
-    public Categories(ArrayList<String> categories) {
-        this.categories = categories;
     }
 
 }

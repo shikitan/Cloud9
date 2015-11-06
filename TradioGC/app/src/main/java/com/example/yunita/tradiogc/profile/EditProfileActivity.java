@@ -1,6 +1,5 @@
 package com.example.yunita.tradiogc.profile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,7 @@ import com.example.yunita.tradiogc.login.LoginActivity;
 /**
  * Created by Amber on 15/11/4.
  */
-public class EditProfileActivity extends AppCompatActivity{
+public class EditProfileActivity extends AppCompatActivity {
     private EditText location_et;
     private EditText email_et;
     private EditText phone_et;

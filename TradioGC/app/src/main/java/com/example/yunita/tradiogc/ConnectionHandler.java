@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 public class ConnectionHandler {
 
-    public ConnectionHandler(){
+    public ConnectionHandler() {
 
     }
 

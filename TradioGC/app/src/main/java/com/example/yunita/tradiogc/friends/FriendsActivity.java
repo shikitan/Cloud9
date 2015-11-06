@@ -4,17 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.SearchUserActivity;
-import com.example.yunita.tradiogc.User;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
@@ -29,7 +26,7 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.friend_main_view);
+        setContentView(R.layout.friend_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         friendsController = new FriendsController(context);
         friendList = (ListView) findViewById(R.id.friend_list_view);
@@ -65,7 +62,7 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Thread updateFrindListThread  = new UpdateFrindListThread();
+        Thread updateFrindListThread = new UpdateFrindListThread();
         updateFrindListThread.start();
     }
 
@@ -94,9 +91,11 @@ public class FriendsActivity extends AppCompatActivity {
 
     class DeleteThread extends Thread {
         private String friendname;
+
         public DeleteThread(String friendname) {
             this.friendname = friendname;
         }
+
         @Override
         public void run() {
             friendsController.deleteFriend(friendname);
@@ -107,7 +106,9 @@ public class FriendsActivity extends AppCompatActivity {
 
 
     public class UpdateFrindListThread extends Thread {
-        public UpdateFrindListThread() {}
+        public UpdateFrindListThread() {
+        }
+
         @Override
         public void run() {
             Thread refreshUserLoginThread = friendsController.new RefreshUserLoginThread();
