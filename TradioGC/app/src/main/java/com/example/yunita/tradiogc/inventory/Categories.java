@@ -1,7 +1,5 @@
 package com.example.yunita.tradiogc.inventory;
 
-import android.widget.ArrayAdapter;
-
 import java.util.ArrayList;
 
 /**

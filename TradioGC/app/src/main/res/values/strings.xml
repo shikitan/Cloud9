@@ -17,6 +17,10 @@
 
     <!-- Friends Activity -->
     <string name="search_user">Search User</string>
+    <string name="friend_longclick_hint">Long click on your friend name to delete friend.</string>
+    <string name="add_new_friend">Add new friend</string>
+
+
 
     <!-- Inventory Activity -->
     <string name="inventory">Inventory</string>

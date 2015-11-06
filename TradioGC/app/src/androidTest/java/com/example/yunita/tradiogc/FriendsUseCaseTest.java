@@ -94,7 +94,7 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
         Friends john_friendlist = john.getFriends();
         john_friendlist.addNewFriend(ann.getUsername());
 
-        assertTrue(ann_friendlist.isFriend("john"));
+        assertTrue(ann_friendlist.contains("john"));
     }
 
 }

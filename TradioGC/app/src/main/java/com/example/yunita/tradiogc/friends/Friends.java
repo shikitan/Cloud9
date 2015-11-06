@@ -14,20 +14,12 @@ public class Friends extends ArrayList<String>{
     }
 
     // Add newFriend to User's friend list
-    public void addNewFriend(String newFriend) {
-        this.add(newFriend);
+    public void addNewFriend(String friendname) {
+        this.add(friendname);
     }
 
     // Remove otherUser from the User's friend list
-    public void deleteFriend(String otherUser){
-        this.remove(otherUser);
-    }
-
-    public boolean isFriend(String searchFriend){
-        if (this.contains(new String(searchFriend))){
-            return true;
-        } else {
-            return false;
-        }
+    public void deleteFriend(String friendname){
+        this.remove(friendname);
     }
 }

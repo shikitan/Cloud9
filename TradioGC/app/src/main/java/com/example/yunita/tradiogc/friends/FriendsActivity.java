@@ -46,7 +46,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String username = friends.get(position);
-                viewFriendProfileActivity(username);
+                viewFriendProfile(username);
             }
         });
         // Delete friends on long click
@@ -86,7 +86,7 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     // Class for going to a friend's profile
-    public void viewFriendProfileActivity(String username) {
+    public void viewFriendProfile(String username) {
         Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra(ProfileActivity.USERNAME, username);
         startActivity(intent);

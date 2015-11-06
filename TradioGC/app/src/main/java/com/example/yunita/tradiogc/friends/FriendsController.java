@@ -20,22 +20,12 @@ public class FriendsController {
 
     private static final String TAG = "FriendsController";
     private Gson gson = new Gson();
-    private Context context;
     private WebServer webServer = new WebServer();
     private SearchController searchController;
-    private Friends friends;
     private User friend;
-
-    // Thread that close the activity after finishing add
-    private Runnable doFinishAdd = new Runnable() {
-        public void run() {
-            ((Activity) context).finish();
-        }
-    };
 
     public FriendsController(Context context) {
         super();
-        this.context = context;
         searchController = new SearchController(context);
     }
 
