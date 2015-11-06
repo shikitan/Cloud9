@@ -95,15 +95,11 @@ public class LoginController {
 
         @Override
         public void run() {
-            addUser(newUser);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (this) {
+                addUser(newUser);
+                ((Activity) context).runOnUiThread(doFinishAdd);
+                notify();
             }
-            ((Activity) context).runOnUiThread(doFinishAdd);
         }
     }
-
-
 }

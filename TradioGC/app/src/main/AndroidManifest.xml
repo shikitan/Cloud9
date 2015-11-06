@@ -30,18 +30,15 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".MarketActivity"
-            android:label="@string/market"
-            android:parentActivityName=".MainActivity" >
+            android:label="@string/market">
         </activity>
         <activity
             android:name=".NotificationActivity"
-            android:label="@string/notification"
-            android:parentActivityName=".MainActivity" >
+            android:label="@string/notification">
         </activity>
         <activity
             android:name=".SearchUserActivity"
-            android:label="@string/search_user"
-            android:parentActivityName=".MainActivity" >
+            android:label="@string/search_user">
         </activity>
         <activity
             android:name=".friends.FriendsActivity"

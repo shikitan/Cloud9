@@ -139,6 +139,13 @@ public class LoginActivity extends Activity {
                         // Execute the thread
                         Thread thread2 = loginController.new SignUpThread(newUser);
                         thread2.start();
+                        synchronized (thread2) {
+                            try {
+                                thread2.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         Toast toast = Toast.makeText(mContext, "User account has been created", Toast.LENGTH_SHORT);
                         toast.show();
 
