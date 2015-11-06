@@ -7,6 +7,9 @@ A trading gift-card application
 - Min Sdk Version: 18
 - Target Sdk Version: 21
 
+## Demo
+Here is the [demo](https://github.com/CMPUT301F15T09/Cloud9/blob/yunita/docs/demo/tradiogc_demo_project4.mp4) for project 4
+
 ## Documentation
 You can find our documentation in[our wiki](https://github.com/CMPUT301F15T09/Cloud9/wiki)
 
