@@ -29,16 +29,17 @@ public class NewItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
-    }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
         privateChoice = (RadioButton) findViewById(R.id.private_radio_button);
         nameEdit = (EditText) findViewById(R.id.name_textEdit);
         priceEdit = (EditText) findViewById(R.id.price_edit_text);
         descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
@@ -56,8 +57,8 @@ public class NewItemActivity extends AppCompatActivity {
 
         Item newItem = new Item(name, category, price, description, visibility);
 
-        Thread thread = inventoryController.new UpdateInventoryThread(newItem);
-        thread.start();
+        inventoryController.addItem(newItem);
+        finish();
     }
 
 }

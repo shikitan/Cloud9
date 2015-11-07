@@ -20,6 +20,7 @@ public class FriendsController {
     private static final String TAG = "FriendsController";
     private WebServer webServer = new WebServer();
     private UserController userController;
+    private Friends friends =  LoginActivity.USERLOGIN.getFriends();
 
     public FriendsController(Context context) {
         super();
@@ -27,41 +28,15 @@ public class FriendsController {
     }
 
     public void addFriend(String friendname) {
-        Thread refreshFriendsThread = new RefreshFriendsThread();
-        refreshFriendsThread.start();
-        synchronized (refreshFriendsThread) {
-            try {
-                refreshFriendsThread.wait();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // Add a new friend to user's friend list
-            LoginActivity.USERLOGIN.getFriends().addNewFriend(friendname);
-        }
+        friends.addNewFriend(friendname);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }
 
     public void deleteFriend(String friendname) {
-        LoginActivity.USERLOGIN.getFriends().deleteFriend(friendname);
+        friends.deleteFriend(friendname);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }
-
-
-    public class RefreshFriendsThread extends Thread {
-        public RefreshFriendsThread() {
-        }
-
-        @Override
-        public void run() {
-            synchronized (this) {
-                String username = LoginActivity.USERLOGIN.getUsername();
-                LoginActivity.USERLOGIN = userController.getUser(username);
-                notify();
-            }
-        }
-    }
-
 
 }

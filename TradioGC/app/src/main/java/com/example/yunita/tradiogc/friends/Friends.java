@@ -17,4 +17,5 @@ public class Friends extends ArrayList<String> {
     public void deleteFriend(String friendname) {
         this.remove(friendname);
     }
+
 }

@@ -18,7 +18,7 @@ import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class FriendsActivity extends AppCompatActivity {
     private Context context = this;
-    private Friends friends;
+    private Friends friends = LoginActivity.USERLOGIN.getFriends();
     private ListView friendList;
     private FriendsController friendsController;
     private ArrayAdapter<String> friendsViewAdapter;
@@ -35,7 +35,6 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        friends = new Friends();
         friendsViewAdapter = new ArrayAdapter<String>(this, R.layout.friend_list_item, friends);
         friendList.setAdapter(friendsViewAdapter);
 
@@ -54,6 +53,7 @@ public class FriendsActivity extends AppCompatActivity {
                 Thread deleteThread = new DeleteThread(friendname);
                 deleteThread.start();
                 Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
+                friendsViewAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -62,18 +62,6 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Thread updateFrindListThread = new UpdateFriendListThread();
-        updateFrindListThread.start();
-    }
-
-    public void notifyUpdated() {
-        // Thread to update adapter after an operation
-        Runnable doUpdateGUIList = new Runnable() {
-            public void run() {
-                friendsViewAdapter.notifyDataSetChanged();
-            }
-        };
-        runOnUiThread(doUpdateGUIList);
     }
 
     // Send to search friend page after clicking "Add Friend" button
@@ -99,31 +87,9 @@ public class FriendsActivity extends AppCompatActivity {
         @Override
         public void run() {
             friendsController.deleteFriend(friendname);
-            friends.remove(friendname);
-            notifyUpdated();
+            friends.deleteFriend(friendname);
         }
     }
 
-
-    public class UpdateFriendListThread extends Thread {
-        public UpdateFriendListThread() {
-        }
-
-        @Override
-        public void run() {
-            Thread refreshUserLoginThread = friendsController.new RefreshFriendsThread();
-            refreshUserLoginThread.start();
-            synchronized (refreshUserLoginThread) {
-                try {
-                    refreshUserLoginThread.wait();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                friends.clear();
-                friends.addAll(LoginActivity.USERLOGIN.getFriends());
-                notifyUpdated();
-            }
-        }
-    }
 
 }

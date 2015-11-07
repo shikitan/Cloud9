@@ -100,23 +100,10 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InventoryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
     public void addFriend(View view) {
-
-        Thread addThreat = new AddThreat(targetUsername);
-        addThreat.start();
-        synchronized (addThreat) {
-            try {
-                addThreat.wait();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        Toast toast = Toast.makeText(this, "Friend has been added", Toast.LENGTH_SHORT);
-        toast.show();
-
+        friendsController.addFriend(targetUsername);
         finish();
     }
 
@@ -125,23 +112,6 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    class AddThreat extends Thread {
-        private String friendname;
-
-        public AddThreat(String friendname) {
-            this.friendname = friendname;
-        }
-
-        @Override
-        public void run() {
-            synchronized (this) {
-                friendsController.addFriend(friendname);
-                friends.addNewFriend(friendname);
-                notify();
-            }
-        }
-    }
 
     class GetThread extends Thread {
         private String username;
