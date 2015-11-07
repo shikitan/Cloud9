@@ -1,12 +1,15 @@
 ## UPDATE INFORMATION
 7/11/2015 <yunita3>
-####Updates:
+
+#### Updates:
 - friends requirements
 - inventory works! (adding, removing, listing item)
-####TODO for Project 4 to Project 5:
+
+#### TODO for Project 4 to Project 5:
 - view item after added to inventory
 - edit item in inventory
-####Information:
+
+#### Information:
 1. "adding friend" and "removing friend" now is one way.
 (A adds B, A friends with B, but B does not friend with A, see Dr. Hindle clarification)
 2. removed the same or unused methods (see git commit for reference)
