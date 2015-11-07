@@ -13,8 +13,9 @@ import android.widget.Toast;
 
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.SearchController;
-import com.example.yunita.tradiogc.User;
+import com.example.yunita.tradiogc.inventory.Inventory;
+import com.example.yunita.tradiogc.user.UserController;
+import com.example.yunita.tradiogc.user.User;
 
 public class LoginActivity extends Activity {
 
@@ -23,7 +24,7 @@ public class LoginActivity extends Activity {
 
     private Context mContext = this;
     private LoginController loginController;
-    private SearchController searchController;
+    private UserController userController;
 
     private LinearLayout login_view;
     private LinearLayout signup_view;
@@ -38,7 +39,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login_screen);
 
         loginController = new LoginController(mContext);
-        searchController = new SearchController(mContext);
+        userController = new UserController(mContext);
 
         login_view = (LinearLayout) findViewById(R.id.login_view);
         signup_view = (LinearLayout) findViewById(R.id.signUp_view);
@@ -81,7 +82,7 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (!username.equals("")) {
-            Thread thread = searchController.new GetUserLoginThread(username);
+            Thread thread = userController.new GetUserLoginThread(username);
             thread.start();
 
             synchronized (thread) {
@@ -109,7 +110,7 @@ public class LoginActivity extends Activity {
 
         // Execute the thread
         if (!username.equals("")) {
-            Thread thread = searchController.new GetUserLoginThread(username);
+            Thread thread = userController.new GetUserLoginThread(username);
             thread.start();
 
             synchronized (thread) {
@@ -129,12 +130,14 @@ public class LoginActivity extends Activity {
                         newUser.setLocation(location);
                         newUser.setEmail(email);
                         newUser.setPhone(phone);
+                        newUser.setInventory(new Inventory());
 
                         USERLOGIN = new User();
                         USERLOGIN.setUsername(username);
                         USERLOGIN.setLocation(location);
                         USERLOGIN.setEmail(email);
                         USERLOGIN.setPhone(phone);
+                        USERLOGIN.setInventory(new Inventory());
 
                         // Execute the thread
                         Thread thread2 = loginController.new SignUpThread(newUser);

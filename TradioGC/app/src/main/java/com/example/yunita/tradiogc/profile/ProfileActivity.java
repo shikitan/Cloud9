@@ -11,8 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.SearchController;
-import com.example.yunita.tradiogc.User;
+import com.example.yunita.tradiogc.user.UserController;
+import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.inventory.InventoryActivity;
@@ -25,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private User user;
     private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
-    private SearchController searchController;
+    private UserController userController;
     private FriendsController friendsController;
     private Context context = this;
 
@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         friendsController = new FriendsController(context);
-        searchController = new SearchController(context);
+        userController = new UserController(context);
         Intent intent = getIntent();
 
         if (intent != null) {
@@ -152,7 +152,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            user = searchController.getUser(username);
+            user = userController.getUser(username);
             runOnUiThread(doUpdateGUIDetails);
         }
     }

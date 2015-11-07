@@ -1,6 +1,7 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.user;
 
 import com.example.yunita.tradiogc.friends.Friends;
+import com.example.yunita.tradiogc.inventory.Inventory;
 
 public class User {
 
@@ -9,6 +10,7 @@ public class User {
     private String email;
     private String phone;
     private Friends friends;
+    private Inventory inventory;
 
 //    private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
 
@@ -58,6 +60,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     @Override

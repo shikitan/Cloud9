@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.SearchUserActivity;
+import com.example.yunita.tradiogc.search.SearchUserActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
@@ -62,7 +62,7 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Thread updateFrindListThread = new UpdateFrindListThread();
+        Thread updateFrindListThread = new UpdateFriendListThread();
         updateFrindListThread.start();
     }
 
@@ -105,13 +105,13 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-    public class UpdateFrindListThread extends Thread {
-        public UpdateFrindListThread() {
+    public class UpdateFriendListThread extends Thread {
+        public UpdateFriendListThread() {
         }
 
         @Override
         public void run() {
-            Thread refreshUserLoginThread = friendsController.new RefreshUserLoginThread();
+            Thread refreshUserLoginThread = friendsController.new RefreshFriendsThread();
             refreshUserLoginThread.start();
             synchronized (refreshUserLoginThread) {
                 try {

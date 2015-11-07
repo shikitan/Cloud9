@@ -10,10 +10,8 @@ import android.widget.TextView;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.user.UserController;
 
-/**
- * Created by Amber on 15/11/4.
- */
 public class EditProfileActivity extends AppCompatActivity {
     private EditText location_et;
     private EditText email_et;
@@ -54,8 +52,8 @@ public class EditProfileActivity extends AppCompatActivity {
         LoginActivity.USERLOGIN.setEmail(email);
         LoginActivity.USERLOGIN.setPhone(phone);
 
-        FriendsController friendsController = new FriendsController(context);
-        Thread updateUserThread = friendsController.new UpdateUserThread(LoginActivity.USERLOGIN);
+        UserController userController = new UserController(context);
+        Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
         synchronized (updateUserThread) {
             try {

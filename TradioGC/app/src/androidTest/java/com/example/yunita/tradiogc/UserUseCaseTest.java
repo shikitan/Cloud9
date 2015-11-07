@@ -2,6 +2,9 @@ package com.example.yunita.tradiogc;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.Users;
+
 public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public UserUseCaseTest() {

@@ -2,6 +2,8 @@ package com.example.yunita.tradiogc;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.example.yunita.tradiogc.user.User;
+
 public class BrowseUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public BrowseUseCaseTest() {

@@ -1,14 +1,15 @@
 package com.example.yunita.tradiogc.inventory;
 
-/**
- * Created by dshin on 10/31/15.
- */
 public class Item {
-    String name;
-    int category;
-    double price;
-    String desc;
-    Boolean visibility;
+    private String name;
+    private int category;
+    private double price;
+    private String desc;
+    private Boolean visibility;
+
+    public Item(){
+
+    }
 
     public Item(String name, int category, double price, String desc, Boolean visibility) {
         this.category = category;
@@ -56,5 +57,10 @@ public class Item {
 
     public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
+    }
+
+    @Override
+    public String toString(){
+        return this.name + ": " + this.price;
     }
 }

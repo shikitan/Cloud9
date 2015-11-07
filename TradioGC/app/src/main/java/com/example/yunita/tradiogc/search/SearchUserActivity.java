@@ -1,4 +1,4 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,13 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
+import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.UserController;
+import com.example.yunita.tradiogc.user.Users;
 
 public class SearchUserActivity extends AppCompatActivity {
     private Users users;
     private ListView userList;
     private ArrayAdapter<User> usersViewAdapter;
-    private SearchController searchController;
+    private UserController userController;
     private EditText editText1;
     private Context mContext = this;
 
@@ -40,7 +44,7 @@ public class SearchUserActivity extends AppCompatActivity {
         users = new Users();
         usersViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, users);
         userList.setAdapter(usersViewAdapter);
-        searchController = new SearchController(mContext);
+        userController = new UserController(mContext);
         SearchThread thread = new SearchThread("");
         thread.start();
         editText1.addTextChangedListener(new DelayedTextWatcher(500) {
@@ -93,7 +97,7 @@ public class SearchUserActivity extends AppCompatActivity {
         @Override
         public void run() {
             users.clear();
-            users.addAll(searchController.searchUsers(search));
+            users.addAll(userController.searchUsers(search));
             notifyUpdated();
         }
 

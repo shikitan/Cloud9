@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
+import com.example.yunita.tradiogc.user.User;
 
 import java.security.acl.Owner;
 

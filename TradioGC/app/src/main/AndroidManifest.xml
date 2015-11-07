@@ -36,7 +36,7 @@
             android:label="@string/notification">
         </activity>
         <activity
-            android:name=".SearchUserActivity"
+            android:name=".search.SearchUserActivity"
             android:label="@string/search_user">
         </activity>
         <activity

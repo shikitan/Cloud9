@@ -3,6 +3,7 @@ package com.example.yunita.tradiogc;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.example.yunita.tradiogc.friends.Friends;
+import com.example.yunita.tradiogc.user.User;
 
 public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.yunita.tradiogc.User;
+import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.WebServer;
 import com.google.gson.Gson;
 

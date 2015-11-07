@@ -1,34 +1,39 @@
 package com.example.yunita.tradiogc.inventory;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.login.LoginActivity;
 
 public class InventoryActivity extends AppCompatActivity {
-    Inventory inventory = new Inventory();
+    private Context context = this;
+    private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
+    private ListView inventoryList;
+    private ArrayAdapter<Item> inventoryViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.your_inventory);
-        onClickListeners();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        inventoryList = (ListView) findViewById(R.id.inventory_list_view);
     }
 
-
-    public void onClickListeners() {
-        Button plus = (Button) findViewById(R.id.plus_button);
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(InventoryActivity.this, NewItemActivity.class));
-            }
-        });
-
+    @Override
+    protected void onStart(){
+        super.onStart();
+        inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
+        inventoryList.setAdapter(inventoryViewAdapter);
     }
 
+    public void goToAddItem(View view){
+        startActivity(new Intent(InventoryActivity.this, NewItemActivity.class));
+    }
 
 }

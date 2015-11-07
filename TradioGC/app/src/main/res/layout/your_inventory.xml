@@ -9,13 +9,15 @@
         android:text="@string/plus"
         android:id="@+id/plus_button"
         android:layout_gravity="right"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:onClick="goToAddItem" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="406dp"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.11" />
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="16"
+        android:id="@+id/inventory_list_view">
+
+    </ListView>
 
 </LinearLayout>

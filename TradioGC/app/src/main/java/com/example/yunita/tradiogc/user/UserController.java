@@ -1,12 +1,15 @@
-package com.example.yunita.tradiogc;
+package com.example.yunita.tradiogc.user;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.data.SearchHit;
 import com.example.yunita.tradiogc.data.SearchResponse;
 import com.example.yunita.tradiogc.data.SimpleSearchCommand;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -25,19 +28,37 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
-public class SearchController {
-    private static final String TAG = "SearchController";
+public class UserController {
+    private static final String TAG = "UserController";
     private Gson gson;
     private WebServer webServer = new WebServer();
     private Users users = new Users();
     private Context context;
 
 
-    public SearchController(Context context) {
+    public UserController(Context context) {
         gson = new Gson();
         this.context = context;
     }
 
+    public void updateUser(User user) {
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+            HttpPost addRequest = new HttpPost(webServer.getResourceUrl() + user.getUsername());
+
+            StringEntity stringEntity = new StringEntity(gson.toJson(user));
+            addRequest.setEntity(stringEntity);
+            addRequest.setHeader("Accept", "application/json");
+
+            HttpResponse response = httpClient.execute(addRequest);
+            String status = response.getStatusLine().toString();
+            Log.i(TAG, status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public User getUser(String username) {
         SearchHit<User> sr = null;
@@ -152,6 +173,21 @@ public class SearchController {
         return result;
     }
 
+    public class UpdateUserThread extends Thread {
+        private User user;
+
+        public UpdateUserThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+            synchronized (this) {
+                updateUser(user);
+                notify();
+            }
+        }
+    }
 
     public class GetUserLoginThread extends Thread {
         private String username;
