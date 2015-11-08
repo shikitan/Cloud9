@@ -1,21 +1,30 @@
 package com.example.yunita.tradiogc.friends;
 
+import com.example.yunita.tradiogc.Observable;
+import com.example.yunita.tradiogc.Observer;
+
 import java.util.ArrayList;
 
-public class Friends extends ArrayList<String> {
+public class Friends extends ArrayList<String> implements Observable{
 
-    public Friends() {
+    private static final long serialVersionUID = 3199561696102797345L;
+    private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
 
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
     }
 
-    // Add newFriend to User's friend list
-    public void addNewFriend(String friendname) {
-        this.add(friendname);
+    @Override
+    public void deleteObserver(Observer o) {
+        observers.remove(o);
     }
 
-    // Remove otherUser from the User's friend list
-    public void deleteFriend(String friendname) {
-        this.remove(friendname);
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.notifyUpdated(this);
+        }
     }
 
 }

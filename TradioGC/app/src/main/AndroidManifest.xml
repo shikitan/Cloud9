@@ -29,15 +29,15 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".MarketActivity"
-            android:label="@string/market">
+            android:label="@string/market" >
         </activity>
         <activity
             android:name=".NotificationActivity"
-            android:label="@string/notification">
+            android:label="@string/notification" >
         </activity>
         <activity
             android:name=".search.SearchUserActivity"
-            android:label="@string/search_user">
+            android:label="@string/search_user" >
         </activity>
         <activity
             android:name=".friends.FriendsActivity"
@@ -48,7 +48,7 @@
             android:label="@string/inventory" >
         </activity>
         <activity
-            android:name=".inventory.NewItemActivity"
+            android:name=".inventory.AddItemActivity"
             android:label="@string/add_item" >
         </activity>
         <activity
@@ -59,6 +59,10 @@
             android:name=".profile.EditProfileActivity"
             android:label="@string/edit_profile" >
         </activity>
-
+        <activity
+            android:name=".inventory.ItemActivity"
+            android:label="@string/title_activity_item" >
+        </activity>
     </application>
+
 </manifest>

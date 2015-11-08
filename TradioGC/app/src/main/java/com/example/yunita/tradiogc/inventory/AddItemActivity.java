@@ -2,19 +2,16 @@ package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.login.LoginActivity;
 
-public class NewItemActivity extends AppCompatActivity {
+public class AddItemActivity extends AppCompatActivity {
     private InventoryController inventoryController;
     private Context mContext = this;
     private EditText nameEdit;
@@ -38,14 +35,14 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
     }
 
-    public void addNewItem(View view){
+    public void addNewItem(View view) {
         String name = nameEdit.getText().toString();
         int category = categoriesChoice.getSelectedItemPosition();
         Boolean visibility = true;

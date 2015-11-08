@@ -1,23 +1,28 @@
 package com.example.yunita.tradiogc.inventory;
 
+import com.example.yunita.tradiogc.Observer;
+
 import java.util.ArrayList;
 
-public class Inventory extends ArrayList<Item> {
+public class Inventory extends ArrayList<Item> implements com.example.yunita.tradiogc.Observable {
 
-    public Inventory(){
+    private static final long serialVersionUID = 3199561696102797345L;
+    private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
 
-    }
-
-    public void addNewItem(Item item){
-        this.add(item);
-    }
-
-    public void removeItem(Item item){
-        this.remove(item);
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
     }
 
     @Override
-    public String toString(){
-        return "";
+    public void deleteObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.notifyUpdated(this);
+        }
     }
 }

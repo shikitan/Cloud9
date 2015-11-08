@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
 

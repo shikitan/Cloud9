@@ -8,8 +8,6 @@ import com.example.yunita.tradiogc.data.SearchHit;
 import com.example.yunita.tradiogc.data.SearchResponse;
 import com.example.yunita.tradiogc.data.SimpleSearchCommand;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.user.User;
-import com.example.yunita.tradiogc.user.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -101,7 +99,7 @@ public class UserController {
         Users result = new Users();
 
 
-        HttpPost searchRequest = new HttpPost(users.getSearchUrl());
+        HttpPost searchRequest = new HttpPost(webServer.getSearchUrl());
 
         String[] fields = null;
         if (field != null) {

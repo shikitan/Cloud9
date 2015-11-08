@@ -1,19 +1,10 @@
 package com.example.yunita.tradiogc.inventory;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
-import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.WebServer;
+import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
-import com.google.gson.Gson;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 public class InventoryController {
     private static final String TAG = "InventoryController";
@@ -28,15 +19,29 @@ public class InventoryController {
     }
 
     public void addItem(Item item) {
-        inventory.addNewItem(item);
+        inventory.add(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }
 
     public void removeExistingItem(Item item) {
-        inventory.removeItem(item);
+        inventory.remove(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
+    }
+
+    class DeleteItemThread extends Thread {
+        private Item item;
+
+        public DeleteItemThread(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void run() {
+            removeExistingItem(item);
+            inventory.remove(item);
+        }
     }
 
 }

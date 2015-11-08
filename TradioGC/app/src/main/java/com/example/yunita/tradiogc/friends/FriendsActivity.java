@@ -11,12 +11,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.search.SearchUserActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
+import com.example.yunita.tradiogc.search.SearchUserActivity;
 
 
 public class FriendsActivity extends AppCompatActivity {
+
     private Context context = this;
     private Friends friends = LoginActivity.USERLOGIN.getFriends();
     private ListView friendList;
@@ -50,7 +51,7 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String friendname = friends.get(position);
-                Thread deleteThread = new DeleteThread(friendname);
+                Thread deleteThread = friendsController.new DeleteFriendThread(friendname);
                 deleteThread.start();
                 Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
                 friendsViewAdapter.notifyDataSetChanged();
@@ -76,20 +77,5 @@ public class FriendsActivity extends AppCompatActivity {
         intent.putExtra(ProfileActivity.USERNAME, username);
         startActivity(intent);
     }
-
-    class DeleteThread extends Thread {
-        private String friendname;
-
-        public DeleteThread(String friendname) {
-            this.friendname = friendname;
-        }
-
-        @Override
-        public void run() {
-            friendsController.deleteFriend(friendname);
-            friends.deleteFriend(friendname);
-        }
-    }
-
 
 }

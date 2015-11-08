@@ -7,7 +7,7 @@ public class Item {
     private String desc;
     private Boolean visibility;
 
-    public Item(){
+    public Item() {
 
     }
 
@@ -60,7 +60,7 @@ public class Item {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.name + ": " + this.price;
     }
 }

@@ -109,7 +109,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Inventory"
-            android:id="@+id/inventoryButton"
+            android:id="@+id/my_inventory_button"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:onClick="goToInventory"/>
@@ -162,9 +162,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Inventory"
-            android:id="@+id/view_inventory_btn"
+            android:id="@+id/friend_inventory_btn"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginBottom="2dp"
+            android:onClick="goToInventory"/>
 
     </LinearLayout>
 

@@ -14,13 +14,13 @@ import android.widget.Toast;
 import com.example.yunita.tradiogc.MainActivity;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.inventory.Inventory;
-import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.UserController;
 
 public class LoginActivity extends Activity {
 
     public static boolean STATUS = false;
-    public static User USERLOGIN = new User();
+    public static User USERLOGIN = new User(); // it is not final, so that the value can be altered
 
     private Context mContext = this;
     private LoginController loginController;

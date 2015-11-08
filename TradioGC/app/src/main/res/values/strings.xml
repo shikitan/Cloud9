@@ -107,6 +107,7 @@
         <item>Food</item>
         <item>Other</item>
     </string-array>
+    <string name="title_activity_item">Item Detail</string>
 
 
 
