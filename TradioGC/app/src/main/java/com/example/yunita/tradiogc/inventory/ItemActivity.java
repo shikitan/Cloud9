@@ -15,7 +15,24 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
-
+/*
+Comments for 09/11/2015 update:
+-The layout for viewing an item is mostly done as well as some coding on this activity.
+-Modifications were made in InventoryActivity to start this activity
+-Unfortunately, I'm a bit stuck on finding an effective way to send the item information from the
+ InventoryActivity to this activity so it doesn't work yet. We could possibly wait until we finish
+ the code for searching for an item to get the item information for this page...? Or I'm just
+ missing a really obvious option for getting it to work ||OTL
+-Since we haven't added photos to the item class yet, I haven't done much with the ImageView on this
+ part and on the layout
+-Since we haven't implemented trades, the Trade button does not do anything on this page. Or..
+ how do we plan to start/add items to a trade? From the inventory list page or the item detail page?
+-According to US01.01.01, item must have "a name, quantity, quality, category, if I want to share it
+ with others, and comments". So.. technically our item should have quantity and quality as well..?
+-The location for the edit item button is subject to change
+-A lot of stuff on this class is commented out for now since I'm not sure about some parts
+-A few more comments found on: ItemActivity (scattered), InventoryActivity(viewItemDetails)
+*/
 public class ItemActivity extends AppCompatActivity {
 
     private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
