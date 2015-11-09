@@ -1,7 +1,6 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.yunita.tradiogc.R;

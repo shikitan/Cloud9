@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name=".search.SearchUserActivity"
-            android:label="@string/search_user" >
+            android:label="@string/search_user">
         </activity>
         <activity
             android:name=".friends.FriendsActivity"
@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name=".inventory.AddItemActivity"
-            android:label="@string/add_item" >
+            android:label="@string/add_item">
         </activity>
         <activity
             android:name=".profile.ProfileActivity"
@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name=".inventory.ItemActivity"
-            android:label="@string/title_activity_item" >
+            android:label="@string/title_activity_item">
         </activity>
     </application>
 

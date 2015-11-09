@@ -2,7 +2,6 @@ package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
 
-import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
 

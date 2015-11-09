@@ -3,6 +3,7 @@ package com.example.yunita.tradiogc.inventory;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -44,18 +45,29 @@ public class AddItemActivity extends AppCompatActivity {
 
     public void addNewItem(View view) {
         String name = nameEdit.getText().toString();
-        int category = categoriesChoice.getSelectedItemPosition();
-        Boolean visibility = true;
-        if (privateChoice.isChecked()) {
-            visibility = false;
-        }
-        double price = Double.parseDouble(priceEdit.getText().toString());
+        String price_str = priceEdit.getText().toString();
         String description = descriptionEdit.getText().toString();
 
-        Item newItem = new Item(name, category, price, description, visibility);
-
-        inventoryController.addItem(newItem);
-        finish();
+        if(TextUtils.isEmpty(name)){
+            nameEdit.setError("Name cannot be empty.");
+            return;
+        } else if(TextUtils.isEmpty(priceEdit.getText().toString())){
+            priceEdit.setError("Price cannot be empty.");
+            return;
+        } else if(TextUtils.isEmpty(description)) {
+            descriptionEdit.setError("Description cannot be empty.");
+            return;
+        } else {
+            double price = Double.parseDouble(price_str);
+            int category = categoriesChoice.getSelectedItemPosition();
+            Boolean visibility = true;
+            if (privateChoice.isChecked()) {
+                visibility = false;
+            }
+            Item newItem = new Item(name, category, price, description, visibility);
+            inventoryController.addItem(newItem);
+            finish();
+        }
     }
 
 }

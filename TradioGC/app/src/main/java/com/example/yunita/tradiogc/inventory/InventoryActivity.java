@@ -9,12 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
 public class InventoryActivity extends AppCompatActivity {
@@ -28,8 +26,13 @@ public class InventoryActivity extends AppCompatActivity {
 
     private InventoryController inventoryController;
     private UserController userController;
-
-
+    private Runnable doUpdateGUIDetails = new Runnable() {
+        public void run() {
+            inventoryViewAdapter.clear();
+            inventoryViewAdapter.addAll(inventory);
+            inventoryViewAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class InventoryActivity extends AppCompatActivity {
         }
 
         // check whether this is my profile or not
-        if(!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())){
+        if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
             add_item_button.setVisibility(View.GONE);
 
         }
@@ -66,7 +69,6 @@ public class InventoryActivity extends AppCompatActivity {
         Thread thread = new GetThread(targetUsername);
         thread.start();
 
-        // Delete friends on long click
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -78,6 +80,13 @@ public class InventoryActivity extends AppCompatActivity {
                 return true;
             }
         });
+        Toast.makeText(context, "on start", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Toast.makeText(context, "on resume", Toast.LENGTH_SHORT).show();
     }
 
     public void goToAddItem(View view) {
@@ -97,12 +106,5 @@ public class InventoryActivity extends AppCompatActivity {
             runOnUiThread(doUpdateGUIDetails);
         }
     }
-
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-            inventoryViewAdapter.addAll(inventory);
-            inventoryViewAdapter.notifyDataSetChanged();
-        }
-    };
 
 }

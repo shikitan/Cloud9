@@ -64,7 +64,7 @@
                 android:id="@+id/public_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false" />
+                android:checked="true" />
 
             <TextView
                 android:id="@+id/private_title"
