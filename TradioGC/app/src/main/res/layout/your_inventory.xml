@@ -14,13 +14,16 @@
     </ListView>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="@string/plus"
+        android:textSize="35sp"
+        android:textColor="@color/white"
         android:id="@+id/add_item_button"
         android:layout_gravity="right"
-        android:textSize="50sp"
         android:visibility="visible"
+        android:background="@drawable/custom_add_button"
         android:onClick="goToAddItem" />
 
 </LinearLayout>
