@@ -52,58 +52,25 @@ public class InventoryActivity extends AppCompatActivity {
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
         itemList.setAdapter(inventoryViewAdapter);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                targetUsername = extras.getString("user_inventory");
+
+        // my inventory
+        itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Item deletedItem = inventory.get(position);
+                Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                deleteThread.start();
+                Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
+                inventoryViewAdapter.notifyDataSetChanged();
+                return true;
             }
-        }
+        });
 
-        // check whether this is my profile or not
-        // if it is friend's inventory, then cannot remove and add item into inventory.
-        if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
-            // friend's inventory
-            add_item_button.setVisibility(View.GONE);
-
-//            // BUG! need to be fixed, or other solution: separate the friend and my inventory
-//            Thread getUserThread = new GetThread(targetUsername);
-//            getUserThread.start();
-
-        } else {
-            // my inventory
-            itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    Item deletedItem = inventory.get(position);
-                    Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
-                    deleteThread.start();
-                    Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
-                    inventoryViewAdapter.notifyDataSetChanged();
-                    return true;
-                }
-            });
-        }
 
     }
 
     public void goToAddItem(View view) {
         startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
-    }
-
-    class GetThread extends Thread {
-        private String username;
-
-        public GetThread(String username) {
-            this.username = username;
-        }
-
-        @Override
-        public void run() {
-            inventory = userController.getUser(username).getInventory();
-            runOnUiThread(doUpdateGUIDetails);
-
-        }
     }
 
 }

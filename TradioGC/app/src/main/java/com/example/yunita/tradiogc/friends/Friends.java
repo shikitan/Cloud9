@@ -2,6 +2,7 @@ package com.example.yunita.tradiogc.friends;
 
 import com.example.yunita.tradiogc.Observable;
 import com.example.yunita.tradiogc.Observer;
+import com.example.yunita.tradiogc.inventory.InventoryActivity;
 
 import java.util.ArrayList;
 

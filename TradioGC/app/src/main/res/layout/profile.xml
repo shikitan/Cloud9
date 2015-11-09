@@ -164,8 +164,7 @@
             android:text="Inventory"
             android:id="@+id/friend_inventory_btn"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:onClick="goToInventory"/>
+            android:layout_marginBottom="2dp" />
 
     </LinearLayout>
 
