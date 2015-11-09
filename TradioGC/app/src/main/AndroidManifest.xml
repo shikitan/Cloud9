@@ -44,7 +44,7 @@
             android:label="@string/friends" >
         </activity>
         <activity
-            android:name=".inventory.InventoryActivity"
+            android:name=".inventory.MyInventoryActivity"
             android:label="@string/inventory" >
         </activity>
         <activity

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.friends.FriendsController;
-import com.example.yunita.tradiogc.inventory.InventoryActivity;
+import com.example.yunita.tradiogc.inventory.MyInventoryActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
@@ -96,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void goToInventory(View view) {
-        Intent intent = new Intent(this, InventoryActivity.class);
+        Intent intent = new Intent(this, MyInventoryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
