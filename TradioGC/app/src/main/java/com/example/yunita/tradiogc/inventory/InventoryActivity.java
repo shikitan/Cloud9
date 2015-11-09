@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.profile.ProfileActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -66,7 +67,16 @@ public class InventoryActivity extends AppCompatActivity {
         Thread thread = new GetThread(targetUsername);
         thread.start();
 
-        // Delete friends on long click
+        // See the item details on normal click
+        itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Item item = inventory.get(position);
+                viewItemDetails(item);
+            }
+        });
+
+        // Delete item on long click
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,6 +92,15 @@ public class InventoryActivity extends AppCompatActivity {
 
     public void goToAddItem(View view) {
         startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
+    }
+
+    // Needs to be changed depending on what we want to send to the ItemActivity
+    // We'll need to know whether we're viewing the description as a friend or as the owner
+    // We'll probably also need to know what item was selected
+    public void viewItemDetails(Item item) {
+        Intent intent = new Intent(context, ItemActivity.class);
+        intent.putExtra(ProfileActivity.USERNAME, targetUsername);
+        startActivity(intent);
     }
 
     class GetThread extends Thread {
