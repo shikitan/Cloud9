@@ -66,6 +66,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
             Item newItem = new Item(name, category, price, description, visibility);
             inventoryController.addItem(newItem);
+
             finish();
         }
     }

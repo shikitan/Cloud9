@@ -17,57 +17,25 @@ import com.example.yunita.tradiogc.user.UserController;
 
 public class InventoryActivity extends AppCompatActivity {
     private Context context = this;
-    private Inventory inventory = new Inventory();
-    private String targetUsername;
-
+    private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
     private ListView itemList;
     private ArrayAdapter<Item> inventoryViewAdapter;
-    private Button add_item_button;
-
     private InventoryController inventoryController;
-    private UserController userController;
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-            inventoryViewAdapter.clear();
-            inventoryViewAdapter.addAll(inventory);
-            inventoryViewAdapter.notifyDataSetChanged();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.your_inventory);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         inventoryController = new InventoryController(context);
         itemList = (ListView) findViewById(R.id.inventory_list_view);
-        add_item_button = (Button) findViewById(R.id.add_item_button);
-
-        userController = new UserController(context);
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart(){
         super.onStart();
-
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
         itemList.setAdapter(inventoryViewAdapter);
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                targetUsername = extras.getString("user_inventory");
-            }
-        }
-
-        // check whether this is my profile or not
-        if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
-            add_item_button.setVisibility(View.GONE);
-
-        }
-
-        Thread thread = new GetThread(targetUsername);
-        thread.start();
 
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -80,31 +48,10 @@ public class InventoryActivity extends AppCompatActivity {
                 return true;
             }
         });
-        Toast.makeText(context, "on start", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Toast.makeText(context, "on resume", Toast.LENGTH_SHORT).show();
-    }
-
-    public void goToAddItem(View view) {
+    public void goToAddItem(View view){
         startActivity(new Intent(InventoryActivity.this, AddItemActivity.class));
-    }
-
-    class GetThread extends Thread {
-        private String username;
-
-        public GetThread(String username) {
-            this.username = username;
-        }
-
-        @Override
-        public void run() {
-            inventory = userController.getUser(username).getInventory();
-            runOnUiThread(doUpdateGUIDetails);
-        }
     }
 
 }
