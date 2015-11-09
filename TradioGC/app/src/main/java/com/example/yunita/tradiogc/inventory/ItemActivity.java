@@ -35,10 +35,9 @@ Comments for 09/11/2015 update:
 */
 public class ItemActivity extends AppCompatActivity {
 
-    private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
     private Item item;
     private Context context = this;
-    private String[] category_array = getResources().getStringArray(R.array.categories_array);
+    private Categories categories;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
                                         // Not sure if that's how we want to start a trade with an item?
@@ -58,7 +57,7 @@ public class ItemActivity extends AppCompatActivity {
             // If no photo, we need to set the visibility of itemImage to "gone"
             //photo.setImage... waiting for photo to be implemented
             name.setText(item.getName());
-            category.setText(category_array[item.getCategory()]);
+            category.setText(categories.getCategories().get(item.getCategory()));
             price.setText("$"+Double.toString(item.getPrice()));
             description.setText(item.getDesc());
         }
@@ -77,53 +76,26 @@ public class ItemActivity extends AppCompatActivity {
 
     // Most of the onStart right now is for altering the layout depending if you're viewing as a
     // friend or as the owner of the item
-    /*
+
     @Override
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                targetUsername = extras.getString(USERNAME);
-                Thread thread = new GetThread(targetUsername);
-                thread.start();
-            }
-        }
-
-        // Checks to see if we are getting a username from the intent
-        if (!targetUsername.equals(LoginActivity.USERLOGIN.getUsername())) {
-
-            // If the user is a friend of the person owning the item
-            // Show trade button and remove edit profile button
-            friend_panel.setVisibility(View.VISIBLE);
-
-        }
+        item = (Item) intent.getSerializableExtra("item");
+        categories = new Categories();
+        runOnUiThread(doUpdateGUIDetails);
     }
-    */
 
-    /*  To be added when editing item is implemented
+
+    //  To be added when editing item is implemented
+    /*
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
         startActivity(intent);
     }
     */
 
-    /* Possibly added/edited when searching an item is implemented
-    class GetThread extends Thread {
-        private String itemName;
 
-        public GetThread(String itemName) {
-            this.itemName = itemName;
-        }
 
-        @Override
-        public void run() {
-            item = itemController.getItem(itemName);
-            runOnUiThread(doUpdateGUIDetails);
-        }
-    }
-    */
 
 }

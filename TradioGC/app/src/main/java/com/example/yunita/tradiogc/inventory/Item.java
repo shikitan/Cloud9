@@ -1,6 +1,9 @@
 package com.example.yunita.tradiogc.inventory;
 
-public class Item {
+import java.io.Serializable;
+
+
+public class Item implements Serializable{
     private String name;
     private int category;
     private double price;

@@ -6,13 +6,9 @@ import java.util.ArrayList;
  * Created by dshin on 11/1/15.
  */
 public class Categories {
-    private ArrayList<String> categories;
+    private ArrayList<String> categories = new ArrayList<>();
 
-    public Categories(ArrayList<String> categories) {
-        this.categories = categories;
-    }
-
-    public ArrayList<String> getCategories() {
+    public Categories() {
         categories.add("books");
         categories.add("electronics");
         categories.add("food");
@@ -21,6 +17,9 @@ public class Categories {
         categories.add("clothing");
         categories.add("hobby");
         categories.add("other");
+    }
+
+    public ArrayList<String> getCategories() {
         return categories;
     }
 

@@ -99,7 +99,7 @@ public class InventoryActivity extends AppCompatActivity {
     // We'll probably also need to know what item was selected
     public void viewItemDetails(Item item) {
         Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra(ProfileActivity.USERNAME, targetUsername);
+        intent.putExtra("item", item);
         startActivity(intent);
     }
 
