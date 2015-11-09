@@ -108,6 +108,7 @@
         <item>Other</item>
     </string-array>
     <string name="title_activity_item">Item Detail</string>
+    <string name="title_activity_friends_inventory">Friends Inventory</string>
 
 
 
