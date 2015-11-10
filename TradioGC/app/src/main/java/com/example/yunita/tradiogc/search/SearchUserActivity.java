@@ -32,6 +32,7 @@ public class SearchUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_friends_search_results);
+
         userList = (ListView) findViewById(R.id.friendsSearchList);
         editText1 = (EditText) findViewById(R.id.search_by_username_et);
     }

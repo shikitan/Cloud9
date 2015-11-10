@@ -21,6 +21,9 @@ public class MainActivity extends TabActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        overridePendingTransition(0,0);
+
         manageTab();
 
         LoginActivity.STATUS = true;

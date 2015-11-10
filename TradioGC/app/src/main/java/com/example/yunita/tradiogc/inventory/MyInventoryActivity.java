@@ -31,6 +31,8 @@ public class MyInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_inventory);
 
+        overridePendingTransition(0,0);
+
         inventoryController = new InventoryController(context);
         userController = new UserController(context);
 
@@ -52,7 +54,6 @@ public class MyInventoryActivity extends AppCompatActivity {
             }
         });
 
-        // !!!!!!!BUG HERE:DO NOT DELETE IT IN WEB SERVER
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,7 +78,6 @@ public class MyInventoryActivity extends AppCompatActivity {
         inventoryViewAdapter.notifyDataSetChanged();
     }
 
-
     public void goToAddItem(View view) {
         startActivity(new Intent(MyInventoryActivity.this, AddItemActivity.class));
     }
@@ -85,10 +85,11 @@ public class MyInventoryActivity extends AppCompatActivity {
     public void viewItemDetails(Item item, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
         intent.putExtra("item", item);
-        intent.putExtra("owner", "login");
+        intent.putExtra("owner", "owner");
         intent.putExtra("index",position);
 
         startActivity(intent);
+        finish();
     }
 
 

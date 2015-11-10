@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ public class FriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friend_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         friendsController = new FriendsController(context);
         friendList = (ListView) findViewById(R.id.friend_list_view);
     }

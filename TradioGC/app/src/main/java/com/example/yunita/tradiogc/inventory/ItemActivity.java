@@ -39,6 +39,7 @@ public class ItemActivity extends AppCompatActivity {
     private Item item;
     private Context context = this;
     private Categories categories;
+    private String owner;
     private int index;
     private UserController userController;
 
@@ -72,6 +73,8 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        overridePendingTransition(0,0);
+
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
@@ -90,9 +93,9 @@ public class ItemActivity extends AppCompatActivity {
 
 
         index = intent.getExtras().getInt("index");
-        String owner = intent.getExtras().getString("owner");
+        owner = intent.getExtras().getString("owner");
         // Checks to see if we are getting a username from the intent
-        if (owner==null) {
+        if (owner.equals("friend")) {
             edit_button.setVisibility(View.GONE);
         }
 
@@ -102,20 +105,34 @@ public class ItemActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
-        getUserLoginThread.start();
-        synchronized (getUserLoginThread) {
-            try {
-                getUserLoginThread.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (owner.equals("owner")) {
+            Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+            getUserLoginThread.start();
+            synchronized (getUserLoginThread) {
+                try {
+                    getUserLoginThread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Inventory inventory = LoginActivity.USERLOGIN.getInventory();
+                item = inventory.get(index);
+                runOnUiThread(doUpdateGUIDetails);
             }
-            Inventory inventory = LoginActivity.USERLOGIN.getInventory();
-            item = inventory.get(index);
-            runOnUiThread(doUpdateGUIDetails);
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        // fix remove inventory bug
+        if (owner.equals("owner")) {
+            Intent intent = new Intent(context, MyInventoryActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 
     //  To be added when editing item is implemented
@@ -125,9 +142,5 @@ public class ItemActivity extends AppCompatActivity {
         intent.putExtra("index",index);
         startActivity(intent);
     }
-
-
-
-
 
 }

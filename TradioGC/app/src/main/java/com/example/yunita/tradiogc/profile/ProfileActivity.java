@@ -53,6 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        overridePendingTransition(0,0);
+
         friendsController = new FriendsController(context);
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
@@ -94,6 +96,12 @@ public class ProfileActivity extends AppCompatActivity {
                 stranger_panel.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        overridePendingTransition(0,0);
     }
 
     public void goToInventory(View view) {
