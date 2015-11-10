@@ -56,7 +56,7 @@ public class MyInventoryActivity extends AppCompatActivity {
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Item deletedItem = LoginActivity.USERLOGIN.getInventory().get(position);
+                Item deletedItem = inventory.get(position);
                 Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
                 deleteThread.start();
                 inventory.remove(deletedItem);
