@@ -28,7 +28,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".MarketActivity"
+            android:name=".market.MarketActivity"
             android:label="@string/market" >
         </activity>
         <activity
@@ -70,6 +70,10 @@
         <activity
             android:name=".inventory.EditItemActivity"
             android:label="@string/edit_item">
+        </activity>
+        <activity
+            android:name=".market.ScreenSlidePagerActivity"
+            android:label="EXAMPLE">
         </activity>
     </application>
 

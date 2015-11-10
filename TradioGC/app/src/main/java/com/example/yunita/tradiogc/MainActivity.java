@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.yunita.tradiogc.friends.FriendsActivity;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.market.MarketActivity;
+import com.example.yunita.tradiogc.market.ScreenSlidePagerActivity;
 import com.example.yunita.tradiogc.profile.ProfileActivity;
 
 public class MainActivity extends TabActivity {
@@ -34,7 +36,7 @@ public class MainActivity extends TabActivity {
         TabHost.TabSpec spec;
         Intent intent;
         Class activityArray[] = {NotificationActivity.class, FriendsActivity.class,
-                MarketActivity.class, ProfileActivity.class};
+                ScreenSlidePagerActivity.class, ProfileActivity.class};
         for (int i = 0; i < 4; i++) {
             intent = new Intent().setClass(this, activityArray[i]);
             if (i == 3) {
