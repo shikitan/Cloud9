@@ -1,132 +1,131 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_background"
     android:orientation="vertical"
-    android:padding="32dp"
-    android:background="@color/primary_background">
+    android:padding="32dp">
 
     <ImageView
+        android:id="@+id/tradiogc_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="25dp"
-        android:id="@+id/tradiogc_logo"
-        android:background="@mipmap/ic_launcher"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="32dp"
+        android:background="@mipmap/ic_launcher" />
 
     <EditText
+        android:id="@+id/usernameEditText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:textColorHint="@color/hint_color"
-        android:backgroundTint="@color/login_textColor"
-        android:ems="10"
-        android:id="@+id/usernameEditText"
         android:layout_gravity="center_horizontal"
         android:layout_margin="6dp"
+        android:backgroundTint="@color/login_textColor"
+        android:ems="10"
         android:fontFamily="monospace"
-        android:inputType="text" />
+        android:hint="Username"
+        android:inputType="text"
+        android:textColorHint="@color/hint_color" />
 
     <LinearLayout
+        android:id="@+id/login_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:id="@+id/login_view">
+        android:orientation="vertical">
 
         <Button
+            android:id="@+id/loginButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:background="@drawable/custom_login_button"
-            android:id="@+id/loginButton"
-            android:layout_marginTop="25dp"
             android:layout_marginBottom="10dp"
-            android:textColorHighlight="@color/primary_background"
-            android:onClick="login" />
+            android:layout_marginTop="25dp"
+            android:background="@drawable/custom_login_button"
+            android:onClick="login"
+            android:text="@string/login"
+            android:textColorHighlight="@color/primary_background" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/login_textColor"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Create Account"
             android:layout_gravity="center_horizontal"
             android:layout_margin="6dp"
             android:clickable="true"
-            android:onClick="goToSignUp"/>
+            android:onClick="goToSignUp"
+            android:text="Create Account"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/login_textColor" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/signUp_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:id="@+id/signUp_view"
         android:visibility="gone">
 
         <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="City"
-            android:textColorHint="@color/hint_color"
-            android:backgroundTint="@color/login_textColor"
-            android:ems="10"
             android:id="@+id/locationEditText"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="6dp"
-            android:fontFamily="monospace"
-            android:inputType="text" />
-
-        <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:textColorHint="@color/hint_color"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
             android:backgroundTint="@color/login_textColor"
             android:ems="10"
+            android:fontFamily="monospace"
+            android:hint="City"
+            android:inputType="text"
+            android:textColorHint="@color/hint_color" />
+
+        <EditText
             android:id="@+id/phoneEditText"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="6dp"
-            android:fontFamily="monospace"
-            android:inputType="text" />
-
-        <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:textColorHint="@color/hint_color"
-            android:backgroundTint="@color/login_textColor"
-            android:ems="10"
-            android:id="@+id/emailEditText"
             android:layout_gravity="center_horizontal"
             android:layout_margin="6dp"
+            android:backgroundTint="@color/login_textColor"
+            android:ems="10"
             android:fontFamily="monospace"
-            android:inputType="text" />
+            android:hint="Phone"
+            android:inputType="text"
+            android:textColorHint="@color/hint_color" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="6dp"
+            android:backgroundTint="@color/login_textColor"
+            android:ems="10"
+            android:fontFamily="monospace"
+            android:hint="Email"
+            android:inputType="textWebEmailAddress"
+            android:textColorHint="@color/hint_color" />
 
         <Button
+            android:id="@+id/signUpButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up"
-            android:background="@drawable/custom_login_button"
-            android:id="@+id/signUpButton"
-            android:layout_marginTop="25dp"
             android:layout_marginBottom="10dp"
-            android:textColorHighlight="@color/primary_background"
-            android:onClick="signUp"/>
+            android:layout_marginTop="25dp"
+            android:background="@drawable/custom_login_button"
+            android:onClick="signUp"
+            android:text="@string/sign_up"
+            android:textColorHighlight="@color/primary_background" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/login_textColor"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Log in"
-            android:clickable="true"
             android:layout_gravity="center_horizontal"
             android:layout_margin="6dp"
-            android:onClick="goToLogin"/>
+            android:clickable="true"
+            android:onClick="goToLogin"
+            android:text="Log in"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/login_textColor" />
 
     </LinearLayout>
 

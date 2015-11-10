@@ -53,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
 
         friendsController = new FriendsController(context);
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
@@ -73,6 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 targetUsername = extras.getString(USERNAME);
+                setTitle(targetUsername + "'s Profile");
                 Thread thread = new GetThread(targetUsername);
                 thread.start();
             }
@@ -99,9 +100,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     public void goToInventory(View view) {

@@ -26,6 +26,8 @@ public class EditItemActivity extends AppCompatActivity {
     private RadioGroup radioVisibility;
     private RadioButton privateChoice;
     private Spinner categoriesChoice;
+    private EditText quantityEdit;
+    private Spinner qualityChoice;
     private Item item;
     private Button add;
     private Button save;
@@ -43,8 +45,10 @@ public class EditItemActivity extends AppCompatActivity {
 
         radioVisibility = (RadioGroup) findViewById(R.id.radioVisibility);
         privateChoice = (RadioButton) findViewById(R.id.private_radio_button);
-        nameEdit = (EditText) findViewById(R.id.name_textEdit);
+        nameEdit = (EditText) findViewById(R.id.item_name_textEdit);
         priceEdit = (EditText) findViewById(R.id.price_edit_text);
+        quantityEdit = (EditText) findViewById(R.id.quantity_edit_text);
+        qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
         descriptionEdit = (EditText) findViewById(R.id.description_text_edit);
         categoriesChoice = (Spinner) findViewById(R.id.categories_spinner);
         add = (Button) findViewById(R.id.add_item_button);
@@ -58,6 +62,10 @@ public class EditItemActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
 
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.quality_array, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        qualityChoice.setAdapter(adapter2);
+
         add.setVisibility(View.GONE);
         save.setVisibility(View.VISIBLE);
 
@@ -69,6 +77,8 @@ public class EditItemActivity extends AppCompatActivity {
         categoriesChoice.setSelection(item.getCategory());
         priceEdit.setText(Double.toString(item.getPrice()));
         descriptionEdit.setText(item.getDesc());
+        qualityChoice.setSelection(item.getQuality());
+        quantityEdit.setText(Integer.toString(item.getQuantity()));
     }
 
     public void saveItem(View view) {
@@ -76,11 +86,11 @@ public class EditItemActivity extends AppCompatActivity {
         String price_str = priceEdit.getText().toString();
         String description = descriptionEdit.getText().toString();
 
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             nameEdit.setError("Name cannot be empty.");
-        } else if(TextUtils.isEmpty(priceEdit.getText().toString())){
+        } else if (TextUtils.isEmpty(priceEdit.getText().toString())) {
             priceEdit.setError("Price cannot be empty.");
-        } else if(TextUtils.isEmpty(description)) {
+        } else if (TextUtils.isEmpty(description)) {
             descriptionEdit.setError("Description cannot be empty.");
         } else {
             double price = Double.parseDouble(price_str);
@@ -89,13 +99,16 @@ public class EditItemActivity extends AppCompatActivity {
             if (privateChoice.isChecked()) {
                 visibility = false;
             }
+            int quantity = Integer.parseInt(quantityEdit.getText().toString());
+            int quality = qualityChoice.getSelectedItemPosition();
+
             item.setName(name);
             item.setDesc(description);
             item.setVisibility(visibility);
             item.setPrice(price);
             item.setCategory(category);
-
-
+            item.setQuantity(quantity);
+            item.setQuality(quality);
 
             inventoryController.updateItem(item);
             finish();

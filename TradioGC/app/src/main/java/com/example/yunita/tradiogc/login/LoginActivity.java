@@ -38,7 +38,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
 
         loginController = new LoginController(mContext);
         userController = new UserController(mContext);

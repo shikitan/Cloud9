@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
 /*
@@ -44,7 +41,7 @@ public class ItemActivity extends AppCompatActivity {
     private UserController userController;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
-                                        // Not sure if that's how we want to start a trade with an item?
+    // Not sure if that's how we want to start a trade with an item?
     private ImageButton edit_button;    // Shown when the item is part of the user's inventory
 
 
@@ -55,6 +52,8 @@ public class ItemActivity extends AppCompatActivity {
             TextView category = (TextView) findViewById(R.id.itemCategory);
             TextView price = (TextView) findViewById(R.id.itemPrice);
             TextView description = (TextView) findViewById(R.id.itemDescription);
+            TextView quantity = (TextView) findViewById(R.id.itemQuantity);
+            TextView quality = (TextView) findViewById(R.id.itemQuality);
 
             // Hasn't been tested yet
             // Need to check if the item has a photo
@@ -62,8 +61,15 @@ public class ItemActivity extends AppCompatActivity {
             //photo.setImage... waiting for photo to be implemented
             name.setText(item.getName());
             category.setText(categories.getCategories().get(item.getCategory()));
-            price.setText("$"+Double.toString(item.getPrice()));
+            price.setText("$" + Double.toString(item.getPrice()));
             description.setText(item.getDesc());
+            quantity.setText(Integer.toString(item.getQuantity()));
+            if(item.getQuality() == 0){
+                quality.setText("New");
+            } else {
+                quality.setText("Used");
+            }
+
         }
     };
 
@@ -73,7 +79,7 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
 
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
@@ -90,7 +96,6 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         item = (Item) intent.getSerializableExtra("item");
         categories = new Categories();
-
 
         index = intent.getExtras().getInt("index");
         owner = intent.getExtras().getString("owner");
@@ -136,7 +141,7 @@ public class ItemActivity extends AppCompatActivity {
 
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
-        intent.putExtra("index",index);
+        intent.putExtra("index", index);
         startActivity(intent);
     }
 

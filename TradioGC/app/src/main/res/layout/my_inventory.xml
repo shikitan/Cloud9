@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:orientation="vertical">
 
     <ListView
+        android:id="@+id/inventory_list_view"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="16"
-        android:id="@+id/inventory_list_view">
+        android:layout_weight="16">
 
     </ListView>
 
     <Button
-        android:layout_margin="8dp"
+        android:id="@+id/add_item_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:text="@string/plus"
-        android:textSize="35sp"
-        android:textColor="@color/white"
-        android:id="@+id/add_item_button"
         android:layout_gravity="right"
-        android:visibility="visible"
-        android:background="@drawable/custom_add_button"
-        android:onClick="goToAddItem" />
+        android:layout_margin="8dp"
+        android:background="@drawable/custom_round_button"
+        android:onClick="goToAddItem"
+        android:text="@string/plus"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:visibility="visible" />
 
 </LinearLayout>

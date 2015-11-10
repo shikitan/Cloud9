@@ -31,7 +31,7 @@ public class MyInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_inventory);
 
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
 
         inventoryController = new InventoryController(context);
         userController = new UserController(context);
@@ -55,17 +55,17 @@ public class MyInventoryActivity extends AppCompatActivity {
         });
 
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Item deletedItem = inventory.get(position);
-                Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
-                deleteThread.start();
-                inventory.remove(deletedItem);
-                Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
-                inventoryViewAdapter.notifyDataSetChanged();
-                return true;
-            }
-        }
+                                                @Override
+                                                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                                    Item deletedItem = inventory.get(position);
+                                                    Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                                                    deleteThread.start();
+                                                    inventory.remove(deletedItem);
+                                                    Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
+                                                    inventoryViewAdapter.notifyDataSetChanged();
+                                                    return true;
+                                                }
+                                            }
         );
     }
 
@@ -86,7 +86,7 @@ public class MyInventoryActivity extends AppCompatActivity {
         Intent intent = new Intent(context, ItemActivity.class);
         intent.putExtra("item", item);
         intent.putExtra("owner", "owner");
-        intent.putExtra("index",position);
+        intent.putExtra("index", position);
 
         startActivity(intent);
         finish();

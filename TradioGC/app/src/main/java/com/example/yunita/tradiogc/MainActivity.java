@@ -22,7 +22,7 @@ public class MainActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
 
         manageTab();
 

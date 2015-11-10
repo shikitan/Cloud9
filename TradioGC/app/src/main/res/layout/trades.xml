@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/searchTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Trades"
+        android:clickable="false"
         android:gravity="center"
-        android:textSize="32sp"
-        android:clickable="false" />
+        android:text="Trades"
+        android:textSize="32sp" />
 
     <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Offers"
         android:id="@+id/buttonOffers"
-        android:layout_weight="1"/>
-
-    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Pending"
+        android:layout_weight="1"
+        android:text="Offers" />
+
+    <Button
         android:id="@+id/buttonPending"
-        android:layout_weight="1"/>
-
-    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Accepted"
+        android:layout_weight="1"
+        android:text="Pending" />
+
+    <Button
         android:id="@+id/buttonAccepted"
-        android:layout_weight="1"/>
-
-    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Rejected"
+        android:layout_weight="1"
+        android:text="Accepted" />
+
+    <Button
         android:id="@+id/buttonRejected"
-        android:layout_weight="1"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Rejected" />
 
 </LinearLayout>

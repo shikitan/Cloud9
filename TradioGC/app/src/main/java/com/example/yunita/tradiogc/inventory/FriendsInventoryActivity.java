@@ -2,20 +2,14 @@ package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
 public class FriendsInventoryActivity extends AppCompatActivity {
@@ -27,7 +21,13 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
     private ListView itemList;
     private ArrayAdapter<Item> inventoryViewAdapter;
-
+    private Runnable doUpdateGUIDetails = new Runnable() {
+        public void run() {
+            inventoryViewAdapter.clear();
+            inventoryViewAdapter.addAll(inventory);
+            inventoryViewAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +69,19 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
+    }
+
+    public void viewItemDetails(Item item, int position) {
+        Intent intent = new Intent(context, ItemActivity.class);
+        intent.putExtra("item", item);
+        // mark this as "friends" page
+        intent.putExtra("owner", "friend");
+        intent.putExtra("index", position);
+
+        startActivity(intent);
     }
 
     class GetThread extends Thread {
@@ -82,30 +92,12 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         }
 
         @Override
-        public void run( ) {
+        public void run() {
             inventory = userController.getUser(username).getInventory();
             // only show public items
             inventory = inventory.getPublicItems(inventory);
             runOnUiThread(doUpdateGUIDetails);
         }
-    }
-
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-            inventoryViewAdapter.clear();
-            inventoryViewAdapter.addAll(inventory);
-            inventoryViewAdapter.notifyDataSetChanged();
-        }
-    };
-
-    public void viewItemDetails(Item item, int position) {
-        Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra("item", item);
-        // mark this as "friends" page
-        intent.putExtra("owner", "friend");
-        intent.putExtra("index",position);
-
-        startActivity(intent);
     }
 
 }

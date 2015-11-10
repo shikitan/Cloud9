@@ -1,171 +1,178 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/activity_vertical_margin">
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
 
         <TextView
+            android:id="@+id/profileName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/profileName" />
+            android:textStyle="bold" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="40dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             android:id="@+id/edit_button"
-            android:src="@drawable/edit_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:background="#00000000"
+            android:maxWidth="40dp"
             android:onClick="editProfile"
-            android:visibility="visible"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/edit_profile_button"
+            android:visibility="visible" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
 
         <TextView
+            android:id="@+id/profileLocationHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location: "
             android:ems="6"
-            android:id="@+id/profileLocationHeader" />
+            android:text="Location: " />
 
         <TextView
+            android:id="@+id/profileLocation"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profileLocation" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E-mail: "
-            android:ems="6"
-            android:id="@+id/profileEmailHeader" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profileEmail" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
 
         <TextView
+            android:id="@+id/profileEmailHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="Phone: "
             android:ems="6"
-            android:id="@+id/profilePhoneHeader" />
+            android:text="E-mail: " />
 
         <TextView
+            android:id="@+id/profileEmail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:id="@+id/profilePhone" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/profilePhoneHeader"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:text="Phone: " />
+
+        <TextView
+            android:id="@+id/profilePhone"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/myprofile_button_panel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="30dp"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
-        android:id="@+id/myprofile_button_panel"
+        android:paddingTop="30dp"
         android:visibility="visible">
 
         <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Inventory"
             android:id="@+id/my_inventory_button"
-            android:layout_marginTop="2dp"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:onClick="goToInventory"/>
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Trades"
-            android:id="@+id/tradeButton"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="30dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:id="@+id/stranger_button_panel"
-        android:visibility="gone">
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Add friend"
-            android:id="@+id/add_friend_btn"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:onClick="addFriend"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="30dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:id="@+id/friend_button_panel"
-        android:visibility="gone">
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:background="@drawable/custom_roundrect_button"
+            android:onClick="goToInventory"
             android:text="Inventory"
-            android:id="@+id/friend_inventory_btn"
-            android:layout_marginTop="2dp"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/tradeButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:onClick="goToFriendInventory"/>
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_roundrect_button"
+            android:text="Trades"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/stranger_button_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="30dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/add_friend_btn"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/custom_roundrect_button"
+            android:onClick="addFriend"
+            android:text="Add friend"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/friend_button_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="30dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/friend_inventory_btn"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/custom_roundrect_button"
+            android:onClick="goToFriendInventory"
+            android:text="Inventory"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

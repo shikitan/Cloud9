@@ -26,10 +26,10 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
         }
     }
 
-    public Inventory getPublicItems(Inventory inventory){
+    public Inventory getPublicItems(Inventory inventory) {
         Inventory pInventory = new Inventory();
-        for(Item item : inventory){
-            if(item.getVisibility() == true){
+        for (Item item : inventory) {
+            if (item.getVisibility() == true) {
                 pInventory.add(item);
             }
         }
