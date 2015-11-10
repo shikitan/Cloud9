@@ -134,9 +134,6 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
-
-    //  To be added when editing item is implemented
-
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
         intent.putExtra("index",index);

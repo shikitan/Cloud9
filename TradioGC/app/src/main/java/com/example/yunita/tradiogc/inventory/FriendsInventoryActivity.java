@@ -55,6 +55,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         }
 
+        // run the thread to retrieve friend's inventory
         Thread getInventoryThread = new GetThread(targetUsername);
         getInventoryThread.start();
 
@@ -81,8 +82,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         }
 
         @Override
-        public void run() {
+        public void run( ) {
             inventory = userController.getUser(username).getInventory();
+            // only show public items
+            inventory = inventory.getPublicItems(inventory);
             runOnUiThread(doUpdateGUIDetails);
         }
     }
@@ -98,6 +101,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     public void viewItemDetails(Item item, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
         intent.putExtra("item", item);
+        // mark this as "friends" page
         intent.putExtra("owner", "friend");
         intent.putExtra("index",position);
 

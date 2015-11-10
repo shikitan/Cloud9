@@ -106,7 +106,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void goToInventory(View view) {
         Intent intent = new Intent(this, MyInventoryActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
