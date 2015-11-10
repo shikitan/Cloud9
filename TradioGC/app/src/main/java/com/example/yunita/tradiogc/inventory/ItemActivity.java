@@ -14,6 +14,8 @@ import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
+import com.example.yunita.tradiogc.user.UserController;
+
 /*
 Comments for 09/11/2015 update:
 -The layout for viewing an item is mostly done as well as some coding on this activity.
@@ -37,6 +39,8 @@ public class ItemActivity extends AppCompatActivity {
     private Item item;
     private Context context = this;
     private Categories categories;
+    private int index;
+    private UserController userController;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
                                         // Not sure if that's how we want to start a trade with an item?
@@ -70,6 +74,7 @@ public class ItemActivity extends AppCompatActivity {
 
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
+        userController = new UserController(context);
 
     }
 
@@ -82,17 +87,45 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         item = (Item) intent.getSerializableExtra("item");
         categories = new Categories();
+
+
+        index = intent.getExtras().getInt("index");
+        String owner = intent.getExtras().getString("owner");
+        // Checks to see if we are getting a username from the intent
+        if (owner==null) {
+            edit_button.setVisibility(View.GONE);
+        }
+
         runOnUiThread(doUpdateGUIDetails);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+        getUserLoginThread.start();
+        synchronized (getUserLoginThread) {
+            try {
+                getUserLoginThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Inventory inventory = LoginActivity.USERLOGIN.getInventory();
+            item = inventory.get(index);
+            runOnUiThread(doUpdateGUIDetails);
+        }
+    }
+
+
 
     //  To be added when editing item is implemented
-    /*
+
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
+        intent.putExtra("index",index);
         startActivity(intent);
     }
-    */
+
 
 
 

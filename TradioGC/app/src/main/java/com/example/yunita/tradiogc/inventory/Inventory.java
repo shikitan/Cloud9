@@ -25,4 +25,6 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
             o.notifyUpdated(this);
         }
     }
+
+
 }

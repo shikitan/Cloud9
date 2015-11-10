@@ -3,7 +3,8 @@ package com.example.yunita.tradiogc.user;
 import com.example.yunita.tradiogc.friends.Friends;
 import com.example.yunita.tradiogc.inventory.Inventory;
 
-public class User {
+
+public class User{
 
     private String username;
     private String location;

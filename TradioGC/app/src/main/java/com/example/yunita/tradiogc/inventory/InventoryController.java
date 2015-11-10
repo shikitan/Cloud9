@@ -30,6 +30,27 @@ public class InventoryController {
         updateUserThread.start();
     }
 
+    public void updateItem(Item item) {
+        Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+        updateUserThread.start();
+        synchronized (updateUserThread) {
+            try {
+                updateUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+            getUserLoginThread.start();
+            synchronized (getUserLoginThread) {
+                try {
+                    getUserLoginThread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     class DeleteItemThread extends Thread {
         private Item item;
 
@@ -39,8 +60,11 @@ public class InventoryController {
 
         @Override
         public void run() {
-            removeExistingItem(item);
-            inventory.remove(item);
+            synchronized (this) {
+                removeExistingItem(item);
+                inventory.remove(item);
+                notify();
+            }
         }
     }
 
