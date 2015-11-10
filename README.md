@@ -1,3 +1,11 @@
+## Update (9/11)
+- Fixing inventory bug
+- View item list, edit item
+
+## TODO
+- check user stories for listing friend's inventory (public-private)
+- start project 5 (see planning)
+
 ## TradioGC
 A trading gift-card application
 
@@ -17,7 +25,6 @@ You can find our documentation in[our wiki](https://github.com/CMPUT301F15T09/Cl
 - user1338795, http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
 - Designmodo, https://www.iconfinder.com/designmodo
 - Joshua Campbell, https://github.com/joshua2ua/AndroidElasticSearch
-- Jason Leung, http://madcoda.com/2013/09/android-activity-transition-slide-in-out-animation/
 
 ## License
 TradioGC is licensed under Apache License Version 2.0.
