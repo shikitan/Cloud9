@@ -61,7 +61,7 @@ public class ItemActivity extends AppCompatActivity {
             //photo.setImage... waiting for photo to be implemented
             name.setText(item.getName());
             category.setText(categories.getCategories().get(item.getCategory()));
-            price.setText("$" + Double.toString(item.getPrice()));
+            price.setText("$" + item.getPrice());
             description.setText(item.getDesc());
             quantity.setText(Integer.toString(item.getQuantity()));
             if(item.getQuality() == 0){

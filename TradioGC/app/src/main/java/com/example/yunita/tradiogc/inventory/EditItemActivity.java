@@ -75,7 +75,7 @@ public class EditItemActivity extends AppCompatActivity {
         }
         nameEdit.setText(item.getName());
         categoriesChoice.setSelection(item.getCategory());
-        priceEdit.setText(Double.toString(item.getPrice()));
+        priceEdit.setText(item.getPrice());
         descriptionEdit.setText(item.getDesc());
         qualityChoice.setSelection(item.getQuality());
         quantityEdit.setText(Integer.toString(item.getQuantity()));

@@ -1,6 +1,8 @@
 package com.example.yunita.tradiogc.inventory;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 
 public class Item implements Serializable {
@@ -42,12 +44,14 @@ public class Item implements Serializable {
         this.category = category;
     }
 
-    public double getPrice() {
-        return price;
+    public String getPrice() {
+        return Double.toString(round(price, 3));
     }
 
+    //TODO: fix the price to print in two decimal points
+
     public void setPrice(double price) {
-        this.price = price;
+        this.price = round(price, 2);
     }
 
     public String getDesc() {
@@ -84,7 +88,15 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return this.name + "\n$" + this.price;
+        return this.name + "\n$" + round(this.price, 2);
     }
 
+    //http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }
