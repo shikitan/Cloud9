@@ -2,9 +2,6 @@ package com.example.yunita.tradiogc.inventory;
 
 import java.util.ArrayList;
 
-/**
- * Created by dshin on 11/1/15.
- */
 public class Categories {
     private ArrayList<String> categories = new ArrayList<>();
 
@@ -16,6 +13,8 @@ public class Categories {
         categories.add("Clothing");
         categories.add("Hobby");
         categories.add("Food");
+        categories.add("Grocery");
+        categories.add("Specialty");
         categories.add("Other");
     }
 

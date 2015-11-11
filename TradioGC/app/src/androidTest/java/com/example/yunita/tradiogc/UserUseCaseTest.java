@@ -11,7 +11,7 @@ public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
         super(com.example.yunita.tradiogc.MainActivity.class);
     }
 
-    public void testAddUser(){
+    public void testCreateAccount(){
         User ann = new User();
         ann.setUsername("ann");
         ann.setLocation("edmonton");
@@ -22,20 +22,6 @@ public class UserUseCaseTest extends ActivityInstrumentationTestCase2 {
         users.add(ann);
 
         assertTrue(users.contains(ann));
-    }
-
-    public void testViewUserProfile(){
-        User ann = new User();
-        ann.setUsername("ann");
-        ann.setLocation("edmonton");
-        ann.setPhone("7809998881");
-        ann.setEmail("ann@yahoo.com");
-
-        assertTrue(ann.getUsername().equals("ann"));
-        assertTrue(ann.getLocation().equals("edmonton"));
-        assertTrue(ann.getPhone().equals("7809998881"));
-        assertTrue(ann.getEmail().equals("ann@yahoo.com"));
-
     }
 
     public void testLogin(){

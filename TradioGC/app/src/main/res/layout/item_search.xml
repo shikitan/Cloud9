@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/search_category_panel"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/item_by_category_spinner"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown" />
+
+        <ListView
+            android:id="@+id/item_by_category_list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="16">
+        </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_query_panel"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" >
+
+            <EditText
+                android:layout_margin="2dp"
+                android:id="@+id/search_by_username_et"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search by query"
+                android:layout_weight="1"
+                android:maxLines="1" />
+
+            <ImageView
+                android:id="@+id/query_search_btn"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_search"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/item_by_query_list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="16">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

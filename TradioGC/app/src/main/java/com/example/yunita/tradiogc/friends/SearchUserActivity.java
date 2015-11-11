@@ -1,4 +1,4 @@
-package com.example.yunita.tradiogc.search;
+package com.example.yunita.tradiogc.friends;
 
 import android.content.Context;
 import android.content.Intent;

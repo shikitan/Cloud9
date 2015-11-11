@@ -20,14 +20,14 @@
     <string name="friend_longclick_hint">Long click on your friend name to delete friend.</string>
     <string name="add_new_friend">Add new friend</string>
 
-
-
     <!-- Inventory Activity -->
     <string name="inventory">Inventory</string>
     <string name="add_item">Add New Item</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="main_menu">Main Menu</string>
+    <!-- Market -->
+    <string name="search_by_category">Search by Category &#10095;</string>
+    <string name="search_by_query">Search by Query &#10095;</string>
+
 
     <string name="location">Location</string>
     <string name="price_range">Price Range (min-max)</string>
@@ -106,6 +106,8 @@
         <item>Clothing</item>
         <item>Hobby</item>
         <item>Food</item>
+        <item>Grocery</item>
+        <item>Specialty</item>
         <item>Other</item>
     </string-array>
     <string-array name="quality_array">
@@ -114,6 +116,7 @@
     </string-array>
     <string name="title_activity_item">Item Detail</string>
     <string name="title_activity_friends_inventory">Friends Inventory</string>
+    <string name="title_activity_item_search">Search Item</string>
 
 
 

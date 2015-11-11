@@ -1,5 +1,6 @@
 package com.example.yunita.tradiogc.friends;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.example.yunita.tradiogc.login.LoginActivity;
@@ -9,10 +10,12 @@ public class FriendsController {
 
     private static final String TAG = "FriendsController";
     private UserController userController;
+    private Context context;
     private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     public FriendsController(Context context) {
         super();
+        this.context = context;
         userController = new UserController(context);
     }
 
@@ -26,20 +29,6 @@ public class FriendsController {
         friends.remove(friendname);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
-    }
-
-    class DeleteFriendThread extends Thread {
-        private String friendname;
-
-        public DeleteFriendThread(String friendname) {
-            this.friendname = friendname;
-        }
-
-        @Override
-        public void run() {
-            deleteFriend(friendname);
-            friends.remove(friendname);
-        }
     }
 
 
