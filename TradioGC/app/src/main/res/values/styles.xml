@@ -1,0 +1,33 @@
+<resources>
+    <style name="rbt_bottom">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <!-- taken from Android Developers
+    https://developer.android.com/training/basics/actionbar/styling.html 2015
+    modified by Yunita -->
+
+    <!-- the theme applied to the application or activity -->
+    <style name="CustomActionBarTheme"
+        parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/primary_color</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/primary_color</item>
+    </style>
+
+</resources>
