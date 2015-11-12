@@ -13,7 +13,7 @@ public class InventoryController {
     private WebServer webServer = new WebServer();
 
     /**
-     * Class constructor specifying this controller class is a subclass of Context.
+     * Class constructor specifying that this controller class is a subclass of Context.
      *
      * @param context
      */
@@ -24,10 +24,10 @@ public class InventoryController {
 
     /**
      * Called after the new item is created.
-     * This method is used to add the item to the current inventory
-     * and run update user thread.
+     * This method is used to add the item to the user's inventory
+     * and run the "Update User Thread".
      *
-     * @param item new item.
+     * @param item new item
      */
     public void addItem(Item item) {
         inventory.add(item);
@@ -36,11 +36,11 @@ public class InventoryController {
     }
 
     /**
-     * Called when the user clicks on item that exists in the inventory.
+     * Called when the user long presses on an item that exists in the inventory.
      * <p>This method is used to remove the item from the inventory and
-     * run update user thread.
+     * run the "Update User Thread".
      *
-     * @param item existing item in inventory.
+     * @param item existing item in the inventory
      */
     public void removeExistingItem(Item item) {
         inventory.remove(item);
@@ -49,8 +49,8 @@ public class InventoryController {
     }
 
     /**
-     * Called when the user needs to update his items in the inventory.
-     * <p>This method is used to update user's inventory.
+     * Called when the user needs to update the items in their inventory.
+     * <p>This method is used to update the user's inventory.
      *
      * @param item item
      */
@@ -76,9 +76,9 @@ public class InventoryController {
     }
 
     /**
-     * Called when the user clicks on existing item in the inventory.
+     * Called when the user long presses on an existing item in their inventory.
      * <p>This class creates a thread and runs "Delete Item".
-     * While it is running, it removes this item in user's inventory
+     * While it is running, it removes this item from the user's inventory
      * and updates the inventory.
      */
     class DeleteItemThread extends Thread {

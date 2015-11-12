@@ -11,7 +11,7 @@ public class WebServer {
     /**
      * Gets the resource url.
      *
-     * @return String.
+     * @return String
      */
     public String getResourceUrl() {
         return RESOURCE_URL;
@@ -20,7 +20,7 @@ public class WebServer {
     /**
      * Gets the search url.
      *
-     * @return String.
+     * @return String
      */
     public String getSearchUrl() {
         return SEARCH_URL;

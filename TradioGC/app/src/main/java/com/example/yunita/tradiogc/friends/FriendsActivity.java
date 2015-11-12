@@ -43,10 +43,10 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the friends view adapter and manipulate the list view.
-     * While the item list is clicked, it sends user to friend pofile.
-     * While the item list is long clicked, it removes friend from
-     * the user friend list and calls delete thread.
+     * Sets up the "Friends View Adapter" and manipulates the list view.
+     * When an item in the list is pressed, it sends the user to a friend's profile.
+     * When an item in the list is long pressed, it removes the friend from
+     * the user's friend list and calls the "Delete Friend Thread".
      */
     @Override
     protected void onStart() {
@@ -76,7 +76,7 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
-     * Updates user's friends everytime the user going back to friends page.
+     * Updates the user's friends list every time the user goes back to their Friends page.
      */
     @Override
     public void onResume() {
@@ -87,10 +87,10 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Add New Friend" button.
-     * <p>This method is used to send user to search friend page.
+     * Called when the user clicks the "Add New Friend" button.
+     * <p>This method is used to send the user to the Search Friend page.
      *
-     * @param view "Add New Friend" button.
+     * @param view "Add New Friend" button
      */
     public void searchUser(View view) {
         Intent intent = new Intent(this, SearchUserActivity.class);
@@ -98,10 +98,10 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks friend's name in list view.
-     * <p>This method is used to send user to his friend's profile page.
+     * Called when the user presses a friend's name in the list view.
+     * <p>This method is used to send the user to a friend's profile page.
      *
-     * @param username friends's name.
+     * @param username friend's name
      */
     public void viewFriendProfile(String username) {
         Intent intent = new Intent(context, ProfileActivity.class);
@@ -111,10 +111,10 @@ public class FriendsActivity extends AppCompatActivity {
 
     /**
      * Called when the user attempts to delete a friend by long pressing
-     * on friend's name.
+     * on a friend's name.
      * <p>This class creates a thread and runs "Delete Friend".
-     * While it is running, it removes this friend in user's friend list
-     * and updates the friends list view.
+     * While it is running, it removes this friend from the user's friend list
+     * and updates the Friends list view.
      */
     class DeleteFriendThread extends Thread {
         private String friendname;

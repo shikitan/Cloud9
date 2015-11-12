@@ -42,10 +42,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets the friend's name that is passed from previous activity.
-     * <p>It runs get inventory thread and get the inventory of this
-     * friend. In addition, while user clicks on item, it sends user
-     * to Item Detail page.
+     * Gets the friend's name that was passed from previous activity.
+     * <p>This method runs the "Get Inventory Thread" and gets the inventory of a
+     * friend. In addition, when the user clicks on an item, it sends the user
+     * to the Item Detail page.
      */
     @Override
     protected void onStart() {
@@ -85,10 +85,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks on item.
-     * This method is used to send user to Item Detail page and
-     * pass item index position and tell Item Detail activity
-     * to show the Item Detail page from friend's perspective.
+     * Called when the user clicks on an item.
+     * This method is used to send the user to the Item Detail page,
+     * pass the item index position, and tell the Item Detail activity
+     * to show the Item Detail page from a friend's perspective.
      *
      * @param item     this item.
      * @param position this item's index in the inventory.
@@ -104,10 +104,10 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the activity is started.
+     * Called when the activity starts.
      * <p>This class creates a thread and runs "Get User".
-     * While it is running, it gets the user inventory that only
-     * contains public items and updates the view.
+     * While it is running, it gets the public items from the
+     * user's inventory and updates the view.
      */
     class GetPublicItemsThread extends Thread {
         private String username;

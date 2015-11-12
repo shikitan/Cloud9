@@ -48,9 +48,9 @@ public class LoginController {
 
     /**
      * Called when the sign up thread is running.
-     * This method is save the new user to the webserver.
+     * This method saves the new user to the webserver.
      *
-     * @param user new user.
+     * @param user new user
      */
     public void addUser(User user) {
         HttpClient httpClient = new DefaultHttpClient();
@@ -74,10 +74,10 @@ public class LoginController {
     }
 
     /**
-     * Called when the sign up thread is running.
-     * This method is save the new user to local storage.
+     * Called when the "Sign Up Thread" is running.
+     * This method saves the new user to the local storage.
      *
-     * @param user new user.
+     * @param user new user
      */
     private void saveUserInFile(User user) {
         try {
@@ -94,9 +94,9 @@ public class LoginController {
     }
 
     /**
-     * Called when the user attempts to sign up by clicking "Sign Up" button.
+     * Called when the user attempts to sign up by clicking on the "Sign Up" button.
      * This class creates a thread and runs "Add User".
-     * While it is running, it adds new user to the webserver.
+     * While it is running, it adds the new user to the webserver.
      * After it is done, it closes the activity.
      */
     class SignUpThread extends Thread {

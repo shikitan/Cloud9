@@ -20,15 +20,15 @@ public class Item implements Serializable {
     }
 
     /**
-     * Class constructor specifying the detail of the object.
+     * Class constructor specifying the details of the object.
      *
-     * @param name       contains the name of the item.
-     * @param category   contains integer which is the index of the categories.
-     * @param price      contains double with two decimal.
-     * @param desc       contains description/comment of the item.
-     * @param visibility determines whether it is public or private item.
-     * @param quantity   contains integer 1..*.
-     * @param quality    contains integer that describes the item's quality, 0 is new and 1 is used.
+     * @param name contains the name of the item
+     * @param category contains an integer that represents an index of the Categories array
+     * @param price contains a double for the price of the item
+     * @param desc contains the description/comment of the item
+     * @param visibility determines whether the item is shared publicly or privately
+     * @param quantity contains an integer 1..* for the amount that the owner has of the item
+     * @param quality contains an integer that describes the item's quality; 0 is new and 1 is used
      */
     public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality) {
         this.category = category;
@@ -43,7 +43,7 @@ public class Item implements Serializable {
     /**
      * Gets the name of this item.
      *
-     * @return name.
+     * @return name
      */
     public String getName() {
         return name;
@@ -52,7 +52,7 @@ public class Item implements Serializable {
     /**
      * Changes the name of this item.
      *
-     * @param name this item's new name.
+     * @param name this item's new name
      */
     public void setName(String name) {
         this.name = name;
@@ -60,9 +60,9 @@ public class Item implements Serializable {
 
     /**
      * Gets the category of this item.
-     * Category is specified by integer 0 - 9.
+     * Category is specified by an integer from 0 - 9.
      *
-     * @return category.
+     * @return category
      */
     public int getCategory() {
         return category;
@@ -70,9 +70,9 @@ public class Item implements Serializable {
 
     /**
      * Changes the category of this item.
-     * Category is specified by integer 0 - 9.
+     * Category is specified by an integer from 0 - 9.
      *
-     * @param category this item's new category.
+     * @param category this item's new category
      */
     public void setCategory(int category) {
         this.category = category;
@@ -81,7 +81,7 @@ public class Item implements Serializable {
     /**
      * Gets the price of this item.
      *
-     * @return price.
+     * @return price
      */
     public double getPrice() {
         return price;
@@ -90,7 +90,7 @@ public class Item implements Serializable {
     /**
      * Changes the price of this item.
      *
-     * @param price this item's new price.
+     * @param price this item's new price
      */
     public void setPrice(double price) {
         this.price = price;
@@ -99,7 +99,7 @@ public class Item implements Serializable {
     /**
      * Gets the description of this item.
      *
-     * @return description.
+     * @return description
      */
     public String getDesc() {
         return desc;
@@ -108,7 +108,7 @@ public class Item implements Serializable {
     /**
      * Changes the description of this item.
      *
-     * @param desc this item's new description.
+     * @param desc this item's new description
      */
     public void setDesc(String desc) {
         this.desc = desc;
@@ -117,7 +117,7 @@ public class Item implements Serializable {
     /**
      * Gets the visibility of this item.
      *
-     * @return visibility.
+     * @return visibility
      */
     public Boolean getVisibility() {
         return visibility;
@@ -126,7 +126,7 @@ public class Item implements Serializable {
     /**
      * Changes the visibility of this item.
      *
-     * @param visibility this item's new visibility.
+     * @param visibility this item's new visibility
      */
     public void setVisibility(Boolean visibility) {
         this.visibility = visibility;
@@ -135,7 +135,7 @@ public class Item implements Serializable {
     /**
      * Gets the quantity of this item.
      *
-     * @return quantity.
+     * @return quantity
      */
     public int getQuantity() {
         return quantity;
@@ -144,7 +144,7 @@ public class Item implements Serializable {
     /**
      * Changes the quantity of this item.
      *
-     * @param quantity this item's new quantity.
+     * @param quantity this item's new quantity
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -152,9 +152,9 @@ public class Item implements Serializable {
 
     /**
      * Gets the quality of this item.
-     * Quality is specified by integer 0 (new) or 1 (used).
+     * Quality is specified by an integer: 0 (new) or 1 (used).
      *
-     * @return quality.
+     * @return quality
      */
     public int getQuality() {
         return quality;
@@ -162,19 +162,19 @@ public class Item implements Serializable {
 
     /**
      * Changes the quality of this item.
-     * Quality is specified by integer 0 (new) or 1 (used).
+     * Quality is specified by an integer: 0 (new) or 1 (used).
      *
-     * @param quality this item's new quality.
+     * @param quality this item's new quality
      */
     public void setQuality(int quality) {
         this.quality = quality;
     }
 
     /**
-     * Return the new printing format of item.
+     * Return the new printing format of the item.
      * <p>The new format of item is [name]\n[price].
      *
-     * @return String item's name with its price in new line.
+     * @return String:  item's name with its price in a new line
      */
     @Override
     public String toString() {

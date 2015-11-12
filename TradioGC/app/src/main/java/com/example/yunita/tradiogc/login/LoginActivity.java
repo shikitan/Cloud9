@@ -58,10 +58,10 @@ public class LoginActivity extends Activity {
     }
 
     /**
-     * Called when the user clicks on "Create Account".
-     * <p>This method is used to show the sign up panel in login page.
+     * Called when the user presses on "Create Account".
+     * <p>This method is used to show the sign up panel on the Login page.
      *
-     * @param view "Create Account" text view.
+     * @param view "Create Account" text view
      */
     public void goToSignUp(View view) {
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.pull_down);
@@ -71,10 +71,10 @@ public class LoginActivity extends Activity {
     }
 
     /**
-     * Called when the user clicks on "Login".
-     * <p>This method is used to show the login panel in login page.
+     * Called when the user presses on "Login".
+     * <p>This method is used to show the login panel on the Login page.
      *
-     * @param view "Login" text view.
+     * @param view "Login" text view
      */
     public void goToLogin(View view) {
         signup_view.setVisibility(View.GONE);
@@ -82,8 +82,8 @@ public class LoginActivity extends Activity {
     }
 
     /**
-     * Called when the user clicks "Login" or "Sign Up" button.
-     * <p>This method is used to send user to Main page.
+     * Called when the user presses the "Login" or "Sign Up" button.
+     * <p>This method is used to send the user to the Main page.
      */
     public void goToMain() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -93,12 +93,13 @@ public class LoginActivity extends Activity {
     }
 
     /**
-     * Called when the user clicks "Login" button.
-     * <p>This method is used to check whether username is exist in webserver.
-     * If it is exist, store user information to USERLOGIN and direct user to Main page.
-     * Otherwise, it shows error message.
+     * Called when the user presses the "Login" button.
+     * <p>This method is used to check if the username exists in the webserver.
+     * If it exists, it stores the user information into USERLOGIN and directs
+     * the user to the Main page.
+     * Otherwise, it shows an error message.
      *
-     * @param view "Login" button.
+     * @param view "Login" button
      */
     public void login(View view) {
 
@@ -127,12 +128,12 @@ public class LoginActivity extends Activity {
     }
 
     /**
-     * Called when the user clicks "Sign Up" button.
-     * <p>This method is used to check whether username is unique.
+     * Called when the user presses the "Sign Up" button.
+     * <p>This method is used to check if the username is unique.
      * If the username is unique, it will create a new user.
-     * Otherwise, it shows error message.
+     * Otherwise, it shows an error message.
      *
-     * @param view "Sign Up" button.
+     * @param view "Sign Up" button
      */
     public void signUp(View view) {
         String username = username_et.getText().toString();

@@ -40,7 +40,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Manipulates the category and quality drop down menu.
+     * Manipulates the Category and Quality drop down menu.
      */
     @Override
     protected void onStart() {
@@ -55,12 +55,12 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Add Item" button.
-     * <p>This method is used to check the user input.
-     * If all fields are filled, it creates a new item
-     * and adds it into inventory.
+     * Called when the user clicks the "Add Item" button.
+     * <p>This method is used to check the user's input.
+     * If all fields are filled, it creates a new item and adds
+     * it into the user's inventory.
      *
-     * @param view "Add Item" button.
+     * @param view "Add Item" button in the Inventory page
      */
     public void addNewItem(View view) {
         String name = nameEdit.getText().toString();
