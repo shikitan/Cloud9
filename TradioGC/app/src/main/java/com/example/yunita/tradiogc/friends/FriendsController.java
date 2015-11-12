@@ -10,7 +10,6 @@ public class FriendsController {
     private static final String TAG = "FriendsController";
     private UserController userController;
     private Context context;
-    private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     /**
      * Class constructor specifying this controller class is a subclass of Context.
@@ -32,7 +31,7 @@ public class FriendsController {
      * @param friendname new friend with this name.
      */
     public void addFriend(String friendname) {
-        friends.add(friendname);
+        LoginActivity.USERLOGIN.getFriends().add(friendname);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }
@@ -46,7 +45,8 @@ public class FriendsController {
      * @param friendname friend with this name in user's friend list.
      */
     public void deleteFriend(String friendname) {
-        friends.remove(friendname);
+        LoginActivity.USERLOGIN.getFriends().remove(friendname);
+        System.out.println("login friends = " + LoginActivity.USERLOGIN.getFriends().size());
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }

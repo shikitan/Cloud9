@@ -18,14 +18,14 @@ import com.example.yunita.tradiogc.profile.ProfileActivity;
 public class FriendsActivity extends AppCompatActivity {
 
     private Context context = this;
-    private Friends friends = LoginActivity.USERLOGIN.getFriends();
+    private Friends friends;
     private ListView friendList;
+    private String friendname;
     private FriendsController friendsController;
     private ArrayAdapter<String> friendsViewAdapter;
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
-            friendsViewAdapter.clear();
-            friendsViewAdapter.addAll(friends);
+            friendsViewAdapter.remove(friendname);
             friendsViewAdapter.notifyDataSetChanged();
         }
     };
@@ -38,6 +38,8 @@ public class FriendsActivity extends AppCompatActivity {
 
         friendsController = new FriendsController(context);
         friendList = (ListView) findViewById(R.id.friend_list_view);
+        friends = LoginActivity.USERLOGIN.getFriends();
+        System.out.println("friends: " + friends.size());
     }
 
     /**
@@ -64,7 +66,7 @@ public class FriendsActivity extends AppCompatActivity {
         friendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String friendname = friends.get(position);
+                friendname = friends.get(position);
                 Thread deleteThread = new DeleteFriendThread(friendname);
                 deleteThread.start();
                 Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
@@ -79,6 +81,8 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        // keep updating friend list (since we use tabmenu, after first
+        // visit, this activity will be on resume/pause).
         friends = LoginActivity.USERLOGIN.getFriends();
     }
 
@@ -122,9 +126,7 @@ public class FriendsActivity extends AppCompatActivity {
         @Override
         public void run() {
             friendsController.deleteFriend(friendname);
-            friends.remove(friendname);
             runOnUiThread(doUpdateGUIDetails);
         }
     }
-
 }
