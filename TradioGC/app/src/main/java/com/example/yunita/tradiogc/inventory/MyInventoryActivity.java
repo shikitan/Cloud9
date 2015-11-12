@@ -40,10 +40,10 @@ public class MyInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the inventory view adapter and manipulate the list view.
-     * While the item is clicked, it sends user to this item detail.
-     * While the item is long clicked, it removes item from
-     * this user's inventory and calls delete item thread.
+     * Sets up the "Inventory View Adapter" and manipulates the list view.
+     * When an item is pressed, it sends the user to the Item Detail page.
+     * When an item is long pressed, it removes the item from
+     * the user's inventory and calls the "Delete Item Thread".
      */
     @Override
     protected void onStart() {
@@ -87,23 +87,23 @@ public class MyInventoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "+" button in Inventory page.
-     * <p>This method is used to send user to Add Item page.
+     * Called when the user presses the "+" button in the Inventory page.
+     * <p>This method is used to send the user to the Add Item page.
      *
-     * @param view "+" Button in Inventory page.
+     * @param view: "+" Button in the user's Inventory page
      */
     public void goToAddItem(View view) {
         startActivity(new Intent(MyInventoryActivity.this, AddItemActivity.class));
     }
 
     /**
-     * Called when the user clicks on item.
-     * This method is used to send user to Item Detail page and
-     * pass item index position and tell Item Detail activity
-     * to show the Item Detail page from user's perspective.
+     * Called when the user presses on an item.
+     * This method is used to send the user to the Item Detail page,
+     * pass the item index position, and tell the Item Detail activity
+     * to show the Item Detail page from the user's perspective.
      *
-     * @param item      this item.
-     * @param position  this item's index in the inventory.
+     * @param item:     this item
+     * @param position: this item's index in the inventory
      */
     public void viewItemDetails(Item item, int position) {
         Intent intent = new Intent(context, ItemActivity.class);

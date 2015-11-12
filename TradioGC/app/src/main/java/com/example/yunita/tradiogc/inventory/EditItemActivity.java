@@ -87,12 +87,12 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Save" button in edit item page.
-     * This method is used to run update item thread, and close
-     * this activity after the thread is done updating the item information
-     * in webserver.
+     * Called when the user clicks the "Save" button on the Edit Item page.
+     * This method is used to run the update item thread and closes
+     * this activity after the thread updates the item information
+     * into the webserver.
      *
-     * @param view "Save" button in edit item page.
+     * @param view: "Save" button in the Edit Item page
      */
     public void saveItem(View view) {
         String name = nameEdit.getText().toString();

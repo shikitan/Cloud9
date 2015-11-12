@@ -63,10 +63,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets the username that is passed from previous activity.
-     * <p>In this case, it could be from friends, search user
-     * or main activity. This activity determines which panel that
-     * user will see (ie. my profile, friend's profile, or stranger profile).
+     * Gets the username that was passed from the previous activity.
+     * <p>In this case, it could be from the Friends, Search User,
+     * or Main activity. This activity determines which panel the
+     * user will see (ie. my profile, friend's profile, or stranger's profile).
      */
     @Override
     protected void onStart() {
@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * While the user clicks on back, it removes the transition.
+     * When the user presses the back button, the transition is removed.
      */
     @Override
     public void onBackPressed() {
@@ -115,10 +115,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Inventory" button in this user profile.
-     * <p>This method is used to send user to inventory page.
+     * Called when the user presses the "Inventory" button on the user's Profile page.
+     * <p>This method is used to send the user to their own Inventory page.
      *
-     * @param view "Inventory" button in this user profile.
+     * @param view: "Inventory" button on the user's Profile page
      */
     public void goToInventory(View view) {
         Intent intent = new Intent(this, MyInventoryActivity.class);
@@ -126,11 +126,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Inventory" button in this user's friend profile.
-     * <p>This method is used to send user to friend's inventory page, and pass
-     * friend's name to the friends inventory activity.
+     * Called when the user presses the "Inventory" button on a friend's Profile page.
+     * <p>This method is used to send the user to a friend's Inventory page and pass
+     * the friend's name to the friend's Inventory activity.
      *
-     * @param view "Inventory" button in friend profile.
+     * @param view: "Inventory" button on a friend's Profile page
      */
     public void goToFriendInventory(View view) {
         Intent intent = new Intent(context, FriendsInventoryActivity.class);
@@ -139,11 +139,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Add Friend" button.
-     * <p>This method is used to add friend into this user's friend list,
-     * and run update user thread.
+     * Called when the user presses the "Add Friend" button.
+     * <p>This method is used to add a friend to the user's friend list
+     * and run the "Update User Thread".
      *
-     * @param view "Add Friend" button.
+     * @param view: "Add Friend" button
      */
     public void addFriend(View view) {
         friendsController.addFriend(targetUsername);
@@ -151,10 +151,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Pencil" icon in this user profile page.
-     * <p>This method is used to send user to edit profile page.
+     * Called when the user presses the "Pencil" icon in on their Profile page.
+     * <p>This method is used to send the user to Edit Profile page.
      *
-     * @param view "Pencil" icon.
+     * @param view: "Pencil" icon
      */
     public void editProfile(View view) {
         Intent intent = new Intent(context, EditProfileActivity.class);
@@ -162,9 +162,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the activity is started.
+     * Called when the activity starts.
      * <p>This class creates a thread and runs "Get User".
-     * The purpose is to update this user information and profile page.
+     * The purpose of this class is to update the user's information on their Profile page.
      */
     class GetThread extends Thread {
         private String username;

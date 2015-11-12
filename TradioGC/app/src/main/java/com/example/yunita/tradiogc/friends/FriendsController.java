@@ -13,7 +13,7 @@ public class FriendsController {
     private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     /**
-     * Class constructor specifying this controller class is a subclass of Context.
+     * Class constructor specifying that this controller class is a subclass of Context.
      *
      * @param context
      */
@@ -24,12 +24,11 @@ public class FriendsController {
     }
 
     /**
-     * Called when the user clicks "Add Friend" button.
-     * <p>The method is used to add friend to the current login user's friend list
-     * and update user information, which is now with updated friend list,
-     * in the webserver.
+     * Called when the user clicks the "Add Friend" button.
+     * <p>This method is used to add a friend to the current login user's friend list
+     * and update the user's new friend list to the webserver.
      *
-     * @param friendname new friend with this name.
+     * @param friendname:   new friend's name
      */
     public void addFriend(String friendname) {
         friends.add(friendname);
@@ -38,12 +37,11 @@ public class FriendsController {
     }
 
     /**
-     * Called when "Delete Friend Thread" is running.
-     * <p>The method is used to remove friend from the current login user's friend list
-     * and update user information, which is now with updated friend list,
-     * in the webserver.
+     * Called when "Delete Friend Thread" is running
+     * <p>This method is used to remove a friend from the current login user's friend list
+     * and update the user's new friend list to the webserver.
      *
-     * @param friendname friend with this name in user's friend list.
+     * @param friendname:   friend with this name in the user's friend list
      */
     public void deleteFriend(String friendname) {
         friends.remove(friendname);

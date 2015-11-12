@@ -88,7 +88,7 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Alters the layout depending if this user is viewing as friend or
+     * Alters the layout depending on if this user is viewing the item as a friend or
      * as the owner of the item.
      */
     @Override
@@ -131,7 +131,7 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when user clicks back.
+     * Called when the user clicks back.
      */
     @Override
     public void onBackPressed() {
@@ -146,8 +146,8 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user clicks "Pencil" icon in Item Detail page.
-     * <p>This method is used to send user to Edit Item page.
+     * Called when the user presses the "Pencil" icon in Item Detail page.
+     * <p>This method is used to send the user to the Edit Item page.
      * It passes the index of the item in the inventory.
      *
      * @param view "Pencil" icon in Item Detail page.
