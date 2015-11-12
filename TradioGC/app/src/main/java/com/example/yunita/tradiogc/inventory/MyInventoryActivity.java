@@ -39,6 +39,12 @@ public class MyInventoryActivity extends AppCompatActivity {
         itemList = (ListView) findViewById(R.id.inventory_list_view);
     }
 
+    /**
+     * Sets up the inventory view adapter and manipulate the list view.
+     * While the item is clicked, it sends user to this item detail.
+     * While the item is long clicked, it removes item from
+     * this user's inventory and calls delete item thread.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -69,7 +75,9 @@ public class MyInventoryActivity extends AppCompatActivity {
         );
     }
 
-
+    /**
+     * Refreshes the list view.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -78,10 +86,25 @@ public class MyInventoryActivity extends AppCompatActivity {
         inventoryViewAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Called when the user clicks "+" button in Inventory page.
+     * <p>This method is used to send user to Add Item page.
+     *
+     * @param view "+" Button in Inventory page.
+     */
     public void goToAddItem(View view) {
         startActivity(new Intent(MyInventoryActivity.this, AddItemActivity.class));
     }
 
+    /**
+     * Called when the user clicks on item.
+     * This method is used to send user to Item Detail page and
+     * pass item index position and tell Item Detail activity
+     * to show the Item Detail page from user's perspective.
+     *
+     * @param item      this item.
+     * @param position  this item's index in the inventory.
+     */
     public void viewItemDetails(Item item, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
         intent.putExtra("item", item);

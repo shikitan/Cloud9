@@ -8,10 +8,20 @@ public class WebServer {
 
     }
 
+    /**
+     * Gets the resource url.
+     *
+     * @return String.
+     */
     public String getResourceUrl() {
         return RESOURCE_URL;
     }
 
+    /**
+     * Gets the search url.
+     *
+     * @return String.
+     */
     public String getSearchUrl() {
         return SEARCH_URL;
     }

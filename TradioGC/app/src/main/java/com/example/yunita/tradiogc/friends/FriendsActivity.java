@@ -1,6 +1,5 @@
 package com.example.yunita.tradiogc.friends;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +22,13 @@ public class FriendsActivity extends AppCompatActivity {
     private ListView friendList;
     private FriendsController friendsController;
     private ArrayAdapter<String> friendsViewAdapter;
+    private Runnable doUpdateGUIDetails = new Runnable() {
+        public void run() {
+            friendsViewAdapter.clear();
+            friendsViewAdapter.addAll(friends);
+            friendsViewAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,12 @@ public class FriendsActivity extends AppCompatActivity {
         friendList = (ListView) findViewById(R.id.friend_list_view);
     }
 
+    /**
+     * Sets up the friends view adapter and manipulate the list view.
+     * While the item list is clicked, it sends user to friend pofile.
+     * While the item list is long clicked, it removes friend from
+     * the user friend list and calls delete thread.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -61,25 +73,45 @@ public class FriendsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Updates user's friends everytime the user going back to friends page.
+     */
     @Override
     public void onResume() {
         super.onResume();
         friends = LoginActivity.USERLOGIN.getFriends();
     }
 
-    // Send to search friend page after clicking "Add Friend" button
+    /**
+     * Called when the user clicks "Add New Friend" button.
+     * <p>This method is used to send user to search friend page.
+     *
+     * @param view "Add New Friend" button.
+     */
     public void searchUser(View view) {
         Intent intent = new Intent(this, SearchUserActivity.class);
         startActivity(intent);
     }
 
-    // go to a friend's profile
+    /**
+     * Called when the user clicks friend's name in list view.
+     * <p>This method is used to send user to his friend's profile page.
+     *
+     * @param username friends's name.
+     */
     public void viewFriendProfile(String username) {
         Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra(ProfileActivity.USERNAME, username);
         startActivity(intent);
     }
 
+    /**
+     * Called when the user attempts to delete a friend by long pressing
+     * on friend's name.
+     * <p>This class creates a thread and runs "Delete Friend".
+     * While it is running, it removes this friend in user's friend list
+     * and updates the friends list view.
+     */
     class DeleteFriendThread extends Thread {
         private String friendname;
 
@@ -94,13 +126,5 @@ public class FriendsActivity extends AppCompatActivity {
             runOnUiThread(doUpdateGUIDetails);
         }
     }
-
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-            friendsViewAdapter.clear();
-            friendsViewAdapter.addAll(friends);
-            friendsViewAdapter.notifyDataSetChanged();
-        }
-    };
 
 }

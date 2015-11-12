@@ -57,6 +57,12 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * Called when the user clicks on "Create Account".
+     * <p>This method is used to show the sign up panel in login page.
+     *
+     * @param view "Create Account" text view.
+     */
     public void goToSignUp(View view) {
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.pull_down);
         login_view.setVisibility(View.GONE);
@@ -64,12 +70,21 @@ public class LoginActivity extends Activity {
         signup_view.startAnimation(anim);
     }
 
+    /**
+     * Called when the user clicks on "Login".
+     * <p>This method is used to show the login panel in login page.
+     *
+     * @param view "Login" text view.
+     */
     public void goToLogin(View view) {
         signup_view.setVisibility(View.GONE);
         login_view.setVisibility(View.VISIBLE);
     }
 
-
+    /**
+     * Called when the user clicks "Login" or "Sign Up" button.
+     * <p>This method is used to send user to Main page.
+     */
     public void goToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -77,7 +92,14 @@ public class LoginActivity extends Activity {
         finish();
     }
 
-
+    /**
+     * Called when the user clicks "Login" button.
+     * <p>This method is used to check whether username is exist in webserver.
+     * If it is exist, store user information to USERLOGIN and direct user to Main page.
+     * Otherwise, it shows error message.
+     *
+     * @param view "Login" button.
+     */
     public void login(View view) {
 
         final String username = username_et.getText().toString();
@@ -104,6 +126,14 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * Called when the user clicks "Sign Up" button.
+     * <p>This method is used to check whether username is unique.
+     * If the username is unique, it will create a new user.
+     * Otherwise, it shows error message.
+     *
+     * @param view "Sign Up" button.
+     */
     public void signUp(View view) {
         String username = username_et.getText().toString();
         String location = location_et.getText().toString();

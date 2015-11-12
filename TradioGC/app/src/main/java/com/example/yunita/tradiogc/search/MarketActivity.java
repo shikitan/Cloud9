@@ -4,20 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.friends.Friends;
-import com.example.yunita.tradiogc.friends.FriendsController;
 import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.profile.ProfileActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 import com.example.yunita.tradiogc.user.Users;
@@ -32,6 +27,23 @@ public class MarketActivity extends AppCompatActivity {
     private Inventory friendsItems = new Inventory();
     private ListView friendsItemList;
     private ArrayAdapter<Item> friendsItemViewAdapter;
+    private Runnable doUpdateGUIDetails = new Runnable() {
+        public void run() {
+
+            // initialize new inv to avoid an "adding item twice" bug
+            Inventory inv = new Inventory();
+            for (User user : users) {
+                Inventory pItems;
+                if (friends.contains(user.getUsername())) {
+                    pItems = new Inventory().getPublicItems(user.getInventory());
+                    inv.addAll(pItems);
+                }
+            }
+
+            friendsItemViewAdapter.addAll(inv);
+            friendsItemViewAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +56,14 @@ public class MarketActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         friendsItemViewAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, friendsItems);
         friendsItemList.setAdapter(friendsItemViewAdapter);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         friendsItems.clear();
 
@@ -73,13 +85,13 @@ public class MarketActivity extends AppCompatActivity {
         getUsersThread.start();
     }
 
-    public void goToSearchByCategory(View view){
+    public void goToSearchByCategory(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
         intent.putExtra("search", "category");
         startActivity(intent);
     }
 
-    public void goToSearchByQuery(View view){
+    public void goToSearchByQuery(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
         intent.putExtra("search", "query");
         startActivity(intent);
@@ -100,23 +112,5 @@ public class MarketActivity extends AppCompatActivity {
         }
 
     }
-
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-
-            // initialize new inv to avoid an "adding item twice" bug
-            Inventory inv = new Inventory();
-            for(User user : users){
-                Inventory pItems;
-                if(friends.contains(user.getUsername())){
-                    pItems = new Inventory().getPublicItems(user.getInventory());
-                    inv.addAll(pItems);
-                }
-            }
-
-            friendsItemViewAdapter.addAll(inv);
-            friendsItemViewAdapter.notifyDataSetChanged();
-        }
-    };
 
 }

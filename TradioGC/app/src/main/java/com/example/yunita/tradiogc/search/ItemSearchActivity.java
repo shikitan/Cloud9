@@ -2,7 +2,6 @@ package com.example.yunita.tradiogc.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,11 +23,11 @@ public class ItemSearchActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        if(extras.getString("search").equals("query")){
+        if (extras.getString("search").equals("query")) {
             query_panel.setVisibility(View.VISIBLE);
         } else {
             category_panel.setVisibility(View.VISIBLE);

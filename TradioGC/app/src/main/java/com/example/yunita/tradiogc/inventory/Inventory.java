@@ -26,6 +26,12 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
         }
     }
 
+    /**
+     * Gets user's list of public items.
+     *
+     * @param inventory user's inventory.
+     * @return Inventory inventory contains public items.
+     */
     public Inventory getPublicItems(Inventory inventory) {
         Inventory pInventory = new Inventory();
         for (Item item : inventory) {

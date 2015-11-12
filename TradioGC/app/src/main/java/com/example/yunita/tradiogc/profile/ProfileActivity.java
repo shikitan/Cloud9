@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     public static String USERNAME;
     private String targetUsername;
     private User user;
-    private Friends friends = LoginActivity.USERLOGIN.getFriends();
+//    private Friends friends = LoginActivity.USERLOGIN.getFriends();
 
     private UserController userController;
     private FriendsController friendsController;
@@ -62,6 +62,12 @@ public class ProfileActivity extends AppCompatActivity {
         edit_button = (ImageButton) findViewById(R.id.edit_button);
     }
 
+    /**
+     * Gets the username that is passed from previous activity.
+     * <p>In this case, it could be from friends, search user
+     * or main activity. This activity determines which panel that
+     * user will see (ie. my profile, friend's profile, or stranger profile).
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -99,34 +105,67 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * While the user clicks on back, it removes the transition.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, 0);
     }
 
+    /**
+     * Called when the user clicks "Inventory" button in this user profile.
+     * <p>This method is used to send user to inventory page.
+     *
+     * @param view "Inventory" button in this user profile.
+     */
     public void goToInventory(View view) {
         Intent intent = new Intent(this, MyInventoryActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Called when the user clicks "Inventory" button in this user's friend profile.
+     * <p>This method is used to send user to friend's inventory page, and pass
+     * friend's name to the friends inventory activity.
+     *
+     * @param view "Inventory" button in friend profile.
+     */
     public void goToFriendInventory(View view) {
         Intent intent = new Intent(context, FriendsInventoryActivity.class);
         intent.putExtra("friend_uname", targetUsername);
         startActivity(intent);
     }
 
+    /**
+     * Called when the user clicks "Add Friend" button.
+     * <p>This method is used to add friend into this user's friend list,
+     * and run update user thread.
+     *
+     * @param view "Add Friend" button.
+     */
     public void addFriend(View view) {
         friendsController.addFriend(targetUsername);
         finish();
     }
 
+    /**
+     * Called when the user clicks "Pencil" icon in this user profile page.
+     * <p>This method is used to send user to edit profile page.
+     *
+     * @param view "Pencil" icon.
+     */
     public void editProfile(View view) {
         Intent intent = new Intent(context, EditProfileActivity.class);
         startActivity(intent);
     }
 
-
+    /**
+     * Called when the activity is started.
+     * <p>This class creates a thread and runs "Get User".
+     * The purpose is to update this user information and profile page.
+     */
     class GetThread extends Thread {
         private String username;
 

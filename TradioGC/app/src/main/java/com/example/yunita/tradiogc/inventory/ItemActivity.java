@@ -64,7 +64,7 @@ public class ItemActivity extends AppCompatActivity {
             price.setText("$" + Double.toString(item.getPrice()));
             description.setText(item.getDesc());
             quantity.setText(Integer.toString(item.getQuantity()));
-            if(item.getQuality() == 0){
+            if (item.getQuality() == 0) {
                 quality.setText("New");
             } else {
                 quality.setText("Used");
@@ -87,9 +87,10 @@ public class ItemActivity extends AppCompatActivity {
 
     }
 
-    // Most of the onStart right now is for altering the layout depending if you're viewing as a
-    // friend or as the owner of the item
-
+    /**
+     * Alters the layout depending if this user is viewing as friend or
+     * as the owner of the item.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -107,6 +108,9 @@ public class ItemActivity extends AppCompatActivity {
         runOnUiThread(doUpdateGUIDetails);
     }
 
+    /**
+     * Updates this user's inventory and the list view.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -126,7 +130,9 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Called when user clicks back.
+     */
     @Override
     public void onBackPressed() {
         // fix remove inventory bug
@@ -139,6 +145,13 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called when the user clicks "Pencil" icon in Item Detail page.
+     * <p>This method is used to send user to Edit Item page.
+     * It passes the index of the item in the inventory.
+     *
+     * @param view "Pencil" icon in Item Detail page.
+     */
     public void editItem(View view) {
         Intent intent = new Intent(context, EditItemActivity.class);
         intent.putExtra("index", index);

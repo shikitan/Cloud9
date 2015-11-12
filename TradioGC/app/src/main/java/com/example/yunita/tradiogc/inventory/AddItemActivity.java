@@ -39,6 +39,9 @@ public class AddItemActivity extends AppCompatActivity {
         qualityChoice = (Spinner) findViewById(R.id.quality_spinner);
     }
 
+    /**
+     * Manipulates the category and quality drop down menu.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -51,6 +54,14 @@ public class AddItemActivity extends AppCompatActivity {
         qualityChoice.setAdapter(adapter2);
     }
 
+    /**
+     * Called when the user clicks "Add Item" button.
+     * <p>This method is used to check the user input.
+     * If all fields are filled, it creates a new item
+     * and adds it into inventory.
+     *
+     * @param view "Add Item" button.
+     */
     public void addNewItem(View view) {
         String name = nameEdit.getText().toString();
         String price_str = priceEdit.getText().toString();
@@ -74,7 +85,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
             int quantity = Integer.parseInt(quantityEdit.getText().toString());
             int quality = qualityChoice.getSelectedItemPosition();
-            
+
             Item newItem = new Item(name, category, price, description, visibility, quantity, quality);
             inventoryController.addItem(newItem);
 

@@ -37,7 +37,14 @@ public class SearchUserActivity extends AppCompatActivity {
         editText1 = (EditText) findViewById(R.id.search_by_username_et);
     }
 
-
+    /**
+     * Sets up the users view adapter and manipulate the list view
+     * according to user query.
+     * <p>This method runs search thread. While the thread is running, it
+     * search for all or specific user in webserver and return the list of user.
+     * While the user clicks on the username, it sends the user to that username's
+     * profile page.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -71,12 +78,23 @@ public class SearchUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Called when the user clicks username in search list view.
+     * <p>This method is used to send user to that username's profile page.
+     *
+     * @param username the person name that this user want to track.
+     */
     public void startProfileActivity(String username) {
         Intent intent = new Intent(mContext, ProfileActivity.class);
         intent.putExtra(ProfileActivity.USERNAME, username);
         startActivity(intent);
     }
 
+    /**
+     * Called after the user search list is updated and while search
+     * thread is running.
+     * <p>this method notifies the View if there is a change in user search list.
+     */
     public void notifyUpdated() {
         // Thread to update adapter after an operation
         Runnable doUpdateGUIList = new Runnable() {
@@ -87,7 +105,12 @@ public class SearchUserActivity extends AppCompatActivity {
         runOnUiThread(doUpdateGUIList);
     }
 
-
+    /**
+     * Called when the user attempts to search for a specific user.
+     * <p>This class creates a thread and runs "Search User" in webserver.
+     * While it is running, it updates the user search list and notifies
+     * the view for the change.
+     */
     class SearchThread extends Thread {
         private String search;
 
@@ -104,6 +127,10 @@ public class SearchUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This class sets up the accuracy of the search list view
+     * while doing partial search.
+     */
     // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
     // (C) 2015 user1338795
     abstract class DelayedTextWatcher implements TextWatcher {
