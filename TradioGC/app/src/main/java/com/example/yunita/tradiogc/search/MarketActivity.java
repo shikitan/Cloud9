@@ -25,27 +25,23 @@ public class MarketActivity extends AppCompatActivity {
     private Friends friends;
     private Users users = new Users();
     private UserController userController;
-    private Inventory friendsItems = new Inventory();
+    private SearchInventory friendsItems = new SearchInventory();
     private ListView friendsItemListView;
-    private ArrayAdapter<Item> friendsItemViewAdapter;
-
-    // hash map, in case search for all friends inventory
-    private SearchMap searchMap = new SearchMap();
+    private ArrayAdapter<SearchItem> friendsItemViewAdapter;
 
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             friendsItems.clear();
-            searchMap.clear();
             for (User user : users) {
                 Inventory pItems;
                 if (friends.contains(user.getUsername())) {
                     pItems = new Inventory().getPublicItems(user.getInventory());
-                    friendsItems.addAll(pItems);
-
-                    // in case search for all friends inventory, remove if necessary
-                    searchMap.put(user.getUsername(), pItems);
+                    for (Item publicItem : pItems) {
+                        friendsItems.add(new SearchItem(user.getUsername(), publicItem));
+                    }
                 }
             }
+
             friendsItemViewAdapter.notifyDataSetChanged();
         }
     };
@@ -63,14 +59,14 @@ public class MarketActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        friendsItemViewAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, friendsItems);
+        friendsItemViewAdapter = new ArrayAdapter<SearchItem>(this, R.layout.friend_list_item, friendsItems);
         friendsItemListView.setAdapter(friendsItemViewAdapter);
 
         friendsItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = friendsItems.get(position);
-                viewItemDetails(item, position);
+                SearchItem searchItem = friendsItems.get(position);
+                viewItemDetails(searchItem, position);
             }
         });
     }
@@ -98,19 +94,29 @@ public class MarketActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Called when the user clicks the "Search by Category" button in Market page.
+     * <p>This method is used to send the user to the Search Item by Category page.
+     *
+     * @param view "Search by Category" button.
+     */
     public void goToSearchByCategory(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
         intent.putExtra("search", "category");
-        intent.putExtra("searchMap", searchMap);
-//
+        intent.putExtra("friendsItems", friendsItems);
         startActivity(intent);
     }
 
+    /**
+     * Called when the user clicks the "Search by Query" button in Market page.
+     * <p>This method is used to send the user to the Search Item by Query page.
+     *
+     * @param view "Search by Query" button.
+     */
     public void goToSearchByQuery(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
         intent.putExtra("search", "query");
-        intent.putExtra("searchMap", searchMap);
-//        intent.putExtra("friendsItems", friendsItems);
+        intent.putExtra("friendsItems", friendsItems);
         startActivity(intent);
     }
 
@@ -120,12 +126,12 @@ public class MarketActivity extends AppCompatActivity {
      * pass item index position and tell Item Detail activity
      * to show the Item Detail page from borrower(friend)'s perspective.
      *
-     * @param item     this item.
-     * @param position this item's index in friends' item list.
+     * @param searchItem this item.
+     * @param position   this item's index in friends' item list.
      */
-    public void viewItemDetails(Item item, int position) {
+    public void viewItemDetails(SearchItem searchItem, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra("item", item);
+        intent.putExtra("item", searchItem.getoItem());
         intent.putExtra("owner", "friend");
         intent.putExtra("index", position);
 

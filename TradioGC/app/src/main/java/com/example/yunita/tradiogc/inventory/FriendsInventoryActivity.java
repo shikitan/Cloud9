@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.user.UserController;
-import com.example.yunita.tradiogc.user.Users;
 
 public class FriendsInventoryActivity extends AppCompatActivity {
 

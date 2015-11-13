@@ -124,7 +124,7 @@ public class SearchUserActivity extends AppCompatActivity {
             users.clear();
             users.addAll(userController.searchUsers(search));
 
-            System.out.println("search users: "+users.size());
+            System.out.println("search users: " + users.size());
             notifyUpdated();
         }
 

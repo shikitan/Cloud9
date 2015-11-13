@@ -10,11 +10,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.inventory.Inventory;
-import com.example.yunita.tradiogc.inventory.Item;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ItemSearchActivity extends AppCompatActivity {
 
@@ -25,10 +22,10 @@ public class ItemSearchActivity extends AppCompatActivity {
     private ListView queryListView;
     private ListView categoryListView;
 
-    private ArrayAdapter<Item> queryViewAdapter;
-    private ArrayAdapter<Item> categoryViewAdapter;
+    private ArrayAdapter<SearchItem> queryViewAdapter;
+    private ArrayAdapter<SearchItem> categoryViewAdapter;
 
-    private Inventory friendsItems = new Inventory();
+    private SearchInventory friendsItems = new SearchInventory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +47,14 @@ public class ItemSearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        HashMap<String, Inventory> tempMap = (HashMap<String, Inventory>) extras.getSerializable("searchMap");
-        // error here, cannot cast to SearchMap
-//        SearchMap searchMap = (SearchMap) tempMap;
-        SearchMap searchMap = new SearchMap();
-        Inventory tempInventory = searchMap.getSearchInventory(tempMap);
-
-//        //this is how to handle class that extends ArrayList<> and implements Serializable
-//        ArrayList<Item> tempInventory = (ArrayList<Item>) extras.getSerializable("friendsItems");
+        //this is how to handle class that extends ArrayList<> and implements Serializable
+        ArrayList<SearchItem> tempInventory = (ArrayList<SearchItem>) extras.getSerializable("friendsItems");
         friendsItems.addAll(tempInventory);
 
         if (extras.getString("search").equals("query")) {
             query_panel.setVisibility(View.VISIBLE);
 
-            queryViewAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, friendsItems);
+            queryViewAdapter = new ArrayAdapter<>(this, R.layout.friend_list_item, friendsItems);
             queryListView.setAdapter(queryViewAdapter);
 
         } else {
@@ -73,7 +64,7 @@ public class ItemSearchActivity extends AppCompatActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             categoriesChoice.setAdapter(adapter);
 
-            categoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.friend_list_item, friendsItems);
+            categoryViewAdapter = new ArrayAdapter<>(this, R.layout.friend_list_item, friendsItems);
             categoryListView.setAdapter(categoryViewAdapter);
         }
 

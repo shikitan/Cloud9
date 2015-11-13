@@ -102,7 +102,7 @@ public class MyInventoryActivity extends AppCompatActivity {
      * pass the item index position, and tell the Item Detail activity
      * to show the Item Detail page from the user's perspective.
      *
-     * @param item this item
+     * @param item     this item
      * @param position this item's index in the inventory
      */
     public void viewItemDetails(Item item, int position) {

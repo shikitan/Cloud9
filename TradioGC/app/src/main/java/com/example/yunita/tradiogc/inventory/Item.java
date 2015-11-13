@@ -22,13 +22,13 @@ public class Item implements Serializable {
     /**
      * Class constructor specifying the details of the object.
      *
-     * @param name contains the name of the item
-     * @param category contains an integer that represents an index of the Categories array
-     * @param price contains a double for the price of the item
-     * @param desc contains the description/comment of the item
+     * @param name       contains the name of the item
+     * @param category   contains an integer that represents an index of the Categories array
+     * @param price      contains a double for the price of the item
+     * @param desc       contains the description/comment of the item
      * @param visibility determines whether the item is shared publicly or privately
-     * @param quantity contains an integer 1..* for the amount that the owner has of the item
-     * @param quality contains an integer that describes the item's quality; 0 is new and 1 is used
+     * @param quantity   contains an integer 1..* for the amount that the owner has of the item
+     * @param quality    contains an integer that describes the item's quality; 0 is new and 1 is used
      */
     public Item(String name, int category, double price, String desc, Boolean visibility, int quantity, int quality) {
         this.category = category;
