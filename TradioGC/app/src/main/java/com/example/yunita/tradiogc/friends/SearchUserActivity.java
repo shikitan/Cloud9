@@ -123,6 +123,8 @@ public class SearchUserActivity extends AppCompatActivity {
         public void run() {
             users.clear();
             users.addAll(userController.searchUsers(search));
+
+            System.out.println("search users: "+users.size());
             notifyUpdated();
         }
 

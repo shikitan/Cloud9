@@ -177,6 +177,8 @@ public class UserController {
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
             result.add(hit.getSource());
         }
+
+        System.out.println("1 result: " + result.size());
         return result;
     }
 
@@ -195,6 +197,7 @@ public class UserController {
             }
         }
         result.notifyObservers();
+        System.out.println("2 result: " + result.size());
         return result;
     }
 

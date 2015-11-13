@@ -28,14 +28,22 @@ public class MarketActivity extends AppCompatActivity {
     private Inventory friendsItems = new Inventory();
     private ListView friendsItemListView;
     private ArrayAdapter<Item> friendsItemViewAdapter;
+
+    // hash map, in case search for all friends inventory
+    private SearchMap searchMap = new SearchMap();
+
     private Runnable doUpdateGUIDetails = new Runnable() {
         public void run() {
             friendsItems.clear();
+            searchMap.clear();
             for (User user : users) {
                 Inventory pItems;
                 if (friends.contains(user.getUsername())) {
                     pItems = new Inventory().getPublicItems(user.getInventory());
                     friendsItems.addAll(pItems);
+
+                    // in case search for all friends inventory, remove if necessary
+                    searchMap.put(user.getUsername(), pItems);
                 }
             }
             friendsItemViewAdapter.notifyDataSetChanged();
@@ -61,8 +69,6 @@ public class MarketActivity extends AppCompatActivity {
         friendsItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // debug purpose
-                System.out.println("friends item: " + friendsItems);
                 Item item = friendsItems.get(position);
                 viewItemDetails(item, position);
             }
@@ -95,14 +101,16 @@ public class MarketActivity extends AppCompatActivity {
     public void goToSearchByCategory(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
         intent.putExtra("search", "category");
-        intent.putExtra("friendsItems", friendsItems);
+        intent.putExtra("searchMap", searchMap);
+//
         startActivity(intent);
     }
 
     public void goToSearchByQuery(View view) {
         Intent intent = new Intent(context, ItemSearchActivity.class);
         intent.putExtra("search", "query");
-        intent.putExtra("friendsItems", friendsItems);
+        intent.putExtra("searchMap", searchMap);
+//        intent.putExtra("friendsItems", friendsItems);
         startActivity(intent);
     }
 

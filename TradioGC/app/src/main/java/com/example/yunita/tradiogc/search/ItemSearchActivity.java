@@ -14,6 +14,7 @@ import com.example.yunita.tradiogc.inventory.Inventory;
 import com.example.yunita.tradiogc.inventory.Item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ItemSearchActivity extends AppCompatActivity {
 
@@ -49,8 +50,14 @@ public class ItemSearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        // this is how to handle class that extends ArrayList<> and implements Serializable
-        ArrayList<Item> tempInventory = (ArrayList<Item>) extras.getSerializable("friendsItems");
+        HashMap<String, Inventory> tempMap = (HashMap<String, Inventory>) extras.getSerializable("searchMap");
+        // error here, cannot cast to SearchMap
+//        SearchMap searchMap = (SearchMap) tempMap;
+        SearchMap searchMap = new SearchMap();
+        Inventory tempInventory = searchMap.getSearchInventory(tempMap);
+
+//        //this is how to handle class that extends ArrayList<> and implements Serializable
+//        ArrayList<Item> tempInventory = (ArrayList<Item>) extras.getSerializable("friendsItems");
         friendsItems.addAll(tempInventory);
 
         if (extras.getString("search").equals("query")) {
