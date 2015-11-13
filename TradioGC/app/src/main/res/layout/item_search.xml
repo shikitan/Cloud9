@@ -43,14 +43,14 @@
 
             <EditText
                 android:layout_margin="2dp"
-                android:id="@+id/search_by_username_et"
+                android:id="@+id/search_by_query_et"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Search by query"
                 android:layout_weight="1"
                 android:maxLines="1" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/query_search_btn"
                 android:background="@null"
                 android:layout_width="wrap_content"

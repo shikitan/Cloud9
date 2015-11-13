@@ -56,6 +56,11 @@ public class MarketActivity extends AppCompatActivity {
         friendsItemListView = (ListView) findViewById(R.id.all_search_list_view);
     }
 
+    /**
+     * Sets up the view for Market page.
+     * <p>In addition, when the user clicks on an item,
+     * it sends the user to the Item Detail page.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -71,6 +76,9 @@ public class MarketActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *  Updates user login, and gets all users from webserver.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -88,7 +96,7 @@ public class MarketActivity extends AppCompatActivity {
 
         friends = LoginActivity.USERLOGIN.getFriends();
 
-        // get all users in db
+        // get all users in webserver
         Thread getUsersThread = new GetUsersThread("");
         getUsersThread.start();
 
@@ -138,6 +146,11 @@ public class MarketActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Called when the activity starts.
+     * <p>This class creates a thread and runs "Search Users".
+     * The purpose of this class is to get all users from webserver.
+     */
     class GetUsersThread extends Thread {
         private String search;
 
