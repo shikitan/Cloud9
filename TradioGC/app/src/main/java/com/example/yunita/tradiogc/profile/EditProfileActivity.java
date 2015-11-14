@@ -58,8 +58,8 @@ public class EditProfileActivity extends AppCompatActivity {
         String email = email_et.getText().toString();
         String phone = phone_et.getText().toString();
 
-        LoginActivity.USERLOGIN.setLocation(location);
-        LoginActivity.USERLOGIN.setEmail(email);
+        LoginActivity.USERLOGIN.setLocation(location.toUpperCase());
+        LoginActivity.USERLOGIN.setEmail(email.toLowerCase());
         LoginActivity.USERLOGIN.setPhone(phone);
 
         UserController userController = new UserController(context);

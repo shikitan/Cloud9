@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
-import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
@@ -26,7 +25,6 @@ import java.util.Arrays;
 public class FriendsInventoryActivity extends AppCompatActivity {
     private Spinner categoriesChoice;
     private EditText query_et;
-    private Button add;
     private ListView item_list;
 
     private Inventory inventory = new Inventory();
@@ -42,12 +40,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
     private int categorySelection = 0;
 
 
-    /**
-     * Gets the friend's name that was passed from previous activity.
-     * <p>This method runs the "Get Inventory Thread" and gets the inventory of a
-     * friend. In addition, when the user clicks on an item, it sends the user
-     * to the Item Detail page.
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,21 +49,24 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         item_list = (ListView) findViewById(R.id.inventory_list_view);
         categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
         query_et = (EditText) findViewById(R.id.query_et);
-        add = (Button) findViewById(R.id.add_item_button);
+
+        Button add = (Button) findViewById(R.id.add_item_button);
         add.setVisibility(View.GONE);
 
-
         userController = new UserController(context);
-
-
     }
 
+    /**
+     * Gets the friend's name that was passed from previous activity.
+     * <p>This method runs the "Get Inventory Thread" and gets the inventory of a
+     * friend. In addition, when the user clicks on an item, it sends the user
+     * to the Item Detail page.
+     */
     @Override
     protected void onStart() {
         super.onStart();
 
         Intent intent = getIntent();
-
         if (intent != null) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
@@ -78,24 +74,23 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         }
 
+        ArrayList<String> categories = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories_array)));
+        categories.add(0, "--Category--");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriesChoice.setAdapter(adapter);
+
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
         item_list.setAdapter(inventoryViewAdapter);
+
         item_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = inventory.get(position);
-                viewItemDetails(item, position);
+                viewItemDetails(item, friend.getInventory().indexOf(item));
             }
         });
 
-        ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
-        categories.add(0, "--Category--");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        categoriesChoice.setAdapter(adapter);
-        categoriesChoice.setSelection(0);
 
         Thread refreshUserThread = new RefreshUserThread(friendname);
         refreshUserThread.start();
@@ -107,34 +102,31 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         }
 
-        inventory.clear();
-        inventory.addAll(friend.getInventory().getPublicItems());
-        notifyUpdated();
 
         categoriesChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categorySelection = position;
                 category = position - 1;
                 searchItem(category, query);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
-
         query_et.addTextChangedListener(new DelayedTextWatcher(500) {
             @Override
             public void afterTextChangedDelayed(Editable s) {
                 query = s.toString();
-                searchItem(category,query);
+                searchItem(category, query);
             }
         });
     }
 
+    /**
+     * Loading user's category choice and refreshing user data
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -178,14 +170,22 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         intent.putExtra("item", item);
         // mark this as "friends" page
         intent.putExtra("owner", "friend");
+        intent.putExtra("index",position);
 
         startActivity(intent);
     }
 
+    /**
+     * Called when the user changes the category selection or edittext.
+     * This method is used to browse items by query and category.
+     * @param category the category choosed
+     * @param query input of part of item name
+     */
     public void searchItem(int category, String query) {
         inventory.clear();
         for (Item item : friend.getInventory().getPublicItems()) {
-            if (item.getName().contains(query) && (item.getCategory() == category || category==-1)) {
+            if (item.getName().toLowerCase().contains(query.toLowerCase()) &&
+                    (item.getCategory() == category || category == -1)) {
                 inventory.add(item);
             }
         }
@@ -207,14 +207,11 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         @Override
         public void run() {
             synchronized (this) {
-                // only show public items
                 friend = userController.getUser(username);
                 notify();
             }
         }
     }
-
-
 
     /**
      * This class sets up the accuracy of the search list view

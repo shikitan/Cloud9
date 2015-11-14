@@ -53,8 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        overridePendingTransition(0, 0);
-
         friendsController = new FriendsController(context);
         myprofile_panel = (LinearLayout) findViewById(R.id.myprofile_button_panel);
         stranger_panel = (LinearLayout) findViewById(R.id.stranger_button_panel);
@@ -105,14 +103,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * When the user presses the back button, the transition is removed.
-     */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(0, 0);
-    }
 
     /**
      * Called when the user presses the "Inventory" button on the user's Profile page.

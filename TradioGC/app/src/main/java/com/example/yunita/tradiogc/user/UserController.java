@@ -191,7 +191,7 @@ public class UserController {
         Users result = new Users();
         Users allUsers = getAllUsers(null);
         for (User user : allUsers) {
-            if (user.getUsername().indexOf(searchString) != -1) {
+            if (user.getUsername().toLowerCase().contains(searchString.toLowerCase())) {
                 result.add(user);
             }
         }

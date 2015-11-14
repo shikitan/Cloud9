@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
-import com.example.yunita.tradiogc.user.UserController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,10 +60,8 @@ public class MyInventoryActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
-        ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
+        ArrayList<String> categories = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.categories_array)));
         categories.add(0, "--Category--");
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -73,7 +70,6 @@ public class MyInventoryActivity extends AppCompatActivity {
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
         itemList.setAdapter(inventoryViewAdapter);
 
-
         itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,7 +77,6 @@ public class MyInventoryActivity extends AppCompatActivity {
                 viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
             }
         });
-
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,7 +97,6 @@ public class MyInventoryActivity extends AppCompatActivity {
                 category = position - 1;
                 searchItem(category, query);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -117,6 +111,9 @@ public class MyInventoryActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Loading user's category choice
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -151,7 +148,7 @@ public class MyInventoryActivity extends AppCompatActivity {
      * pass the item index position, and tell the Item Detail activity
      * to show the Item Detail page from the user's perspective.
      *
-     * @param index     the index of item in inventory
+     * @param index the index of item in inventory
      */
     public void viewItemDetails(int index) {
         Intent intent = new Intent(context, ItemActivity.class);
@@ -160,17 +157,22 @@ public class MyInventoryActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     * Called when the user changes the category selection or edittext.
+     * This method is used to browse items by query and category.
+     * @param category the category choosed
+     * @param query input of part of item name
+     */
     public void searchItem(int category, String query) {
         inventory.clear();
         for (Item item : LoginActivity.USERLOGIN.getInventory()) {
-            if (item.getName().contains(query) && (item.getCategory() == category || category==-1)) {
+            if (item.getName().toLowerCase().contains(query.toLowerCase()) &&
+                    (item.getCategory() == category || category == -1)) {
                 inventory.add(item);
             }
         }
         notifyUpdated();
     }
-
 
     /**
      * This class sets up the accuracy of the search list view
