@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="Search item"
+            android:hint="search items..."
             android:maxLines="1"/>
         <Spinner
             android:id="@+id/item_by_category_spinner"

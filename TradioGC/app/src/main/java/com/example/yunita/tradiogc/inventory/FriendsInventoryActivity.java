@@ -39,7 +39,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
     private int category = -1;
     private String query = "";
-
+    private int categorySelection = 0;
 
 
     /**
@@ -89,7 +89,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         });
 
         ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
-        categories.add(0, "All");
+        categories.add(0, "--Category--");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -115,6 +115,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categorySelection = position;
                 category = position - 1;
                 searchItem(category, query);
             }
@@ -146,7 +147,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        notifyUpdated();
+        categoriesChoice.setSelection(categorySelection);
     }
 
     /**
