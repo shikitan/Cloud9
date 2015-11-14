@@ -2,17 +2,25 @@ package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.yunita.tradiogc.R;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class MyInventoryActivity extends AppCompatActivity {
@@ -21,23 +29,12 @@ public class MyInventoryActivity extends AppCompatActivity {
 
     private ListView itemList;
     private ArrayAdapter<Item> inventoryViewAdapter;
+    private Spinner categoriesChoice;
 
     private InventoryController inventoryController;
-    private UserController userController;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_inventory);
-
-        overridePendingTransition(0, 0);
-
-        inventoryController = new InventoryController(context);
-        userController = new UserController(context);
-
-        itemList = (ListView) findViewById(R.id.inventory_list_view);
-    }
+    private EditText query_et;
+    private int category = -1;
+    private String query = "";
 
     /**
      * Sets up the "Inventory View Adapter" and manipulates the list view.
@@ -46,10 +43,29 @@ public class MyInventoryActivity extends AppCompatActivity {
      * the user's inventory and calls the "Delete Item Thread".
      */
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.inventory);
+
+        overridePendingTransition(0, 0);
+
+        inventoryController = new InventoryController(context);
+
+        itemList = (ListView) findViewById(R.id.inventory_list_view);
+        categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
+        query_et = (EditText) findViewById(R.id.query_et);
+
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
         itemList.setAdapter(inventoryViewAdapter);
+
+        ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
+        categories.add(0, "All");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriesChoice.setAdapter(adapter);
+        categoriesChoice.setSelection(0);
 
 
         itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,29 +77,49 @@ public class MyInventoryActivity extends AppCompatActivity {
         });
 
         itemList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                                                @Override
-                                                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                                                    Item deletedItem = inventory.get(position);
-                                                    Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
-                                                    deleteThread.start();
-                                                    inventory.remove(deletedItem);
-                                                    Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
-                                                    inventoryViewAdapter.notifyDataSetChanged();
-                                                    return true;
-                                                }
-                                            }
-        );
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Item deletedItem = inventory.get(position);
+                Thread deleteThread = inventoryController.new DeleteItemThread(deletedItem);
+                deleteThread.start();
+                inventory.remove(deletedItem);
+                Toast.makeText(context, "Removing " + deletedItem.toString(), Toast.LENGTH_SHORT).show();
+                notifyUpdated();
+                return true;
+            }
+        });
+
+        categoriesChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = position - 1;
+                searchItem(category, query);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        query_et.addTextChangedListener(new DelayedTextWatcher(500) {
+            @Override
+            public void afterTextChangedDelayed(Editable s) {
+                query = s.toString();
+                searchItem(category, query);
+            }
+        });
+
     }
 
     /**
-     * Refreshes the list view.
+     * Notify the listview to be refreshed
      */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        inventory.clear();
-        inventory.addAll(LoginActivity.USERLOGIN.getInventory());
-        inventoryViewAdapter.notifyDataSetChanged();
+    public void notifyUpdated() {
+        Runnable doUpdateGUIList = new Runnable() {
+            public void run() {
+                inventoryViewAdapter.notifyDataSetChanged();
+            }
+        };
+        runOnUiThread(doUpdateGUIList);
     }
 
     /**
@@ -107,13 +143,77 @@ public class MyInventoryActivity extends AppCompatActivity {
      */
     public void viewItemDetails(Item item, int position) {
         Intent intent = new Intent(context, ItemActivity.class);
-        intent.putExtra("item", item);
         intent.putExtra("owner", "owner");
-        intent.putExtra("index", position);
-
+        intent.putExtra("index",LoginActivity.USERLOGIN.getInventory().indexOf(item));
         startActivity(intent);
         finish();
     }
 
 
+    public void searchItem(int category, String query) {
+        inventory.clear();
+        for (Item item : LoginActivity.USERLOGIN.getInventory()) {
+            if (item.getName().contains(query) && (item.getCategory() == category || category==-1)) {
+                inventory.add(item);
+            }
+        }
+        notifyUpdated();
+    }
+
+
+    /**
+     * This class sets up the accuracy of the search list view
+     * while doing a partial search.
+     */
+    // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+    // (C) 2015 user1338795
+    abstract class DelayedTextWatcher implements TextWatcher {
+
+        private long delayTime;
+        private WaitTask lastWaitTask;
+
+        public DelayedTextWatcher(long delayTime) {
+            super();
+            this.delayTime = delayTime;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            synchronized (this) {
+                if (lastWaitTask != null) {
+                    lastWaitTask.cancel(true);
+                }
+                lastWaitTask = new WaitTask();
+                lastWaitTask.execute(s);
+            }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        public abstract void afterTextChangedDelayed(Editable s);
+
+        private class WaitTask extends AsyncTask<Editable, Void, Editable> {
+
+            @Override
+            protected Editable doInBackground(Editable... params) {
+                try {
+                    Thread.sleep(delayTime);
+                } catch (InterruptedException e) {
+                }
+                return params[0];
+            }
+
+            @Override
+            protected void onPostExecute(Editable result) {
+                super.onPostExecute(result);
+                afterTextChangedDelayed(result);
+            }
+        }
+    }
 }

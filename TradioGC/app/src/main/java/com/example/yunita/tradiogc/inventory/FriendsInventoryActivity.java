@@ -2,44 +2,45 @@ package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.yunita.tradiogc.R;
+import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
 
-public class FriendsInventoryActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Arrays;
 
-    private Context context = this;
+public class FriendsInventoryActivity extends AppCompatActivity {
+    private Spinner categoriesChoice;
+    private EditText query_et;
+    private Button add;
+    private ListView item_list;
+
     private Inventory inventory = new Inventory();
     private UserController userController;
-    private String targetUsername;
-
-    private ListView itemList;
+    private String friendname;
+    private User friend;
     private ArrayAdapter<Item> inventoryViewAdapter;
-    private Runnable doUpdateGUIDetails = new Runnable() {
-        public void run() {
-            inventoryViewAdapter.clear();
-            inventoryViewAdapter.addAll(inventory);
-            inventoryViewAdapter.notifyDataSetChanged();
-        }
-    };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.friends_inventory);
+    private Context context = this;
 
-        // remove page transition.
-        overridePendingTransition(0, 0);
+    private int category = -1;
+    private String query = "";
 
-        itemList = (ListView) findViewById(R.id.friends_inventory_list_view);
-        userController = new UserController(context);
-    }
+
 
     /**
      * Gets the friend's name that was passed from previous activity.
@@ -48,31 +49,101 @@ public class FriendsInventoryActivity extends AppCompatActivity {
      * to the Item Detail page.
      */
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.inventory);
+
+        // remove page transition.
+        overridePendingTransition(0, 0);
+
+        item_list = (ListView) findViewById(R.id.inventory_list_view);
+        categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
+        query_et = (EditText) findViewById(R.id.query_et);
+        add = (Button) findViewById(R.id.add_item_button);
+        add.setVisibility(View.GONE);
+
+
+        userController = new UserController(context);
+
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
-        itemList.setAdapter(inventoryViewAdapter);
-
-        Intent intent = getIntent();
-
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                targetUsername = extras.getString("friend_uname");
-            }
-        }
-
-        // run the thread to retrieve friend's inventory
-        Thread getInventoryThread = new GetPublicItemsThread(targetUsername);
-        getInventoryThread.start();
-
-        itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        item_list.setAdapter(inventoryViewAdapter);
+        item_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = inventory.get(position);
                 viewItemDetails(item, position);
             }
         });
+
+        Intent intent = getIntent();
+
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                friendname = extras.getString("friend_uname");
+            }
+        }
+
+
+
+        ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
+        categories.add(0, "All");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriesChoice.setAdapter(adapter);
+        categoriesChoice.setSelection(0);
+
+        Thread refreshUserThread = new RefreshUserThread(friendname);
+        refreshUserThread.start();
+        synchronized (refreshUserThread) {
+            try {
+                refreshUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        inventory.clear();
+        inventory.addAll(friend.getInventory().getPublicItems());
+        notifyUpdated();
+
+        categoriesChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = position - 1;
+                searchItem(category, query);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        query_et.addTextChangedListener(new DelayedTextWatcher(500) {
+            @Override
+            public void afterTextChangedDelayed(Editable s) {
+                query = s.toString();
+                searchItem(category,query);
+            }
+        });
+    }
+
+
+    /**
+     * Notify the listview to be refreshed
+     */
+    public void notifyUpdated() {
+        Runnable doUpdateGUIList = new Runnable() {
+            public void run() {
+                inventoryViewAdapter.notifyDataSetChanged();
+            }
+        };
+
+        runOnUiThread(doUpdateGUIList);
     }
 
     /**
@@ -98,30 +169,97 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         intent.putExtra("item", item);
         // mark this as "friends" page
         intent.putExtra("owner", "friend");
-        intent.putExtra("index", position);
 
         startActivity(intent);
     }
 
+    public void searchItem(int category, String query) {
+        inventory.clear();
+        for (Item item : friend.getInventory().getPublicItems()) {
+            if (item.getName().contains(query) && (item.getCategory() == category || category==-1)) {
+                inventory.add(item);
+            }
+        }
+        notifyUpdated();
+    }
+
     /**
      * Called when the activity starts.
-     * <p>This class creates a thread and runs "Get User".
-     * While it is running, it gets the public items from the
-     * user's inventory and updates the view.
+     * <p>This class creates a thread and runs "Refresh User".
+     * While it is running, it refreshes the user data.
      */
-    class GetPublicItemsThread extends Thread {
+    class RefreshUserThread extends Thread {
         private String username;
 
-        public GetPublicItemsThread(String username) {
+        public RefreshUserThread(String username) {
             this.username = username;
         }
 
         @Override
         public void run() {
-            inventory = userController.getUser(username).getInventory();
-            // only show public items
-            inventory = inventory.getPublicItems(inventory);
-            runOnUiThread(doUpdateGUIDetails);
+            synchronized (this) {
+                // only show public items
+                friend = userController.getUser(username);
+                notify();
+            }
+        }
+    }
+
+
+
+    /**
+     * This class sets up the accuracy of the search list view
+     * while doing a partial search.
+     */
+    // taken from http://stackoverflow.com/questions/5730609/is-it-possible-to-slowdown-reaction-of-edittext-listener
+    // (C) 2015 user1338795
+    abstract class DelayedTextWatcher implements TextWatcher {
+
+        private long delayTime;
+        private WaitTask lastWaitTask;
+
+        public DelayedTextWatcher(long delayTime) {
+            super();
+            this.delayTime = delayTime;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            synchronized (this) {
+                if (lastWaitTask != null) {
+                    lastWaitTask.cancel(true);
+                }
+                lastWaitTask = new WaitTask();
+                lastWaitTask.execute(s);
+            }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        public abstract void afterTextChangedDelayed(Editable s);
+
+        private class WaitTask extends AsyncTask<Editable, Void, Editable> {
+
+            @Override
+            protected Editable doInBackground(Editable... params) {
+                try {
+                    Thread.sleep(delayTime);
+                } catch (InterruptedException e) {
+                }
+                return params[0];
+            }
+
+            @Override
+            protected void onPostExecute(Editable result) {
+                super.onPostExecute(result);
+                afterTextChangedDelayed(result);
+            }
         }
     }
 

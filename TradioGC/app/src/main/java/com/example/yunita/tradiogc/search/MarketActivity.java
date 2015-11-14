@@ -35,7 +35,7 @@ public class MarketActivity extends AppCompatActivity {
             for (User user : users) {
                 Inventory pItems;
                 if (friends.contains(user.getUsername())) {
-                    pItems = new Inventory().getPublicItems(user.getInventory());
+                    pItems = user.getInventory().getPublicItems();
                     for (Item publicItem : pItems) {
                         friendsItems.add(new SearchItem(user.getUsername(), publicItem));
                     }
