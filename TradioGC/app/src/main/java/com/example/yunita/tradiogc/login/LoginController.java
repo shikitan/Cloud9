@@ -25,21 +25,33 @@ public class LoginController {
     private Gson gson = new Gson();
     private Context context;
     private WebServer webServer = new WebServer();
-
-    // Thread that close the activity after finishing add
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
             ((Activity) context).finish();
         }
     };
 
+    /**
+     * Class constructor.
+     */
     public LoginController() {
     }
 
+    /**
+     * Class constructor specifying this controller class is a subclass of Context.
+     *
+     * @param context
+     */
     public LoginController(Context context) {
         this.context = context;
     }
 
+    /**
+     * Called when the sign up thread is running.
+     * This method saves the new user to the webserver.
+     *
+     * @param user new user
+     */
     public void addUser(User user) {
         HttpClient httpClient = new DefaultHttpClient();
 
@@ -61,6 +73,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Called when the "Sign Up Thread" is running.
+     * This method saves the new user to the local storage.
+     *
+     * @param user new user
+     */
     private void saveUserInFile(User user) {
         try {
             FileOutputStream fos = context.openFileOutput(user.getUsername() + ".sav", 0);
@@ -75,6 +93,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Called when the user attempts to sign up by clicking on the "Sign Up" button.
+     * This class creates a thread and runs "Add User".
+     * While it is running, it adds the new user to the webserver.
+     * After it is done, it closes the activity.
+     */
     class SignUpThread extends Thread {
         private User newUser;
 

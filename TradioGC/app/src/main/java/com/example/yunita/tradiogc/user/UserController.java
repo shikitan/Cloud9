@@ -33,12 +33,23 @@ public class UserController {
     private Users users = new Users();
     private Context context;
 
-
+    /**
+     * Class constructor specifying this controller class is a subclass of Context.
+     *
+     * @param context
+     */
     public UserController(Context context) {
         gson = new Gson();
         this.context = context;
     }
 
+    /**
+     * Called when update user thread is running.
+     * <p>This method is used to update this user information
+     * in the webserver.
+     *
+     * @param user this user.
+     */
     public void updateUser(User user) {
         HttpClient httpClient = new DefaultHttpClient();
 
@@ -58,6 +69,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Gets the user information from the webserver.
+     *
+     * @param username this user's name.
+     */
     public User getUser(String username) {
         SearchHit<User> sr = null;
         HttpClient httpClient = new DefaultHttpClient();
@@ -94,7 +110,12 @@ public class UserController {
 
     }
 
-
+    /**
+     * Gets users with the specified search string. If the search does not
+     * specify fields, it searches on all the fields.
+     *
+     * @param field search string.
+     */
     public Users getAllUsers(String field) {
         Users result = new Users();
 
@@ -156,9 +177,16 @@ public class UserController {
         for (SearchHit<User> hit : esResponse.getHits().getHits()) {
             result.add(hit.getSource());
         }
+
         return result;
     }
 
+    /**
+     * Adds all user into user list.
+     *
+     * @param searchString search string.
+     * @return Users.
+     */
     public Users searchUsers(String searchString) {
         Users result = new Users();
         Users allUsers = getAllUsers(null);
@@ -171,6 +199,12 @@ public class UserController {
         return result;
     }
 
+    /**
+     * Called when this user information needs to be updated in
+     * webserver.
+     * <p>While it is running, it updates this user information in
+     * webserver.
+     */
     public class UpdateUserThread extends Thread {
         private User user;
 
@@ -187,6 +221,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Called when this user information needs to be updated.
+     * While it is running, it updates this user information.
+     */
     public class GetUserLoginThread extends Thread {
         private String username;
 

@@ -30,6 +30,9 @@ public class EditProfileActivity extends AppCompatActivity {
         phone_et = (EditText) findViewById(R.id.phone_et);
     }
 
+    /**
+     * Sets the view with the current user profile.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -42,6 +45,14 @@ public class EditProfileActivity extends AppCompatActivity {
         phone_et.setSelection(LoginActivity.USERLOGIN.getPhone().length());
     }
 
+    /**
+     * Called when the user clicks the "Save" button in the Edit Profile page.
+     * This method is used to run the "Update User Thread", and closes
+     * the activity after the thread is done updating the user information
+     * into the webserver.
+     *
+     * @param view "Save" button
+     */
     public void save(View view) {
         String location = location_et.getText().toString();
         String email = email_et.getText().toString();

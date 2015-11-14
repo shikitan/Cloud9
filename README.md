@@ -1,10 +1,14 @@
-## Update (9/11)
-- Fixing inventory bug
-- View item list, edit item
+## Update (12/11)
+- Fixed search user bug (elastic search size limit)
+- Market is under implementation
+- Issue!
 
 ## TODO
-- check user stories for listing friend's inventory (public-private)
-- start project 5 (see planning)
+- Starting offline behaviour (save/load file)
+- Finishing search friends' inventories
+- Starting trade (planning for implementation)
+- Finding a bug!
+- Keep updating bug under issue.
 
 ## TradioGC
 A trading gift-card application

@@ -20,10 +20,10 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
         // ann adds john to her friendlist
         Friends ann_friendlist = ann.getFriends();
-        ann_friendlist.addNewFriend(john.getUsername());
+        ann_friendlist.add(john.getUsername());
         // then, automatically john adds anna to his friendlist
         Friends john_friendlist = john.getFriends();
-        john_friendlist.addNewFriend(ann.getUsername());
+        john_friendlist.add(ann.getUsername());
 
         // Assert that both users have each other on their friend lists
         assertTrue(ann_friendlist.contains(john.getUsername()));
@@ -40,14 +40,14 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
         // ann adds john to her friendlist
         Friends ann_friendlist = ann.getFriends();
-        ann_friendlist.addNewFriend(john.getUsername());
+        ann_friendlist.add(john.getUsername());
         // then, automatically john adds anna to his friendlist
         Friends john_friendlist = john.getFriends();
-        john_friendlist.addNewFriend(ann.getUsername());
+        john_friendlist.add(ann.getUsername());
 
         // ann removes john from her friendlist
-        ann_friendlist.deleteFriend(john.getUsername());
-        john_friendlist.deleteFriend(ann.getUsername());
+        ann_friendlist.remove(john.getUsername());
+        john_friendlist.remove(ann.getUsername());
 
         // Assert that both users doen't have each other on their friend lists
         assertFalse(ann_friendlist.contains(john.getUsername()));
@@ -66,10 +66,10 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
         // ann adds john to her friendlist
         Friends ann_friendlist = ann.getFriends();
-        ann_friendlist.addNewFriend(john.getUsername());
+        ann_friendlist.add(john.getUsername());
         // then, automatically john adds anna to his friendlist
         Friends john_friendlist = john.getFriends();
-        john_friendlist.addNewFriend(ann.getUsername());
+        john_friendlist.add(ann.getUsername());
 
         // check whether john is ann's friend now
         assertTrue(ann_friendlist.get(0).equals(john.getUsername()));
@@ -81,7 +81,7 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     }
 
-    public void testSearchFriend() {
+    public void testSearchUsername() {
         // we have 2 users: ann and john
         User ann = new User();
         ann.setUsername("ann");
@@ -90,10 +90,10 @@ public class FriendsUseCaseTest extends ActivityInstrumentationTestCase2 {
 
         // ann adds john to her friendlist
         Friends ann_friendlist = ann.getFriends();
-        ann_friendlist.addNewFriend(john.getUsername());
+        ann_friendlist.add(john.getUsername());
         // then, automatically john adds anna to his friendlist
         Friends john_friendlist = john.getFriends();
-        john_friendlist.addNewFriend(ann.getUsername());
+        john_friendlist.add(ann.getUsername());
 
         assertTrue(ann_friendlist.contains("john"));
     }

@@ -57,6 +57,12 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * Called when the user presses on "Create Account".
+     * <p>This method is used to show the sign up panel on the Login page.
+     *
+     * @param view "Create Account" text view
+     */
     public void goToSignUp(View view) {
         Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.pull_down);
         login_view.setVisibility(View.GONE);
@@ -64,12 +70,21 @@ public class LoginActivity extends Activity {
         signup_view.startAnimation(anim);
     }
 
+    /**
+     * Called when the user presses on "Login".
+     * <p>This method is used to show the login panel on the Login page.
+     *
+     * @param view "Login" text view
+     */
     public void goToLogin(View view) {
         signup_view.setVisibility(View.GONE);
         login_view.setVisibility(View.VISIBLE);
     }
 
-
+    /**
+     * Called when the user presses the "Login" or "Sign Up" button.
+     * <p>This method is used to send the user to the Main page.
+     */
     public void goToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -77,7 +92,15 @@ public class LoginActivity extends Activity {
         finish();
     }
 
-
+    /**
+     * Called when the user presses the "Login" button.
+     * <p>This method is used to check if the username exists in the webserver.
+     * If it exists, it stores the user information into USERLOGIN and directs
+     * the user to the Main page.
+     * Otherwise, it shows an error message.
+     *
+     * @param view "Login" button
+     */
     public void login(View view) {
 
         final String username = username_et.getText().toString();
@@ -104,6 +127,14 @@ public class LoginActivity extends Activity {
         }
     }
 
+    /**
+     * Called when the user presses the "Sign Up" button.
+     * <p>This method is used to check if the username is unique.
+     * If the username is unique, it will create a new user.
+     * Otherwise, it shows an error message.
+     *
+     * @param view "Sign Up" button
+     */
     public void signUp(View view) {
         String username = username_et.getText().toString();
         String location = location_et.getText().toString();

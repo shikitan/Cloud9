@@ -39,6 +39,8 @@ public class EditItemActivity extends AppCompatActivity {
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
 
+        // get the index of the item in the inventory.
+        // index is the identifier of the item in inventory.
         Intent intent = getIntent();
         int index = intent.getExtras().getInt("index");
         item = inventory.get(index);
@@ -55,6 +57,9 @@ public class EditItemActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.save_item_button);
     }
 
+    /**
+     * Sets the view with the current item information.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -81,6 +86,14 @@ public class EditItemActivity extends AppCompatActivity {
         quantityEdit.setText(Integer.toString(item.getQuantity()));
     }
 
+    /**
+     * Called when the user clicks the "Save" button on the Edit Item page.
+     * This method is used to run the update item thread and closes
+     * this activity after the thread updates the item information
+     * into the webserver.
+     *
+     * @param view "Save" button in the Edit Item page
+     */
     public void saveItem(View view) {
         String name = nameEdit.getText().toString();
         String price_str = priceEdit.getText().toString();

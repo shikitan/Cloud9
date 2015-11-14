@@ -2,9 +2,10 @@ package com.example.yunita.tradiogc.inventory;
 
 import com.example.yunita.tradiogc.Observer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventory extends ArrayList<Item> implements com.example.yunita.tradiogc.Observable {
+public class Inventory extends ArrayList<Item> implements com.example.yunita.tradiogc.Observable, Serializable {
 
     private static final long serialVersionUID = 3199561696102797345L;
     private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
@@ -26,6 +27,12 @@ public class Inventory extends ArrayList<Item> implements com.example.yunita.tra
         }
     }
 
+    /**
+     * Gets the user's list of public items.
+     *
+     * @param inventory user's inventory
+     * @return Inventory inventory that only contains public items
+     */
     public Inventory getPublicItems(Inventory inventory) {
         Inventory pInventory = new Inventory();
         for (Item item : inventory) {

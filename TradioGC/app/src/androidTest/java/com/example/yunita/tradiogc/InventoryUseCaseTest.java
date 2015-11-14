@@ -13,69 +13,64 @@ public class InventoryUseCaseTest extends ActivityInstrumentationTestCase2 {
 
     public void testAddItemToInventory() {
         Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
-        inventory.addItem(item);
-        assertEquals(inventory.getSize(), 1);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        inventory.add(item);
+        assertEquals(inventory.size(), 1);
     }
 
     public void testEditInventoryItem() {
         Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card",1, 50.00, "Unused", true);
-        inventory.addItem(item);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        inventory.add(item);
 
-        Item modifiedItem = inventory.getItem(0);
-        modifiedItem.setName("new name");
-
-        assertFalse((item.getName()).equals(modifiedItem.getName()));
+        item.setName("Indigo Chapters");
+        assertFalse(item.getName().equals("Chapters"));
     }
 
     public void testRemoveInventoryItem() {
         Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card",1, 50.00, "Unused", true);
-        inventory.addItem(item);
-        assertEquals(inventory.getSize(), 1);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        inventory.add(item);
+        assertEquals(inventory.size(), 1);
 
-        //inventory.removeItem(0);
-        assertEquals(inventory.getSize(), 0);
+        inventory.remove(item);
+        assertEquals(inventory.size(), 0);
     }
+
 
     public void testViewInventory() {
         Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
-        inventory.addItem(item);
-        assertEquals(inventory.getSize(), 1);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        inventory.add(item);
+        assertEquals(inventory.size(), 1);
 
         assertNotNull(inventory);
         assertTrue(inventory.contains(item));
     }
 
     public void testViewItem() {
-        Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card",1, 50.00, "Unused", true);
-        inventory.addItem(item);
-
-        assertEquals(inventory.getItem(1), item);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        assertTrue(item.getName().equals("Chapters"));
+        assertTrue(item.getCategory()==0);
+        assertTrue(item.getPrice()==50.00);
+        assertTrue(item.getDesc().equals("chapters gc"));
+        assertTrue(item.getVisibility() == true);
+        assertTrue(item.getQuantity() == 1);
+        assertTrue(item.getQuality() == 0);
     }
 
     public void testSetItemVisibility() {
-        Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
-        inventory.addItem(item);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        item.setVisibility(false);
 
-        Item modifiedItem = inventory.getItem(0);
-        modifiedItem.setVisibility(true);
-
-        assertFalse((item.getVisibility()).equals(modifiedItem.getVisibility()));
+        assertFalse(item.getVisibility() == true);
     }
 
     public void testSetItemCategory() {
-        Inventory inventory = new Inventory();
-        Item item = new Item("GAP Gift Card", 1, 50.00, "Unused", true);
-        inventory.addItem(item);
+        Item item = new Item("Chapters", 0, 50.00, "chapters gc", true, 1, 0);
+        item.setCategory(1); // category starts from [0] - [9]
 
-        Item modifiedItem = inventory.getItem(0);
-        modifiedItem.setCategory(9); // category starts from [0] - [9]
-
-        assertNotSame(item.getCategory(),modifiedItem.getCategory());
+        assertFalse(item.getCategory() == 0);
     }
+
 }

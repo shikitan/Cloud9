@@ -28,7 +28,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".market.MarketActivity"
+            android:name=".search.MarketActivity"
             android:label="@string/market" >
         </activity>
         <activity
@@ -36,7 +36,7 @@
             android:label="@string/notification" >
         </activity>
         <activity
-            android:name=".search.SearchUserActivity"
+            android:name=".friends.SearchUserActivity"
             android:label="@string/search_user" >
         </activity>
         <activity
@@ -69,11 +69,11 @@
         </activity>
         <activity
             android:name=".inventory.EditItemActivity"
-            android:label="@string/edit_item">
+            android:label="@string/edit_item" >
         </activity>
         <activity
-            android:name=".market.ScreenSlidePagerActivity"
-            android:label="EXAMPLE">
+            android:name=".search.ItemSearchActivity"
+            android:label="@string/title_activity_item_search" >
         </activity>
     </application>
 
