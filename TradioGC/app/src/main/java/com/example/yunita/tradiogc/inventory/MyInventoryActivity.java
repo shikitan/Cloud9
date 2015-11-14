@@ -24,17 +24,31 @@ import java.util.Arrays;
 
 
 public class MyInventoryActivity extends AppCompatActivity {
-    private Context context = this;
-    private Inventory inventory = new Inventory();
-
-    private ListView itemList;
-    private ArrayAdapter<Item> inventoryViewAdapter;
     private Spinner categoriesChoice;
-
-    private InventoryController inventoryController;
     private EditText query_et;
+    private ListView itemList;
+
+    private Inventory inventory = new Inventory();
+    private ArrayAdapter<Item> inventoryViewAdapter;
+    private InventoryController inventoryController;
+
+    private Context context = this;
+
     private int category = -1;
     private String query = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.inventory);
+
+        inventoryController = new InventoryController(context);
+
+        itemList = (ListView) findViewById(R.id.inventory_list_view);
+        categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
+        query_et = (EditText) findViewById(R.id.query_et);
+    }
+
 
     /**
      * Sets up the "Inventory View Adapter" and manipulates the list view.
@@ -43,20 +57,9 @@ public class MyInventoryActivity extends AppCompatActivity {
      * the user's inventory and calls the "Delete Item Thread".
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.inventory);
+    protected void onStart() {
+        super.onStart();
 
-        overridePendingTransition(0, 0);
-
-        inventoryController = new InventoryController(context);
-
-        itemList = (ListView) findViewById(R.id.inventory_list_view);
-        categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
-        query_et = (EditText) findViewById(R.id.query_et);
-
-        inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
-        itemList.setAdapter(inventoryViewAdapter);
 
         ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
         categories.add(0, "All");
@@ -65,14 +68,16 @@ public class MyInventoryActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);
-        categoriesChoice.setSelection(0);
+
+        inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
+        itemList.setAdapter(inventoryViewAdapter);
 
 
         itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = inventory.get(position);
-                viewItemDetails(item, position);
+                viewItemDetails(LoginActivity.USERLOGIN.getInventory().indexOf(item));
             }
         });
 
@@ -95,6 +100,7 @@ public class MyInventoryActivity extends AppCompatActivity {
                 category = position - 1;
                 searchItem(category, query);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -107,7 +113,6 @@ public class MyInventoryActivity extends AppCompatActivity {
                 searchItem(category, query);
             }
         });
-
     }
 
     /**
@@ -138,15 +143,13 @@ public class MyInventoryActivity extends AppCompatActivity {
      * pass the item index position, and tell the Item Detail activity
      * to show the Item Detail page from the user's perspective.
      *
-     * @param item     this item
-     * @param position this item's index in the inventory
+     * @param index     the index of item in inventory
      */
-    public void viewItemDetails(Item item, int position) {
+    public void viewItemDetails(int index) {
         Intent intent = new Intent(context, ItemActivity.class);
         intent.putExtra("owner", "owner");
-        intent.putExtra("index",LoginActivity.USERLOGIN.getInventory().indexOf(item));
+        intent.putExtra("index", index);
         startActivity(intent);
-        finish();
     }
 
 

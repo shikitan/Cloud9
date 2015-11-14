@@ -53,9 +53,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inventory);
 
-        // remove page transition.
-        overridePendingTransition(0, 0);
-
         item_list = (ListView) findViewById(R.id.inventory_list_view);
         categoriesChoice = (Spinner) findViewById(R.id.item_by_category_spinner);
         query_et = (EditText) findViewById(R.id.query_et);
@@ -64,6 +61,22 @@ public class FriendsInventoryActivity extends AppCompatActivity {
 
 
         userController = new UserController(context);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent intent = getIntent();
+
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                friendname = extras.getString("friend_uname");
+            }
+        }
 
         inventoryViewAdapter = new ArrayAdapter<Item>(this, R.layout.inventory_list_item, inventory);
         item_list.setAdapter(inventoryViewAdapter);
@@ -75,23 +88,12 @@ public class FriendsInventoryActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                friendname = extras.getString("friend_uname");
-            }
-        }
-
-
-
         ArrayList<String> categories = new ArrayList<String> (Arrays.asList(getResources().getStringArray(R.array.categories_array)));
         categories.add(0, "All");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         categoriesChoice.setAdapter(adapter);
         categoriesChoice.setSelection(0);
 
@@ -132,6 +134,20 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Thread refreshUserThread = new RefreshUserThread(friendname);
+        refreshUserThread.start();
+        synchronized (refreshUserThread) {
+            try {
+                refreshUserThread.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        notifyUpdated();
+    }
 
     /**
      * Notify the listview to be refreshed
@@ -146,14 +162,6 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         runOnUiThread(doUpdateGUIList);
     }
 
-    /**
-     * Removes page transition.
-     */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(0, 0);
-    }
 
     /**
      * Called when the user clicks on an item.

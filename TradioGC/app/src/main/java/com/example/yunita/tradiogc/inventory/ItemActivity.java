@@ -79,8 +79,6 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        overridePendingTransition(0, 0);
-
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
@@ -129,21 +127,6 @@ public class ItemActivity extends AppCompatActivity {
                 }
                 runOnUiThread(doUpdateGUIDetails);
             }
-        }
-    }
-
-    /**
-     * Called when the user clicks back.
-     */
-    @Override
-    public void onBackPressed() {
-        // fix remove inventory bug
-        if (owner.equals("owner")) {
-            Intent intent = new Intent(context, MyInventoryActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            super.onBackPressed();
         }
     }
 
