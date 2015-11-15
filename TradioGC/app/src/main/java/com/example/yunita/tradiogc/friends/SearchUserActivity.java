@@ -26,6 +26,8 @@ public class SearchUserActivity extends AppCompatActivity {
     private UserController userController;
     private EditText editText1;
     private Context mContext = this;
+    private boolean clickable = true;
+    private String query = "";
 
 
     @Override
@@ -54,30 +56,34 @@ public class SearchUserActivity extends AppCompatActivity {
         usersViewAdapter = new ArrayAdapter<User>(this, R.layout.friend_list_item, users);
         userList.setAdapter(usersViewAdapter);
         userController = new UserController(mContext);
-        SearchThread thread = new SearchThread("");
-        thread.start();
-        editText1.addTextChangedListener(new DelayedTextWatcher(500) {
 
+        editText1.addTextChangedListener(new DelayedTextWatcher(500) {
             @Override
             public void afterTextChangedDelayed(Editable s) {
-                users.clear();
-                SearchThread thread = new SearchThread(s.toString());
+                query = s.toString();
+                SearchThread thread = new SearchThread(query);
                 thread.start();
-
             }
         });
-        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                String username = users.get(pos).getUsername();
-                startProfileActivity(username);
-                finish();
+                if (clickable) {
+                    String username = users.get(pos).getUsername();
+                    startProfileActivity(username);
+                }
             }
-
         });
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SearchThread thread = new SearchThread(query);
+        thread.start();
+    }
+
 
     /**
      * Called when the user clicks a username in the search list view.
@@ -126,6 +132,7 @@ public class SearchUserActivity extends AppCompatActivity {
 
             System.out.println("search users: " + users.size());
             notifyUpdated();
+            clickable = true;
         }
 
     }
@@ -149,6 +156,7 @@ public class SearchUserActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             synchronized (this) {
+                clickable = false;
                 if (lastWaitTask != null) {
                     lastWaitTask.cancel(true);
                 }
@@ -167,6 +175,7 @@ public class SearchUserActivity extends AppCompatActivity {
 
         public abstract void afterTextChangedDelayed(Editable s);
 
+
         private class WaitTask extends AsyncTask<Editable, Void, Editable> {
 
             @Override
@@ -174,6 +183,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 try {
                     Thread.sleep(delayTime);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 return params[0];
             }

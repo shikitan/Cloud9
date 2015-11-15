@@ -111,7 +111,6 @@ public class InventoryController {
             }
         }
     }
-
     /**
      * Called when
      * This method saves the inventory to the local storage.
@@ -130,5 +129,4 @@ public class InventoryController {
             throw new RuntimeException(e);
         }
     }
-
 }

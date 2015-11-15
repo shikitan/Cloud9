@@ -142,7 +142,10 @@ public class LoginActivity extends Activity {
         String phone = phone_et.getText().toString();
 
         // Execute the thread
-        if (!username.equals("")) {
+        if (username.equals("")) {
+            Toast toast = Toast.makeText(mContext, "Username cannot be empty.", Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
             Thread thread = userController.new GetUserLoginThread(username);
             thread.start();
 
@@ -160,15 +163,15 @@ public class LoginActivity extends Activity {
                     try {
                         User newUser = new User();
                         newUser.setUsername(username);
-                        newUser.setLocation(location);
-                        newUser.setEmail(email);
+                        newUser.setLocation(location.toUpperCase());
+                        newUser.setEmail(email.toLowerCase());
                         newUser.setPhone(phone);
                         newUser.setInventory(new Inventory());
 
                         USERLOGIN = new User();
                         USERLOGIN.setUsername(username);
-                        USERLOGIN.setLocation(location);
-                        USERLOGIN.setEmail(email);
+                        USERLOGIN.setLocation(location.toUpperCase());
+                        USERLOGIN.setEmail(email.toLowerCase());
                         USERLOGIN.setPhone(phone);
                         USERLOGIN.setInventory(new Inventory());
 
@@ -187,7 +190,7 @@ public class LoginActivity extends Activity {
 
                         goToMain();
                     } catch (Exception e) {
-                        System.out.println(e);
+                        e.printStackTrace();
                     }
                 }
             }

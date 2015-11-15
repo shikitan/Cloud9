@@ -1,7 +1,6 @@
 package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -31,7 +30,6 @@ public class EditItemActivity extends AppCompatActivity {
     private Item item;
     private Button add;
     private Button save;
-    private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +37,8 @@ public class EditItemActivity extends AppCompatActivity {
         setContentView(R.layout.add_item_inventory);
         inventoryController = new InventoryController(mContext);
 
-        // get the index of the item in the inventory.
-        // index is the identifier of the item in inventory.
-        Intent intent = getIntent();
-        int index = intent.getExtras().getInt("index");
-        item = inventory.get(index);
+        item = LoginActivity.USERLOGIN.getInventory().get(getIntent().getExtras().getInt("index"));
+
 
         radioVisibility = (RadioGroup) findViewById(R.id.radioVisibility);
         privateChoice = (RadioButton) findViewById(R.id.private_radio_button);
