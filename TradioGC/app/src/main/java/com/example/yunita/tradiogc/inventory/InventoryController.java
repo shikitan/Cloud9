@@ -4,12 +4,21 @@ import android.content.Context;
 
 import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.login.LoginActivity;
+import com.example.yunita.tradiogc.user.User;
 import com.example.yunita.tradiogc.user.UserController;
+import com.google.gson.Gson;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class InventoryController {
     private static final String TAG = "InventoryController";
     private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
     private UserController userController;
+    private Context context;
+    private Gson gson = new Gson();
     private WebServer webServer = new WebServer();
 
     /**
@@ -19,6 +28,7 @@ public class InventoryController {
      */
     public InventoryController(Context context) {
         super();
+        this.context = context;
         this.userController = new UserController(context);
     }
 
@@ -30,10 +40,12 @@ public class InventoryController {
      * @param item new item
      */
     public void addItem(Item item) {
+        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
         inventory.add(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }
+
 
     /**
      * Called when the user long presses on an item that exists in the inventory.
@@ -43,6 +55,7 @@ public class InventoryController {
      * @param item existing item in the inventory
      */
     public void removeExistingItem(Item item) {
+        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
         inventory.remove(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
@@ -55,6 +68,7 @@ public class InventoryController {
      * @param item item
      */
     public void updateItem(Item item) {
+        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
         synchronized (updateUserThread) {
@@ -95,6 +109,25 @@ public class InventoryController {
                 inventory.remove(item);
                 notify();
             }
+        }
+    }
+
+    /**
+     * Called when
+     * This method saves the inventory to the local storage.
+     *
+     */
+    private void saveInventoryInFile(Inventory inventory, User user){
+        try{
+            FileOutputStream fos = context.openFileOutput(user.getUsername() + "inventory.sav", 0);
+            OutputStreamWriter writer = new OutputStreamWriter(fos);
+            gson.toJson(inventory, writer);
+            writer.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

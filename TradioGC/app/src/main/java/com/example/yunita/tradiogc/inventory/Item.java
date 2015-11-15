@@ -80,29 +80,23 @@ public class Item implements Serializable {
         this.category = category;
     }
 
-<<<<<<< HEAD
+    /**
+     * Gets the price of this item.
+     *
+     * @return price
+     */
+
     public String getPrice() {
         return Double.toString(round(price, 3));
     }
 
     //TODO: fix the price to print in two decimal points
 
-=======
-    /**
-     * Gets the price of this item.
-     *
-     * @return price
-     */
-    public double getPrice() {
-        return price;
-    }
-
     /**
      * Changes the price of this item.
      *
      * @param price this item's new price
      */
->>>>>>> origin/yunita3
     public void setPrice(double price) {
         this.price = round(price, 2);
     }
