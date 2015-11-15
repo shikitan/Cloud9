@@ -45,6 +45,7 @@ public class AddItemActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesChoice.setAdapter(adapter);

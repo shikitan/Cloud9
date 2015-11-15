@@ -18,7 +18,7 @@ import com.example.yunita.tradiogc.profile.ProfileActivity;
 public class FriendsActivity extends AppCompatActivity {
 
     private Context context = this;
-    private Friends friends;
+    private Friends friends = new Friends();
     private ListView friendList;
     private String friendname;
     private FriendsController friendsController;
@@ -38,7 +38,7 @@ public class FriendsActivity extends AppCompatActivity {
 
         friendsController = new FriendsController(context);
         friendList = (ListView) findViewById(R.id.friend_list_view);
-        friends = LoginActivity.USERLOGIN.getFriends();
+        friends.addAll(LoginActivity.USERLOGIN.getFriends());
         System.out.println("friends: " + friends.size());
     }
 
@@ -69,6 +69,7 @@ public class FriendsActivity extends AppCompatActivity {
                 friendname = friends.get(position);
                 Thread deleteThread = new DeleteFriendThread(friendname);
                 deleteThread.start();
+                friends.remove(friendname);
                 Toast.makeText(context, "Deleting " + friendname, Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -83,7 +84,8 @@ public class FriendsActivity extends AppCompatActivity {
         super.onResume();
         // keep updating friend list (since we use tabmenu, after first
         // visit, this activity will be on resume/pause).
-        friends = LoginActivity.USERLOGIN.getFriends();
+        friends.clear();
+        friends.addAll(LoginActivity.USERLOGIN.getFriends());
     }
 
     /**

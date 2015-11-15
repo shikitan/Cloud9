@@ -37,8 +37,8 @@ public class ItemActivity extends AppCompatActivity {
     private Context context = this;
     private Categories categories;
     private String owner;
-    private int index;
     private UserController userController;
+    private int index;
 
     private LinearLayout friend_panel;  // Shown when wanting to make a trade with an item
     // Not sure if that's how we want to start a trade with an item?
@@ -79,8 +79,6 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.item_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        overridePendingTransition(0, 0);
-
         friend_panel = (LinearLayout) findViewById(R.id.friend_button_panel_item);
         edit_button = (ImageButton) findViewById(R.id.edit_button);
         userController = new UserController(context);
@@ -95,11 +93,15 @@ public class ItemActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        item = (Item) intent.getSerializableExtra("item");
         categories = new Categories();
 
-        index = intent.getExtras().getInt("index");
         owner = intent.getExtras().getString("owner");
+        index = intent.getExtras().getInt("index");
+        if (owner.equals("owner")) {
+            item = LoginActivity.USERLOGIN.getInventory().get(index);
+        } else {
+            item = (Item) intent.getSerializableExtra("item");
+        }
         // Checks to see if we are getting a username from the intent
         if (owner.equals("friend")) {
             edit_button.setVisibility(View.GONE);
@@ -123,32 +125,15 @@ public class ItemActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Inventory inventory = LoginActivity.USERLOGIN.getInventory();
-                item = inventory.get(index);
                 runOnUiThread(doUpdateGUIDetails);
             }
         }
     }
 
     /**
-     * Called when the user clicks back.
-     */
-    @Override
-    public void onBackPressed() {
-        // fix remove inventory bug
-        if (owner.equals("owner")) {
-            Intent intent = new Intent(context, MyInventoryActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    /**
      * Called when the user presses the "Pencil" icon in Item Detail page.
      * <p>This method is used to send the user to the Edit Item page.
-     * It passes the index of the item in the inventory.
+     * It passes the item to be edited.
      *
      * @param view "Pencil" icon in Item Detail page.
      */

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.UserController;
 
+import java.util.Collections;
+
 public class FriendsController {
 
     private static final String TAG = "FriendsController";
@@ -31,6 +33,7 @@ public class FriendsController {
      */
     public void addFriend(String friendname) {
         LoginActivity.USERLOGIN.getFriends().add(friendname);
+        Collections.sort(LoginActivity.USERLOGIN.getFriends(),String.CASE_INSENSITIVE_ORDER);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
     }
