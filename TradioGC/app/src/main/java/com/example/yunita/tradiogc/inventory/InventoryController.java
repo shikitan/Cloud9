@@ -2,6 +2,7 @@ package com.example.yunita.tradiogc.inventory;
 
 import android.content.Context;
 
+import com.example.yunita.tradiogc.CheckNetwork;
 import com.example.yunita.tradiogc.WebServer;
 import com.example.yunita.tradiogc.login.LoginActivity;
 import com.example.yunita.tradiogc.user.User;
@@ -15,11 +16,12 @@ import java.io.OutputStreamWriter;
 
 public class InventoryController {
     private static final String TAG = "InventoryController";
-    private Inventory inventory = LoginActivity.USERLOGIN.getInventory();
     private UserController userController;
     private Context context;
     private Gson gson = new Gson();
     private WebServer webServer = new WebServer();
+    private CheckNetwork checkNetwork = new CheckNetwork(this.context);
+    private Inventory inventory;
 
     /**
      * Class constructor specifying that this controller class is a subclass of Context.
@@ -30,6 +32,12 @@ public class InventoryController {
         super();
         this.context = context;
         this.userController = new UserController(context);
+        if (checkNetwork.isOnline() == true){
+            inventory = LoginActivity.USERLOGIN.getInventory();
+        }
+        else{
+
+        }
     }
 
     /**
@@ -40,9 +48,10 @@ public class InventoryController {
      * @param item new item
      */
     public void addItem(Item item) {
-        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
         inventory.add(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
+
         updateUserThread.start();
     }
 
@@ -55,9 +64,10 @@ public class InventoryController {
      * @param item existing item in the inventory
      */
     public void removeExistingItem(Item item) {
-        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
         inventory.remove(item);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
+        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
+
         updateUserThread.start();
     }
 
@@ -68,7 +78,6 @@ public class InventoryController {
      * @param item item
      */
     public void updateItem(Item item) {
-        saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
         Thread updateUserThread = userController.new UpdateUserThread(LoginActivity.USERLOGIN);
         updateUserThread.start();
         synchronized (updateUserThread) {
@@ -78,6 +87,7 @@ public class InventoryController {
                 e.printStackTrace();
             }
             Thread getUserLoginThread = userController.new GetUserLoginThread(LoginActivity.USERLOGIN.getUsername());
+            saveInventoryInFile(inventory, LoginActivity.USERLOGIN);
             getUserLoginThread.start();
             synchronized (getUserLoginThread) {
                 try {
