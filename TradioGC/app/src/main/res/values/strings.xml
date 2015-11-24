@@ -1,0 +1,123 @@
+<resources>
+
+    <!-- Login Activity -->
+    <string name="app_name">TradioGC</string>
+    <string name="login"><b>LOG IN</b></string>
+    <string name="sign_up"><b>SIGN UP</b></string>
+    <string name="create_account">Create Account</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="Tradio_GC">Tradio_GC</string>
+
+    <!-- Main Activity -->
+    <string name="market">Market</string>
+    <string name="profile">Profile</string>
+    <string name="friends">Friends</string>
+    <string name="notification">Notification</string>
+
+    <!-- Friends Activity -->
+    <string name="search_user">Search User</string>
+    <string name="friend_longclick_hint">Long click on your friend name to delete friend.</string>
+    <string name="add_new_friend">Add new friend</string>
+
+    <!-- Inventory Activity -->
+    <string name="inventory">Inventory</string>
+    <string name="add_item">Add New Item</string>
+
+    <!-- Market -->
+    <string name="search_by_category">Search by Category &#10095;</string>
+    <string name="search_by_query">Search by Query &#10095;</string>
+
+
+    <string name="location">Location</string>
+    <string name="price_range">Price Range (min-max)</string>
+    <string name="search_market">Search</string>
+    <string name="results">Results</string>
+    <string name="trade">Trade</string>
+    <string name="yours">Yours</string>
+    <string name="theirs">Theirs</string>
+    <string name="edit">Edit</string>
+    <string name="make_offer">Make Offer</string>
+    <string name="settings">Settings</string>
+    <string name="picture_mode">Picture Mode?</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="off">Off</string>
+    <string name="john_smith">John Smith</string>
+    <string name="edmonton">Edmonton</string>
+    <string name="bio_john_smith">I love hockey and hanging out with my friends. Also interested
+    in trying new places to eat!</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="trades">Trades</string>
+    <string name="description">Description</string>
+
+    <string name="friend_request">Friend Requests</string>
+    <string name="find_friends">Find Friends</string>
+    <string name="my_friends">My Friends</string>
+    <string name="Inventory_title_text">Inventory</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="browse_title"><![CDATA[Videos by Your Company]]></string>
+    <string name="related_movies">Related Videos</string>
+    <string name="vertical_grid_title"><![CDATA[Vertical Video Grid]]></string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="init_text">00:00</string>
+    <string name="play_pause_description">Play Pause Button</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="no_video_found">No video was found</string>
+    <string name="about_app">About DemoCast Player</string>
+    <string name="version">Version: %1$s</string>
+    <string name="popular_header">Popular Videos</string>
+    <string name="preferences">PREFERENCES</string>
+    <string name="grid_view">Grid View</string>
+    <string name="error_fragment">Error Fragment</string>
+    <string name="personal_settings">Personal Settings</string>
+    <string name="watch_trailer_1">Watch trailer</string>
+    <string name="watch_trailer_2">FREE</string>
+    <string name="rent_1">Rent By Day</string>
+    <string name="rent_2">From $1.99</string>
+    <string name="buy_1">Buy and Own</string>
+    <string name="buy_2">AT $9.99</string>
+    <string name="movie">Movie</string>
+    <string name="should_start">shouldStart</string>
+    <string name="start_position">startPosition</string>
+    <string name="search_results">Search Results</string>
+
+    <!-- Error messages -->
+    <string name="video_error_media_load_timeout">Media loading timed out</string>
+    <string name="video_error_server_inaccessible">Media server was not reachable</string>
+    <string name="video_error_unknown_error">Failed to load video</string>
+    <string name="error_fragment_message">An error occurred</string>
+    <string name="dismiss_error">Dismiss</string>
+    <string name="oops">Oops</string>
+    <string name="title_activity_inventory">InventoryActivity</string>
+    <string name="myInventory">My Inventory</string>
+    <string name="plus">+</string>
+    <string name="title_activity_new_item">NewItemActivity</string>
+    <string-array name="categories_array">
+        <item>Books</item>
+        <item>Electronics</item>
+        <item>Sports</item>
+        <item>Music</item>
+        <item>Clothing</item>
+        <item>Hobby</item>
+        <item>Food</item>
+        <item>Grocery</item>
+        <item>Specialty</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="quality_array">
+        <item>New</item>
+        <item>Used</item>
+    </string-array>
+    <string name="title_activity_item">Item Detail</string>
+    <string name="title_activity_friends_inventory">Friends Inventory</string>
+    <string name="title_activity_item_search">Search Item</string>
+
+
+
+</resources>

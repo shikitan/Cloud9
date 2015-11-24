@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/all_search_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="16">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/search_by_query_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/custom_roundrect_button"
+        android:text="@string/search_by_query"
+        android:textColor="@color/white"
+        android:onClick="goToSearchByQuery" />
+
+    <Button
+        android:id="@+id/search_by_category_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/custom_roundrect_button"
+        android:text="@string/search_by_category"
+        android:textColor="@color/white"
+        android:onClick="goToSearchByCategory" />
+
+</LinearLayout>
