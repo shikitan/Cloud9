@@ -118,7 +118,7 @@ public class EditItemActivity extends AppCompatActivity {
             item.setQuantity(quantity);
             item.setQuality(quality);
 
-            inventoryController.updateItem(item);
+            inventoryController.updateItem();
             finish();
         }
     }
